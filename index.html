@@ -8,61 +8,73 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      /* Colors - Dark theme */
-      --bg-primary: #0d1117;
-      --bg-secondary: #161b22;
-      --bg-tertiary: #21262d;
-      --bg-hover: #30363d;
-      --bg-elevated: #1c2128;
-      --border: #30363d;
-      --border-subtle: #262c36;
-      --text-primary: #e6edf3;
-      --text-secondary: #8b949e;
-      --text-muted: #6e7681;
-      --accent: #58a6ff;
-      --accent-hover: #79b8ff;
-      --accent-glow: rgba(88, 166, 255, 0.15);
-      --accent-subtle: rgba(88, 166, 255, 0.1);
-      --success: #3fb950;
-      --success-muted: rgba(63, 185, 80, 0.15);
-      --warning: #d29922;
-      --warning-muted: rgba(210, 153, 34, 0.15);
-      --danger: #f85149;
-      --danger-muted: rgba(248, 81, 73, 0.15);
+      /* Premium Design Tokens */
+      --bg: #0a0d12;
+      --bg-secondary: #12161d;
+      --panel: #161b24;
+      --panel-2: #1c222d;
+      --panel-3: #242b38;
+      --border: rgba(255, 255, 255, 0.06);
+      --border-subtle: rgba(255, 255, 255, 0.04);
+      --border-highlight: rgba(255, 255, 255, 0.08);
+      --text: #e8ecf2;
+      --text-secondary: #9ca3af;
+      --muted: #6b7280;
+
+      /* Status Colors - Muted & Premium */
+      --completed: #34d399;
+      --completed-bg: rgba(52, 211, 153, 0.12);
+      --completed-glow: rgba(52, 211, 153, 0.15);
+      --almost: #22d3ee;
+      --almost-bg: rgba(34, 211, 238, 0.12);
+      --almost-glow: rgba(34, 211, 238, 0.15);
+      --progress: #fbbf24;
+      --progress-bg: rgba(251, 191, 36, 0.12);
+      --low: #f87171;
+      --low-bg: rgba(248, 113, 113, 0.12);
+
+      /* Accent */
+      --accent: #60a5fa;
+      --accent-subtle: rgba(96, 165, 250, 0.1);
+      --accent-glow: rgba(96, 165, 250, 0.2);
 
       /* Spacing */
-      --space-xs: 4px;
-      --space-sm: 8px;
-      --space-md: 12px;
-      --space-lg: 16px;
-      --space-xl: 20px;
-      --space-2xl: 24px;
+      --gap-xs: 4px;
+      --gap-sm: 8px;
+      --gap-md: 12px;
+      --gap-lg: 16px;
+      --gap-xl: 20px;
+      --gap-2xl: 24px;
 
       /* Radii */
-      --radius-sm: 4px;
-      --radius-md: 6px;
-      --radius-lg: 8px;
-      --radius-xl: 12px;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 18px;
 
       /* Shadows */
-      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
-      --shadow-glow: 0 0 20px var(--accent-glow);
+      --shadow-1: 0 2px 8px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+      --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.25);
+      --shadow-card-hover: 0 8px 32px rgba(0, 0, 0, 0.35);
 
       /* Transitions */
-      --transition-fast: 0.15s ease;
-      --transition-normal: 0.2s ease;
-      --transition-slow: 0.3s ease;
+      --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* Layout */
+      --drawer-width: 360px;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
       min-height: 100vh;
       font-size: 14px;
       line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
 
     /* Layout */
@@ -71,14 +83,16 @@
     .navbar {
       display: flex;
       align-items: center;
-      gap: var(--space-sm);
-      padding: var(--space-md) var(--space-lg);
-      background: var(--bg-secondary);
+      gap: var(--gap-sm);
+      padding: var(--gap-md) var(--gap-xl);
+      background: var(--panel);
       border-bottom: 1px solid var(--border);
       flex-wrap: wrap;
+      position: relative;
+      z-index: 10;
     }
 
-    .navbar-left { display: flex; gap: var(--space-sm); align-items: center; }
+    .navbar-left { display: flex; gap: var(--gap-sm); align-items: center; }
     .navbar-center {
       flex: 1;
       text-align: center;
@@ -87,35 +101,46 @@
       font-size: 15px;
       letter-spacing: -0.01em;
     }
-    .navbar-right { display: flex; gap: var(--space-sm); align-items: center; }
+    .navbar-right { display: flex; gap: var(--gap-sm); align-items: center; }
 
+    /* Main Layout with Drawer Push */
     .main-content {
       flex: 1;
-      display: flex;
-      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 0;
+      transition: grid-template-columns var(--transition-normal);
+      overflow: hidden;
     }
 
-    .view-container { flex: 1; padding: var(--space-lg); overflow-y: auto; }
+    .main-content.drawer-open {
+      grid-template-columns: 1fr var(--drawer-width);
+    }
+
+    .view-container {
+      padding: var(--gap-xl);
+      overflow-y: auto;
+      transition: padding var(--transition-normal);
+    }
 
     /* Buttons */
     .btn {
-      padding: var(--space-sm) var(--space-md);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      background: var(--bg-tertiary);
-      color: var(--text-primary);
+      padding: var(--gap-sm) var(--gap-md);
+      border: 1px solid var(--border-highlight);
+      border-radius: var(--radius-sm);
+      background: var(--panel-2);
+      color: var(--text);
       cursor: pointer;
       font-size: 13px;
       font-weight: 500;
       transition: all var(--transition-fast);
     }
     .btn:hover {
-      background: var(--bg-hover);
-      border-color: var(--text-muted);
+      background: var(--panel-3);
+      border-color: rgba(255, 255, 255, 0.12);
     }
     .btn:focus-visible {
       outline: none;
-      box-shadow: 0 0 0 2px var(--bg-primary), 0 0 0 4px var(--accent);
+      box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
     }
     .btn-primary {
       background: var(--accent);
@@ -124,11 +149,11 @@
       font-weight: 600;
     }
     .btn-primary:hover {
-      background: var(--accent-hover);
-      border-color: var(--accent-hover);
+      background: #79b8ff;
+      border-color: #79b8ff;
     }
-    .btn-sm { padding: var(--space-xs) var(--space-sm); font-size: 12px; }
-    .btn-icon { padding: var(--space-sm) 10px; }
+    .btn-sm { padding: var(--gap-xs) var(--gap-sm); font-size: 12px; }
+    .btn-icon { padding: var(--gap-sm) 10px; }
 
     /* Week Grid */
     .week-grid {
@@ -139,19 +164,19 @@
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       overflow: hidden;
-      margin-bottom: var(--space-lg);
+      margin-bottom: var(--gap-xl);
     }
 
     .grid-header, .grid-cell, .grid-label {
-      padding: 10px var(--space-sm);
-      background: var(--bg-secondary);
+      padding: 10px var(--gap-sm);
+      background: var(--panel);
       text-align: center;
-      transition: background var(--transition-fast);
+      transition: all var(--transition-fast);
     }
 
     .grid-header {
       font-weight: 600;
-      color: var(--text-secondary);
+      color: var(--muted);
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -159,13 +184,20 @@
       position: relative;
     }
     .grid-header:hover {
-      background: var(--bg-tertiary);
+      background: var(--panel-2);
+      color: var(--text-secondary);
     }
+
+    /* Premium Day Header Selection */
     .grid-header.selected {
-      background: var(--bg-elevated);
-      color: var(--text-primary);
-      box-shadow: inset 0 -2px 0 var(--accent), var(--shadow-glow);
+      background: linear-gradient(180deg, rgba(96, 165, 250, 0.15) 0%, rgba(96, 165, 250, 0.08) 100%);
+      color: var(--text);
+      box-shadow:
+        inset 0 0 0 1px rgba(96, 165, 250, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 0 20px rgba(96, 165, 250, 0.1);
     }
+
     .grid-header.today {
       color: var(--accent);
     }
@@ -183,7 +215,7 @@
     .grid-label {
       text-align: left;
       font-weight: 500;
-      background: var(--bg-tertiary);
+      background: var(--panel-2);
       font-size: 13px;
       color: var(--text-secondary);
     }
@@ -195,56 +227,56 @@
       align-items: center;
       justify-content: center;
     }
-    .grid-cell:hover { background: var(--bg-hover); }
-    .grid-cell.column-selected {
-      background: var(--accent-subtle);
-    }
-    .grid-cell.column-selected:hover {
-      background: rgba(88, 166, 255, 0.2);
+    .grid-cell:hover {
+      background: var(--panel-2);
     }
 
+    /* Premium Cell Content - Status Badges */
     .cell-content {
-      font-size: 12px;
-      font-weight: 500;
-      padding: 3px 8px;
-      border-radius: var(--radius-sm);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.02em;
+      transition: all var(--transition-fast);
     }
     .cell-done {
-      color: var(--success);
-      background: var(--success-muted);
+      color: var(--completed);
+      background: var(--completed-bg);
     }
     .cell-partial {
-      color: var(--warning);
-      background: var(--warning-muted);
+      color: var(--progress);
+      background: var(--progress-bg);
     }
     .cell-none {
-      color: var(--text-muted);
+      color: var(--muted);
+      background: transparent;
     }
 
-    /* Day Drawer */
+    /* Day Drawer - Push Layout */
     .drawer {
-      width: 340px;
-      background: var(--bg-secondary);
+      background: var(--panel);
       border-left: 1px solid var(--border);
-      padding: var(--space-lg);
+      padding: var(--gap-xl);
       overflow-y: auto;
-      transform: translateX(100%);
-      transition: transform var(--transition-slow);
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
+      overflow-x: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-normal);
+      width: var(--drawer-width);
     }
-    .drawer.open {
-      transform: translateX(0);
+
+    .main-content.drawer-open .drawer {
+      opacity: 1;
+      pointer-events: auto;
     }
 
     .drawer-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: var(--space-xl);
-      padding-bottom: var(--space-md);
+      margin-bottom: var(--gap-xl);
+      padding-bottom: var(--gap-md);
       border-bottom: 1px solid var(--border);
     }
 
@@ -255,16 +287,16 @@
       color: var(--text-secondary);
       cursor: pointer;
       font-size: 20px;
-      padding: var(--space-xs);
+      padding: var(--gap-xs);
       border-radius: var(--radius-sm);
       transition: all var(--transition-fast);
     }
     .drawer-close:hover {
-      color: var(--text-primary);
-      background: var(--bg-hover);
+      color: var(--text);
+      background: var(--panel-2);
     }
 
-    .drawer-section { margin-bottom: var(--space-xl); }
+    .drawer-section { margin-bottom: var(--gap-xl); }
     .drawer-section-title {
       font-size: 11px;
       text-transform: uppercase;
@@ -275,18 +307,18 @@
     }
 
     /* Form Controls */
-    .checkbox-group { display: flex; flex-direction: column; gap: var(--space-sm); }
+    .checkbox-group { display: flex; flex-direction: column; gap: var(--gap-sm); }
     .checkbox-item {
       display: flex;
       align-items: center;
       gap: 10px;
       cursor: pointer;
-      padding: var(--space-sm);
+      padding: var(--gap-sm);
       border-radius: var(--radius-md);
       transition: background var(--transition-fast);
     }
     .checkbox-item:hover {
-      background: var(--bg-hover);
+      background: var(--panel-2);
     }
     .checkbox-item input[type="checkbox"] {
       width: 18px;
@@ -294,23 +326,19 @@
       accent-color: var(--accent);
       cursor: pointer;
     }
-    .checkbox-item input[type="checkbox"]:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-    }
 
-    .radio-group { display: flex; flex-direction: column; gap: var(--space-sm); }
+    .radio-group { display: flex; flex-direction: column; gap: var(--gap-sm); }
     .radio-item {
       display: flex;
       align-items: center;
       gap: 10px;
       cursor: pointer;
-      padding: var(--space-sm);
+      padding: var(--gap-sm);
       border-radius: var(--radius-md);
       transition: background var(--transition-fast);
     }
     .radio-item:hover {
-      background: var(--bg-hover);
+      background: var(--panel-2);
     }
     .radio-item input[type="radio"] {
       width: 18px;
@@ -319,30 +347,30 @@
       cursor: pointer;
     }
 
-    /* Rating buttons (shared for Guitar and Work) */
+    /* Rating buttons (Guitar and Work) */
     .rating-buttons {
       display: flex;
-      gap: var(--space-sm);
+      gap: var(--gap-sm);
     }
     .rating-btn {
-      width: 40px;
-      height: 40px;
-      border: 1px solid var(--border);
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border-highlight);
       border-radius: var(--radius-md);
-      background: var(--bg-tertiary);
-      color: var(--text-primary);
+      background: var(--panel-2);
+      color: var(--text);
       cursor: pointer;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 600;
       transition: all var(--transition-fast);
     }
     .rating-btn:hover {
-      background: var(--bg-hover);
-      border-color: var(--text-muted);
+      background: var(--panel-3);
+      border-color: rgba(255, 255, 255, 0.15);
     }
     .rating-btn:focus-visible {
       outline: none;
-      box-shadow: 0 0 0 2px var(--bg-primary), 0 0 0 4px var(--accent);
+      box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
     }
     .rating-btn.active {
       background: var(--accent);
@@ -350,46 +378,49 @@
       color: #000;
     }
 
-    /* Week Summary - Premium Redesign */
+    /* ============================================
+       PREMIUM WEEK SUMMARY DASHBOARD
+       ============================================ */
     .week-summary {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: var(--space-xl);
+      background: transparent;
+      transition: all var(--transition-normal);
     }
 
-    .summary-header {
+    .summary-header-section {
       display: flex;
       align-items: center;
-      gap: var(--space-xl);
-      margin-bottom: var(--space-xl);
-      padding-bottom: var(--space-lg);
-      border-bottom: 1px solid var(--border);
+      gap: var(--gap-xl);
+      margin-bottom: var(--gap-xl);
+      padding: var(--gap-xl);
+      background: linear-gradient(180deg, var(--panel) 0%, rgba(22, 27, 36, 0.8) 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-card);
     }
 
-    .donut-container {
+    .overall-donut {
       position: relative;
       width: 100px;
       height: 100px;
       flex-shrink: 0;
     }
-    .donut-svg {
+    .overall-donut svg {
       width: 100%;
       height: 100%;
       transform: rotate(-90deg);
     }
-    .donut-track {
+    .overall-donut .track {
       fill: none;
-      stroke: var(--bg-tertiary);
+      stroke: var(--panel-3);
       stroke-width: 8;
     }
-    .donut-progress {
+    .overall-donut .progress {
       fill: none;
       stroke-width: 8;
       stroke-linecap: round;
       transition: stroke-dashoffset var(--transition-slow);
     }
-    .donut-center {
+    .overall-donut .center {
       position: absolute;
       inset: 0;
       display: flex;
@@ -397,159 +428,241 @@
       align-items: center;
       justify-content: center;
     }
-    .donut-percent {
+    .overall-donut .percent {
       font-size: 22px;
       font-weight: 700;
       line-height: 1;
     }
-    .donut-label {
+    .overall-donut .label {
       font-size: 10px;
-      color: var(--text-muted);
+      color: var(--muted);
       text-transform: uppercase;
       letter-spacing: 0.5px;
       margin-top: 2px;
     }
 
-    .summary-header-info {
-      flex: 1;
-    }
-    .summary-title {
+    .summary-header-info h2 {
       font-size: 18px;
       font-weight: 600;
-      margin-bottom: var(--space-xs);
+      margin-bottom: var(--gap-xs);
     }
-    .summary-subtitle {
-      color: var(--text-muted);
+    .summary-header-info p {
+      color: var(--muted);
       font-size: 13px;
     }
 
-    .summary-stats {
+    /* Premium Cards Grid */
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--gap-lg);
+      transition: grid-template-columns var(--transition-normal);
+    }
+
+    /* Responsive cards when drawer is open */
+    .main-content.drawer-open .summary-cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Premium Card Design */
+    .summary-card {
+      background: linear-gradient(180deg, var(--panel) 0%, rgba(22, 27, 36, 0.9) 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: var(--gap-xl);
+      box-shadow: var(--shadow-card);
+      transition: all var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .summary-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    }
+
+    .summary-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-card-hover);
+      border-color: var(--border-highlight);
+    }
+
+    .card-header {
       display: flex;
-      flex-direction: column;
-      gap: var(--space-lg);
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--gap-lg);
     }
 
-    .stat-category {
-      background: var(--bg-tertiary);
-      border-radius: var(--radius-md);
-      padding: var(--space-md);
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
     }
 
-    .stat-category-header {
+    /* Status Chips */
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .status-chip.completed {
+      background: var(--completed-bg);
+      color: var(--completed);
+      box-shadow: 0 0 12px var(--completed-glow);
+    }
+    .status-chip.almost {
+      background: var(--almost-bg);
+      color: var(--almost);
+      box-shadow: 0 0 12px var(--almost-glow);
+    }
+    .status-chip.in-progress {
+      background: var(--progress-bg);
+      color: var(--progress);
+    }
+    .status-chip.low {
+      background: var(--low-bg);
+      color: var(--low);
+    }
+
+    .status-chip svg {
+      width: 10px;
+      height: 10px;
+    }
+
+    /* Card Content with Mini Donut */
+    .card-content {
+      display: flex;
+      gap: var(--gap-lg);
+      align-items: flex-start;
+    }
+
+    .mini-donut {
+      position: relative;
+      width: 56px;
+      height: 56px;
+      flex-shrink: 0;
+    }
+    .mini-donut svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+    .mini-donut .track {
+      fill: none;
+      stroke: var(--panel-3);
+      stroke-width: 5;
+    }
+    .mini-donut .progress {
+      fill: none;
+      stroke-width: 5;
+      stroke-linecap: round;
+      transition: stroke-dashoffset var(--transition-slow);
+    }
+    .mini-donut .center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .card-details {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card-stat-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: var(--space-sm);
-    }
-    .stat-category-title {
-      font-weight: 600;
-      font-size: 13px;
-    }
-    .stat-category-pct {
-      font-weight: 600;
-      font-size: 13px;
-    }
-
-    .stat-progress-bar {
-      height: 6px;
-      background: var(--bg-hover);
-      border-radius: 3px;
-      overflow: hidden;
-      margin-bottom: var(--space-sm);
-    }
-    .stat-progress-fill {
-      height: 100%;
-      border-radius: 3px;
-      transition: width var(--transition-slow);
-    }
-    .stat-progress-fill.success { background: var(--success); }
-    .stat-progress-fill.warning { background: var(--warning); }
-    .stat-progress-fill.danger { background: var(--danger); }
-
-    .stat-detail {
-      display: flex;
-      justify-content: space-between;
+      padding: 6px 0;
       font-size: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .card-stat-row:last-child {
+      border-bottom: none;
+    }
+    .card-stat-label {
       color: var(--text-secondary);
     }
-
-    .stat-subitems {
-      display: flex;
-      gap: var(--space-sm);
-      margin-top: var(--space-sm);
-    }
-    .stat-subitem {
-      flex: 1;
-      text-align: center;
-      padding: var(--space-xs) var(--space-sm);
-      background: var(--bg-secondary);
-      border-radius: var(--radius-sm);
-    }
-    .stat-subitem-label {
-      font-size: 9px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      letter-spacing: 0.3px;
-    }
-    .stat-subitem-value {
-      font-size: 12px;
+    .card-stat-value {
       font-weight: 600;
-      margin-top: 1px;
+      color: var(--text);
     }
 
-    .stat-guitar {
+    /* Guitar Card Special Layout */
+    .guitar-stats {
       display: flex;
-      gap: var(--space-lg);
+      gap: var(--gap-xl);
+      justify-content: center;
+      padding-top: var(--gap-sm);
     }
-    .stat-guitar-item {
-      flex: 1;
+    .guitar-stat {
       text-align: center;
     }
-    .stat-guitar-value {
-      font-size: 20px;
+    .guitar-stat-value {
+      font-size: 28px;
       font-weight: 700;
+      color: var(--text);
+      line-height: 1;
     }
-    .stat-guitar-label {
+    .guitar-stat-label {
       font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 2px;
+      color: var(--muted);
+      margin-top: 4px;
     }
 
     /* History View */
-    .history-list { display: flex; flex-direction: column; gap: var(--space-sm); }
+    .history-list { display: flex; flex-direction: column; gap: var(--gap-sm); }
 
     .history-item {
       display: grid;
       grid-template-columns: 1fr repeat(5, 80px);
-      gap: var(--space-lg);
+      gap: var(--gap-lg);
       align-items: center;
-      padding: var(--space-md) var(--space-lg);
-      background: var(--bg-secondary);
+      padding: var(--gap-md) var(--gap-lg);
+      background: var(--panel);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       cursor: pointer;
       transition: all var(--transition-fast);
     }
     .history-item:hover {
-      background: var(--bg-tertiary);
-      border-color: var(--text-muted);
+      background: var(--panel-2);
+      border-color: var(--border-highlight);
     }
 
     .history-date { font-weight: 500; }
     .history-stat { text-align: center; font-size: 13px; }
-    .history-stat-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
+    .history-stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; }
 
     /* Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.75);
       display: none;
       align-items: center;
       justify-content: center;
       z-index: 100;
       opacity: 0;
       transition: opacity var(--transition-normal);
+      backdrop-filter: blur(4px);
     }
     .modal-overlay.open {
       display: flex;
@@ -557,17 +670,17 @@
     }
 
     .modal {
-      background: var(--bg-secondary);
+      background: var(--panel);
       border: 1px solid var(--border);
       border-radius: var(--radius-xl);
-      padding: var(--space-2xl);
+      padding: var(--gap-2xl);
       max-width: 480px;
       width: 90%;
       max-height: 90vh;
       overflow-y: auto;
       transform: scale(0.95);
       transition: transform var(--transition-normal);
-      box-shadow: var(--shadow-lg);
+      box-shadow: var(--shadow-2);
     }
     .modal-overlay.open .modal {
       transform: scale(1);
@@ -577,7 +690,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: var(--space-xl);
+      margin-bottom: var(--gap-xl);
     }
     .modal-title { font-size: 18px; font-weight: 600; }
     .modal-close {
@@ -586,56 +699,54 @@
       color: var(--text-secondary);
       cursor: pointer;
       font-size: 24px;
-      padding: var(--space-xs);
+      padding: var(--gap-xs);
       border-radius: var(--radius-sm);
       transition: all var(--transition-fast);
     }
     .modal-close:hover {
-      color: var(--text-primary);
-      background: var(--bg-hover);
+      color: var(--text);
+      background: var(--panel-2);
     }
 
-    .form-group { margin-bottom: var(--space-lg); }
-    .form-label { display: block; margin-bottom: var(--space-sm); font-size: 13px; color: var(--text-secondary); }
+    .form-group { margin-bottom: var(--gap-lg); }
+    .form-label { display: block; margin-bottom: var(--gap-sm); font-size: 13px; color: var(--text-secondary); }
     .form-input {
       width: 100%;
-      padding: var(--space-sm) var(--space-md);
+      padding: var(--gap-sm) var(--gap-md);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      background: var(--bg-tertiary);
-      color: var(--text-primary);
+      background: var(--panel-2);
+      color: var(--text);
       font-size: 14px;
       transition: all var(--transition-fast);
     }
     .form-input:focus {
       outline: none;
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-glow);
+      box-shadow: 0 0 0 3px var(--accent-subtle);
     }
 
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
-
-    .modal-footer { display: flex; justify-content: flex-end; gap: var(--space-sm); margin-top: var(--space-xl); }
+    .modal-footer { display: flex; justify-content: flex-end; gap: var(--gap-sm); margin-top: var(--gap-xl); }
 
     /* Overall View */
     .overall-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--space-lg);
+      gap: var(--gap-lg);
     }
 
     .overall-card {
-      background: var(--bg-secondary);
+      background: var(--panel);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: var(--space-lg);
+      padding: var(--gap-lg);
     }
 
     .overall-card-title {
       font-size: 12px;
       text-transform: uppercase;
       color: var(--text-secondary);
-      margin-bottom: var(--space-md);
+      margin-bottom: var(--gap-md);
       font-weight: 600;
     }
 
@@ -643,7 +754,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: var(--space-lg);
+      margin-bottom: var(--gap-lg);
       font-size: 13px;
     }
     .toggle-row input[type="checkbox"] {
@@ -652,14 +763,35 @@
       accent-color: var(--accent);
     }
 
+    .overall-percent {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: var(--gap-lg);
+    }
+    .overall-percent.success { color: var(--completed); }
+    .overall-percent.warning { color: var(--progress); }
+    .overall-percent.danger { color: var(--low); }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--gap-xs) 0;
+      font-size: 13px;
+    }
+    .summary-label { color: var(--text-secondary); }
+    .summary-value { font-weight: 500; }
+    .summary-value.success { color: var(--completed); }
+    .summary-value.warning { color: var(--progress); }
+    .summary-value.danger { color: var(--low); }
+
     /* View headers */
     .view-header {
-      margin-bottom: var(--space-xl);
+      margin-bottom: var(--gap-xl);
     }
     .view-title {
       font-size: 20px;
       font-weight: 600;
-      margin-bottom: var(--space-xs);
+      margin-bottom: var(--gap-xs);
     }
     .view-subtitle {
       color: var(--text-secondary);
@@ -669,44 +801,54 @@
     /* Data actions */
     .data-actions {
       display: flex;
-      gap: var(--space-sm);
-      padding: var(--space-md) var(--space-lg);
-      background: var(--bg-secondary);
+      gap: var(--gap-sm);
+      padding: var(--gap-md) var(--gap-lg);
+      background: var(--panel);
       border-top: 1px solid var(--border);
     }
 
-    /* Overall percent (reused in cards) */
-    .overall-percent {
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: var(--space-lg);
-    }
-    .overall-percent.success { color: var(--success); }
-    .overall-percent.warning { color: var(--warning); }
-    .overall-percent.danger { color: var(--danger); }
-
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      padding: var(--space-xs) 0;
-      font-size: 13px;
-    }
-    .summary-label { color: var(--text-secondary); }
-    .summary-value { font-weight: 500; }
-    .summary-value.success { color: var(--success); }
-    .summary-value.warning { color: var(--warning); }
-    .summary-value.danger { color: var(--danger); }
-
     /* Responsive */
+    @media (max-width: 1200px) {
+      .summary-cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     @media (max-width: 768px) {
-      .navbar { padding: 10px; gap: var(--space-sm); }
+      .navbar { padding: 10px; gap: var(--gap-sm); }
       .navbar-center { display: none; }
       .week-grid { grid-template-columns: 80px repeat(7, 1fr); font-size: 12px; }
-      .grid-cell { min-height: 36px; padding: var(--space-sm) var(--space-xs); }
-      .drawer { width: 100%; position: fixed; right: 0; top: 0; bottom: 0; z-index: 50; }
-      .history-item { grid-template-columns: 1fr; gap: var(--space-sm); }
+      .grid-cell { min-height: 36px; padding: var(--gap-sm) var(--gap-xs); }
+
+      /* Drawer overlay on mobile */
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+      .main-content.drawer-open {
+        grid-template-columns: 1fr;
+      }
+      .drawer {
+        position: fixed;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 50;
+        transform: translateX(100%);
+        transition: transform var(--transition-normal), opacity var(--transition-normal);
+      }
+      .main-content.drawer-open .drawer {
+        transform: translateX(0);
+      }
+
+      .summary-cards {
+        grid-template-columns: 1fr;
+      }
+      .summary-header-section {
+        flex-direction: column;
+        text-align: center;
+      }
+      .history-item { grid-template-columns: 1fr; gap: var(--gap-sm); }
       .history-stat { text-align: left; }
-      .summary-header { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
@@ -715,8 +857,8 @@
     <!-- Navbar -->
     <nav class="navbar">
       <div class="navbar-left">
-        <button class="btn btn-icon" id="prevWeekBtn" title="Previous Week">◀</button>
-        <button class="btn btn-icon" id="nextWeekBtn" title="Next Week">▶</button>
+        <button class="btn btn-icon" id="prevWeekBtn" title="Previous Week">&#9664;</button>
+        <button class="btn btn-icon" id="nextWeekBtn" title="Next Week">&#9654;</button>
         <button class="btn" id="newWeekBtn">+ New Week</button>
       </div>
       <div class="navbar-center" id="weekLabel">Week</div>
@@ -724,12 +866,12 @@
         <button class="btn" id="targetsBtn">Targets</button>
         <button class="btn" id="historyBtn">History</button>
         <button class="btn" id="overallBtn">Overall</button>
-        <button class="btn btn-sm" id="settingsBtn">⚙</button>
+        <button class="btn btn-sm" id="settingsBtn">&#9881;</button>
       </div>
     </nav>
 
     <!-- Main Content -->
-    <div class="main-content">
+    <div class="main-content" id="mainContent">
       <!-- Week View -->
       <div class="view-container" id="weekView">
         <div class="week-grid" id="weekGrid"></div>
@@ -762,7 +904,7 @@
       <div class="drawer" id="dayDrawer">
         <div class="drawer-header">
           <span class="drawer-title" id="drawerTitle">Monday</span>
-          <button class="drawer-close" id="drawerClose">×</button>
+          <button class="drawer-close" id="drawerClose">&times;</button>
         </div>
 
         <div class="drawer-section">
@@ -826,7 +968,7 @@
     <div class="modal">
       <div class="modal-header">
         <h2 class="modal-title">Week Targets</h2>
-        <button class="modal-close" id="targetsClose">×</button>
+        <button class="modal-close" id="targetsClose">&times;</button>
       </div>
       <div class="form-group">
         <label class="form-label">Voice - Mini Activation (days/week)</label>
@@ -860,7 +1002,7 @@
     <div class="modal">
       <div class="modal-header">
         <h2 class="modal-title">Settings (Default Targets)</h2>
-        <button class="modal-close" id="settingsClose">×</button>
+        <button class="modal-close" id="settingsClose">&times;</button>
       </div>
       <div class="form-group">
         <label class="form-label">Voice - Mini Activation (days/week)</label>
@@ -926,7 +1068,6 @@
 
     /**
      * Normalize a date to local noon to avoid timezone/DST issues.
-     * This ensures consistent weekday calculations.
      */
     function normalizeToLocalNoon(date) {
       const d = new Date(date);
@@ -936,7 +1077,6 @@
 
     /**
      * Parse a YYYY-MM-DD string and return a Date normalized to local noon.
-     * This avoids issues where parsing as ISO can shift to previous day in certain timezones.
      */
     function parseDateString(dateStr) {
       const [year, month, day] = dateStr.split('-').map(Number);
@@ -946,7 +1086,6 @@
 
     /**
      * Get the ISO weekday (1=Monday, 7=Sunday) for a date.
-     * Uses local noon normalization for consistency.
      */
     function getISOWeekday(date) {
       const d = normalizeToLocalNoon(date);
@@ -956,27 +1095,18 @@
 
     /**
      * Get ISO week ID (e.g., "2025-W51") for a given date.
-     * Uses local date operations to avoid timezone issues.
      */
     function getISOWeekId(date) {
       const d = normalizeToLocalNoon(date);
-      // Find Thursday of this week (ISO weeks are defined by their Thursday)
       const dayOfWeek = getISOWeekday(d);
       const thursday = new Date(d);
       thursday.setDate(d.getDate() + (4 - dayOfWeek));
-
-      // Get the year of the Thursday (this is the ISO week year)
       const year = thursday.getFullYear();
-
-      // Find January 4th of that year (always in week 1)
       const jan4 = new Date(year, 0, 4, 12, 0, 0, 0);
       const jan4Weekday = getISOWeekday(jan4);
       const week1Thursday = new Date(jan4);
       week1Thursday.setDate(jan4.getDate() + (4 - jan4Weekday));
-
-      // Calculate week number
       const weekNum = 1 + Math.round((thursday - week1Thursday) / (7 * 24 * 60 * 60 * 1000));
-
       return `${year}-W${String(weekNum).padStart(2, '0')}`;
     }
 
@@ -987,19 +1117,12 @@
       const [yearStr, weekPart] = weekId.split('-W');
       const year = parseInt(yearStr);
       const weekNum = parseInt(weekPart);
-
-      // Find January 4th (always in week 1)
       const jan4 = new Date(year, 0, 4, 12, 0, 0, 0);
       const jan4Weekday = getISOWeekday(jan4);
-
-      // Find Monday of week 1
       const week1Monday = new Date(jan4);
       week1Monday.setDate(jan4.getDate() - (jan4Weekday - 1));
-
-      // Add weeks to get to target week's Monday
       const targetMonday = new Date(week1Monday);
       targetMonday.setDate(week1Monday.getDate() + (weekNum - 1) * 7);
-
       return targetMonday;
     }
 
@@ -1029,12 +1152,12 @@
     function getDayIndex(dateStr) {
       const d = parseDateString(dateStr);
       const weekday = getISOWeekday(d);
-      return weekday - 1; // Convert to 0-6 (Mon=0, Sun=6)
+      return weekday - 1;
     }
 
     /**
-     * Format date range in human-readable format.
-     * Examples: "14 December–20 December" or "28 December–3 January"
+     * Format date range with proper en dash and year handling.
+     * Format: "15 – 21 December 2025" or "29 December 2025 – 4 January 2026"
      */
     function formatDateRange(startDateStr, endDateStr) {
       const start = parseDateString(startDateStr);
@@ -1044,12 +1167,21 @@
       const endDay = end.getDate();
       const startMonth = MONTH_NAMES[start.getMonth()];
       const endMonth = MONTH_NAMES[end.getMonth()];
+      const startYear = start.getFullYear();
+      const endYear = end.getFullYear();
 
-      if (startMonth === endMonth) {
-        return `${startDay}–${endDay} ${startMonth}`;
-      } else {
-        return `${startDay} ${startMonth}–${endDay} ${endMonth}`;
+      // Cross-year case
+      if (startYear !== endYear) {
+        return `${startDay} ${startMonth} ${startYear} – ${endDay} ${endMonth} ${endYear}`;
       }
+
+      // Cross-month, same year
+      if (startMonth !== endMonth) {
+        return `${startDay} ${startMonth} – ${endDay} ${endMonth} ${startYear}`;
+      }
+
+      // Same month, same year
+      return `${startDay} – ${endDay} ${startMonth} ${startYear}`;
     }
 
     function createEmptyDay() {
@@ -1144,6 +1276,7 @@
       const voice = calcVoiceStats(week);
       const sport = calcSportStats(week);
       const work = calcWorkStats(week);
+      // Guitar excluded from overall
       return (voice.categoryPct + sport.sportPct + work.workPct) / 3;
     }
 
@@ -1197,19 +1330,66 @@
 
     // ============ UI HELPERS ============
     function getPctClass(pct) {
-      if (pct >= 80) return 'success';
-      if (pct >= 50) return 'warning';
+      if (pct >= 100) return 'success';
+      if (pct >= 80) return 'warning';
       return 'danger';
     }
 
     function formatPct(pct) {
-      return pct.toFixed(0) + '%';
+      return Math.round(pct) + '%';
     }
 
-    function getDonutColor(pct) {
-      if (pct >= 80) return 'var(--success)';
-      if (pct >= 50) return 'var(--warning)';
-      return 'var(--danger)';
+    /**
+     * Get status tier based on percentage
+     * Completed: 100%, Almost: 85-99%, In Progress: 35-84%, Low: <35%
+     */
+    function getStatusTier(pct) {
+      if (pct >= 100) return 'completed';
+      if (pct >= 85) return 'almost';
+      if (pct >= 35) return 'in-progress';
+      return 'low';
+    }
+
+    function getStatusColor(pct) {
+      const tier = getStatusTier(pct);
+      switch(tier) {
+        case 'completed': return 'var(--completed)';
+        case 'almost': return 'var(--almost)';
+        case 'in-progress': return 'var(--progress)';
+        default: return 'var(--low)';
+      }
+    }
+
+    function getStatusIcon(tier) {
+      switch(tier) {
+        case 'completed': return '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"/></svg>';
+        case 'almost': return '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 4a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 018 4zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg>';
+        case 'in-progress': return '<svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="3"/></svg>';
+        default: return '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 4a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 018 4zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg>';
+      }
+    }
+
+    function getStatusLabel(tier) {
+      switch(tier) {
+        case 'completed': return 'Done';
+        case 'almost': return 'Almost';
+        case 'in-progress': return 'Progress';
+        default: return 'Low';
+      }
+    }
+
+    function createDonutSVG(pct, radius, strokeWidth, color) {
+      const circumference = 2 * Math.PI * radius;
+      const offset = circumference - (Math.min(pct, 100) / 100) * circumference;
+      return `
+        <svg viewBox="0 0 ${(radius + strokeWidth) * 2} ${(radius + strokeWidth) * 2}">
+          <circle class="track" cx="${radius + strokeWidth}" cy="${radius + strokeWidth}" r="${radius}"/>
+          <circle class="progress" cx="${radius + strokeWidth}" cy="${radius + strokeWidth}" r="${radius}"
+            stroke="${color}"
+            stroke-dasharray="${circumference}"
+            stroke-dashoffset="${offset}"/>
+        </svg>
+      `;
     }
 
     // ============ RENDER FUNCTIONS ============
@@ -1234,20 +1414,17 @@
       // Voice row
       html += '<div class="grid-label">Voice</div>';
       week.days.forEach((day, i) => {
-        const date = formatDate(addDays(monday, i));
         const count = (day.voice.miniActivation ? 1 : 0) + (day.voice.articulation ? 1 : 0) + (day.voice.vocalSession ? 1 : 0);
         const cls = count === 3 ? 'cell-done' : count > 0 ? 'cell-partial' : 'cell-none';
-        const colSelected = selectedDay === i ? ' column-selected' : '';
-        html += `<div class="grid-cell${colSelected}" data-day="${i}"><span class="cell-content ${cls}">${count}/3</span></div>`;
+        html += `<div class="grid-cell" data-day="${i}"><span class="cell-content ${cls}">${count}/3</span></div>`;
       });
 
       // Sport row
       html += '<div class="grid-label">Sport</div>';
       week.days.forEach((day, i) => {
-        const label = day.sport === 'none' ? '−' : day.sport === 'cardio' ? 'C' : 'W+C';
+        const label = day.sport === 'none' ? '–' : day.sport === 'cardio' ? 'C' : 'W+C';
         const cls = day.sport !== 'none' ? 'cell-done' : 'cell-none';
-        const colSelected = selectedDay === i ? ' column-selected' : '';
-        html += `<div class="grid-cell${colSelected}" data-day="${i}"><span class="cell-content ${cls}">${label}</span></div>`;
+        html += `<div class="grid-cell" data-day="${i}"><span class="cell-content ${cls}">${label}</span></div>`;
       });
 
       // Work row
@@ -1255,8 +1432,7 @@
       week.days.forEach((day, i) => {
         const blocks = day.work.deepBlocks;
         const cls = blocks > 0 ? 'cell-done' : 'cell-none';
-        const colSelected = selectedDay === i ? ' column-selected' : '';
-        html += `<div class="grid-cell${colSelected}" data-day="${i}"><span class="cell-content ${cls}">${blocks}</span></div>`;
+        html += `<div class="grid-cell" data-day="${i}"><span class="cell-content ${cls}">${blocks}</span></div>`;
       });
 
       // Guitar row
@@ -1264,14 +1440,13 @@
       week.days.forEach((day, i) => {
         const rating = day.guitar.rating;
         const cls = rating > 0 ? 'cell-done' : 'cell-none';
-        const colSelected = selectedDay === i ? ' column-selected' : '';
-        html += `<div class="grid-cell${colSelected}" data-day="${i}"><span class="cell-content ${cls}">${rating > 0 ? rating : '−'}</span></div>`;
+        html += `<div class="grid-cell" data-day="${i}"><span class="cell-content ${cls}">${rating > 0 ? rating : '–'}</span></div>`;
       });
 
       document.getElementById('weekGrid').innerHTML = html;
       document.getElementById('weekLabel').textContent = formatDateRange(week.startDate, week.endDate);
 
-      // Add click handlers to headers and cells
+      // Add click handlers
       document.querySelectorAll('.grid-header[data-day]').forEach(header => {
         header.addEventListener('click', () => {
           const dayIndex = parseInt(header.dataset.day);
@@ -1290,7 +1465,7 @@
     function renderWeekSummary() {
       const week = state.weeks[state.currentWeekId];
       if (!week) {
-        document.getElementById('weekSummary').innerHTML = '<p style="color:var(--text-muted)">No week selected</p>';
+        document.getElementById('weekSummary').innerHTML = '<p style="color:var(--muted)">No week selected</p>';
         return;
       }
 
@@ -1300,97 +1475,121 @@
       const guitar = calcGuitarStats(week);
       const overall = calcOverallPct(week);
 
-      // SVG Donut chart calculations
-      const radius = 42;
-      const circumference = 2 * Math.PI * radius;
-      const strokeDashoffset = circumference - (overall / 100) * circumference;
+      const overallTier = getStatusTier(overall);
+      const voiceTier = getStatusTier(voice.categoryPct);
+      const sportTier = getStatusTier(sport.sportPct);
+      const workTier = getStatusTier(work.workPct);
 
       const html = `
-        <div class="summary-header">
-          <div class="donut-container">
-            <svg class="donut-svg" viewBox="0 0 100 100">
-              <circle class="donut-track" cx="50" cy="50" r="${radius}"/>
-              <circle class="donut-progress" cx="50" cy="50" r="${radius}"
-                stroke="${getDonutColor(overall)}"
-                stroke-dasharray="${circumference}"
-                stroke-dashoffset="${strokeDashoffset}"/>
-            </svg>
-            <div class="donut-center">
-              <span class="donut-percent" style="color: ${getDonutColor(overall)}">${formatPct(overall)}</span>
-              <span class="donut-label">Overall</span>
+        <div class="summary-header-section">
+          <div class="overall-donut">
+            ${createDonutSVG(overall, 42, 8, getStatusColor(overall))}
+            <div class="center">
+              <span class="percent" style="color: ${getStatusColor(overall)}">${formatPct(overall)}</span>
+              <span class="label">Overall</span>
             </div>
           </div>
           <div class="summary-header-info">
-            <div class="summary-title">Week Summary</div>
-            <div class="summary-subtitle">Voice, Sport & Work completion</div>
+            <h2>Week Summary</h2>
+            <p>Voice, Sport & Work completion (Guitar excluded)</p>
           </div>
         </div>
 
-        <div class="summary-stats">
-          <div class="stat-category">
-            <div class="stat-category-header">
-              <span class="stat-category-title">Voice</span>
-              <span class="stat-category-pct" style="color: ${getDonutColor(voice.categoryPct)}">${formatPct(voice.categoryPct)}</span>
+        <div class="summary-cards">
+          <!-- Voice Card -->
+          <div class="summary-card">
+            <div class="card-header">
+              <span class="card-title">Voice</span>
+              <span class="status-chip ${voiceTier}">${getStatusIcon(voiceTier)} ${getStatusLabel(voiceTier)}</span>
             </div>
-            <div class="stat-progress-bar">
-              <div class="stat-progress-fill ${getPctClass(voice.categoryPct)}" style="width: ${Math.min(voice.categoryPct, 100)}%"></div>
-            </div>
-            <div class="stat-subitems">
-              <div class="stat-subitem">
-                <div class="stat-subitem-label">Mini</div>
-                <div class="stat-subitem-value" style="color: ${getDonutColor(voice.miniPct)}">${voice.mini}/${week.targets.mini}</div>
+            <div class="card-content">
+              <div class="mini-donut">
+                ${createDonutSVG(voice.categoryPct, 23, 5, getStatusColor(voice.categoryPct))}
+                <div class="center" style="color: ${getStatusColor(voice.categoryPct)}">${formatPct(voice.categoryPct)}</div>
               </div>
-              <div class="stat-subitem">
-                <div class="stat-subitem-label">Articulation</div>
-                <div class="stat-subitem-value" style="color: ${getDonutColor(voice.artPct)}">${voice.articulation}/${week.targets.articulation}</div>
-              </div>
-              <div class="stat-subitem">
-                <div class="stat-subitem-label">Vocal</div>
-                <div class="stat-subitem-value" style="color: ${getDonutColor(voice.vocalPct)}">${voice.vocal}/${week.targets.vocal}</div>
+              <div class="card-details">
+                <div class="card-stat-row">
+                  <span class="card-stat-label">Mini Activation</span>
+                  <span class="card-stat-value">${voice.mini}/${week.targets.mini}</span>
+                </div>
+                <div class="card-stat-row">
+                  <span class="card-stat-label">Articulation</span>
+                  <span class="card-stat-value">${voice.articulation}/${week.targets.articulation}</span>
+                </div>
+                <div class="card-stat-row">
+                  <span class="card-stat-label">Vocal Session</span>
+                  <span class="card-stat-value">${voice.vocal}/${week.targets.vocal}</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="stat-category">
-            <div class="stat-category-header">
-              <span class="stat-category-title">Sport</span>
-              <span class="stat-category-pct" style="color: ${getDonutColor(sport.sportPct)}">${formatPct(sport.sportPct)}</span>
+          <!-- Sport Card -->
+          <div class="summary-card">
+            <div class="card-header">
+              <span class="card-title">Sport</span>
+              <span class="status-chip ${sportTier}">${getStatusIcon(sportTier)} ${getStatusLabel(sportTier)}</span>
             </div>
-            <div class="stat-progress-bar">
-              <div class="stat-progress-fill ${getPctClass(sport.sportPct)}" style="width: ${Math.min(sport.sportPct, 100)}%"></div>
-            </div>
-            <div class="stat-detail">
-              <span>${sport.sportDays}/${week.targets.sport} days</span>
-              <span>${sport.cardioDays}C + ${sport.weightsCardioDays}W+C</span>
-            </div>
-          </div>
-
-          <div class="stat-category">
-            <div class="stat-category-header">
-              <span class="stat-category-title">Work</span>
-              <span class="stat-category-pct" style="color: ${getDonutColor(work.workPct)}">${formatPct(work.workPct)}</span>
-            </div>
-            <div class="stat-progress-bar">
-              <div class="stat-progress-fill ${getPctClass(work.workPct)}" style="width: ${Math.min(work.workPct, 100)}%"></div>
-            </div>
-            <div class="stat-detail">
-              <span>${work.totalBlocks}/${week.targets.work} deep blocks</span>
-            </div>
-          </div>
-
-          <div class="stat-category">
-            <div class="stat-category-header">
-              <span class="stat-category-title">Guitar</span>
-              <span class="stat-category-pct" style="color: var(--text-secondary)">Not in overall</span>
-            </div>
-            <div class="stat-guitar">
-              <div class="stat-guitar-item">
-                <div class="stat-guitar-value">${guitar.avg > 0 ? guitar.avg.toFixed(1) : '−'}</div>
-                <div class="stat-guitar-label">Avg Rating</div>
+            <div class="card-content">
+              <div class="mini-donut">
+                ${createDonutSVG(sport.sportPct, 23, 5, getStatusColor(sport.sportPct))}
+                <div class="center" style="color: ${getStatusColor(sport.sportPct)}">${formatPct(sport.sportPct)}</div>
               </div>
-              <div class="stat-guitar-item">
-                <div class="stat-guitar-value">${guitar.practicedDays}</div>
-                <div class="stat-guitar-label">Practice Days</div>
+              <div class="card-details">
+                <div class="card-stat-row">
+                  <span class="card-stat-label">Total Days</span>
+                  <span class="card-stat-value">${sport.sportDays}/${week.targets.sport}</span>
+                </div>
+                <div class="card-stat-row">
+                  <span class="card-stat-label">Cardio</span>
+                  <span class="card-stat-value">${sport.cardioDays} days</span>
+                </div>
+                <div class="card-stat-row">
+                  <span class="card-stat-label">Weights + Cardio</span>
+                  <span class="card-stat-value">${sport.weightsCardioDays} days</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Work Card -->
+          <div class="summary-card">
+            <div class="card-header">
+              <span class="card-title">Work</span>
+              <span class="status-chip ${workTier}">${getStatusIcon(workTier)} ${getStatusLabel(workTier)}</span>
+            </div>
+            <div class="card-content">
+              <div class="mini-donut">
+                ${createDonutSVG(work.workPct, 23, 5, getStatusColor(work.workPct))}
+                <div class="center" style="color: ${getStatusColor(work.workPct)}">${formatPct(work.workPct)}</div>
+              </div>
+              <div class="card-details">
+                <div class="card-stat-row">
+                  <span class="card-stat-label">Deep Blocks</span>
+                  <span class="card-stat-value">${work.totalBlocks}/${week.targets.work}</span>
+                </div>
+                <div class="card-stat-row">
+                  <span class="card-stat-label">Completion</span>
+                  <span class="card-stat-value" style="color: ${getStatusColor(work.workPct)}">${formatPct(work.workPct)}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Guitar Card -->
+          <div class="summary-card">
+            <div class="card-header">
+              <span class="card-title">Guitar</span>
+              <span class="status-chip" style="background: var(--panel-3); color: var(--muted);">Not in Overall</span>
+            </div>
+            <div class="guitar-stats">
+              <div class="guitar-stat">
+                <div class="guitar-stat-value">${guitar.avg > 0 ? guitar.avg.toFixed(1) : '–'}</div>
+                <div class="guitar-stat-label">Avg Rating</div>
+              </div>
+              <div class="guitar-stat">
+                <div class="guitar-stat-value">${guitar.practicedDays}</div>
+                <div class="guitar-stat-label">Practice Days</div>
               </div>
             </div>
           </div>
@@ -1404,12 +1603,12 @@
       const weekIds = Object.keys(state.weeks).sort().reverse();
 
       if (weekIds.length === 0) {
-        document.getElementById('historyList').innerHTML = '<p style="color:var(--text-muted)">No weeks tracked yet</p>';
+        document.getElementById('historyList').innerHTML = '<p style="color:var(--muted)">No weeks tracked yet</p>';
         return;
       }
 
       let html = `
-        <div class="history-item" style="cursor:default;background:var(--bg-tertiary)">
+        <div class="history-item" style="cursor:default;background:var(--panel-2)">
           <div style="font-weight:600">Week</div>
           <div class="history-stat"><div class="history-stat-label">Voice</div></div>
           <div class="history-stat"><div class="history-stat-label">Sport</div></div>
@@ -1430,11 +1629,11 @@
         html += `
           <div class="history-item" data-week="${weekId}">
             <div class="history-date">${formatDateRange(week.startDate, week.endDate)}</div>
-            <div class="history-stat"><span class="${getPctClass(voice.categoryPct)}">${formatPct(voice.categoryPct)}</span></div>
-            <div class="history-stat"><span class="${getPctClass(sport.sportPct)}">${formatPct(sport.sportPct)}</span></div>
-            <div class="history-stat"><span class="${getPctClass(work.workPct)}">${formatPct(work.workPct)}</span></div>
-            <div class="history-stat"><span class="${getPctClass(overall)}">${formatPct(overall)}</span></div>
-            <div class="history-stat"><span>${guitar.avg > 0 ? guitar.avg.toFixed(1) : '−'}</span></div>
+            <div class="history-stat"><span style="color: ${getStatusColor(voice.categoryPct)}">${formatPct(voice.categoryPct)}</span></div>
+            <div class="history-stat"><span style="color: ${getStatusColor(sport.sportPct)}">${formatPct(sport.sportPct)}</span></div>
+            <div class="history-stat"><span style="color: ${getStatusColor(work.workPct)}">${formatPct(work.workPct)}</span></div>
+            <div class="history-stat"><span style="color: ${getStatusColor(overall)}">${formatPct(overall)}</span></div>
+            <div class="history-stat"><span>${guitar.avg > 0 ? guitar.avg.toFixed(1) : '–'}</span></div>
           </div>
         `;
       });
@@ -1454,14 +1653,14 @@
       const stats = calcAllTimeStats(useWeekTargets);
 
       if (!stats) {
-        document.getElementById('overallGrid').innerHTML = '<p style="color:var(--text-muted)">No data yet</p>';
+        document.getElementById('overallGrid').innerHTML = '<p style="color:var(--muted)">No data yet</p>';
         return;
       }
 
       const html = `
         <div class="overall-card">
           <div class="overall-card-title">Overall</div>
-          <div class="overall-percent ${getPctClass(stats.overallPct)}">${formatPct(stats.overallPct)}</div>
+          <div class="overall-percent" style="color: ${getStatusColor(stats.overallPct)}">${formatPct(stats.overallPct)}</div>
           <div class="summary-row">
             <span class="summary-label">Weeks tracked</span>
             <span class="summary-value">${stats.weeksCount}</span>
@@ -1472,15 +1671,15 @@
           <div class="overall-card-title">Voice (${formatPct(stats.voiceCategoryPct)})</div>
           <div class="summary-row">
             <span class="summary-label">Mini Activation</span>
-            <span class="summary-value ${getPctClass(stats.miniPct)}">${stats.totalMini} (${formatPct(stats.miniPct)})</span>
+            <span class="summary-value" style="color: ${getStatusColor(stats.miniPct)}">${stats.totalMini} (${formatPct(stats.miniPct)})</span>
           </div>
           <div class="summary-row">
             <span class="summary-label">Articulation</span>
-            <span class="summary-value ${getPctClass(stats.artPct)}">${stats.totalArticulation} (${formatPct(stats.artPct)})</span>
+            <span class="summary-value" style="color: ${getStatusColor(stats.artPct)}">${stats.totalArticulation} (${formatPct(stats.artPct)})</span>
           </div>
           <div class="summary-row">
             <span class="summary-label">Vocal Session</span>
-            <span class="summary-value ${getPctClass(stats.vocalPct)}">${stats.totalVocal} (${formatPct(stats.vocalPct)})</span>
+            <span class="summary-value" style="color: ${getStatusColor(stats.vocalPct)}">${stats.totalVocal} (${formatPct(stats.vocalPct)})</span>
           </div>
         </div>
 
@@ -1512,7 +1711,7 @@
           <div class="overall-card-title">Guitar</div>
           <div class="summary-row">
             <span class="summary-label">All-time avg rating</span>
-            <span class="summary-value">${stats.guitarAvg > 0 ? stats.guitarAvg.toFixed(2) : '−'}</span>
+            <span class="summary-value">${stats.guitarAvg > 0 ? stats.guitarAvg.toFixed(2) : '–'}</span>
           </div>
           <div class="summary-row">
             <span class="summary-label">Total practice days</span>
@@ -1601,14 +1800,14 @@
         btn.classList.toggle('active', parseInt(btn.dataset.rating) === day.guitar.rating);
       });
 
-      document.getElementById('dayDrawer').classList.add('open');
-      renderWeekGrid(); // Re-render to show selected column highlight
+      document.getElementById('mainContent').classList.add('drawer-open');
+      renderWeekGrid();
     }
 
     function closeDayDrawer() {
       selectedDay = null;
-      document.getElementById('dayDrawer').classList.remove('open');
-      renderWeekGrid(); // Re-render to remove selected column highlight
+      document.getElementById('mainContent').classList.remove('drawer-open');
+      renderWeekGrid();
     }
 
     function updateDayData(field, value) {
@@ -1671,7 +1870,6 @@
         state.weeks[currentWeekId] = createWeek(currentWeekId);
         state.currentWeekId = currentWeekId;
       } else {
-        // Find next week
         const weekIds = Object.keys(state.weeks).sort();
         const lastWeekId = weekIds[weekIds.length - 1];
         const lastMonday = getWeekMonday(lastWeekId);
@@ -1792,7 +1990,6 @@
             }
             saveState();
 
-            // Set current week
             const weekIds = Object.keys(state.weeks).sort();
             if (weekIds.length > 0) {
               const currentWeekId = getISOWeekId(new Date());
@@ -1817,7 +2014,6 @@
       loadSettings();
       loadState();
 
-      // Ensure current week exists
       const currentWeekId = getISOWeekId(new Date());
       if (!state.weeks[currentWeekId]) {
         state.weeks[currentWeekId] = createWeek(currentWeekId);
@@ -1882,6 +2078,16 @@
       });
 
       showView('week');
+
+      // Test: Log date verification for Dec 19, 2025
+      console.log('Date verification test:');
+      const testDate = new Date(2025, 11, 19, 12, 0, 0); // Dec 19, 2025
+      console.log('Dec 19, 2025 weekday:', DAY_FULL_NAMES[getISOWeekday(testDate) - 1]); // Should be Friday
+
+      // Test cross-year formatting
+      const crossYearStart = '2025-12-29';
+      const crossYearEnd = '2026-01-04';
+      console.log('Cross-year test:', formatDateRange(crossYearStart, crossYearEnd));
     }
 
     init();
