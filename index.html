@@ -8,7 +8,6 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      /* Premium Design Tokens */
       --bg: #0a0d12;
       --bg-secondary: #12161d;
       --panel: #161b24;
@@ -20,8 +19,6 @@
       --text: #e8ecf2;
       --text-secondary: #9ca3af;
       --muted: #6b7280;
-
-      /* Status Colors - Muted & Premium */
       --completed: #34d399;
       --completed-bg: rgba(52, 211, 153, 0.12);
       --completed-glow: rgba(52, 211, 153, 0.15);
@@ -32,38 +29,26 @@
       --progress-bg: rgba(251, 191, 36, 0.12);
       --low: #f87171;
       --low-bg: rgba(248, 113, 113, 0.12);
-
-      /* Accent */
       --accent: #60a5fa;
       --accent-subtle: rgba(96, 165, 250, 0.1);
       --accent-glow: rgba(96, 165, 250, 0.2);
-
-      /* Spacing */
       --gap-xs: 4px;
       --gap-sm: 8px;
       --gap-md: 12px;
       --gap-lg: 16px;
       --gap-xl: 20px;
       --gap-2xl: 24px;
-
-      /* Radii */
       --radius-sm: 6px;
       --radius-md: 10px;
       --radius-lg: 14px;
       --radius-xl: 18px;
-
-      /* Shadows */
       --shadow-1: 0 2px 8px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
       --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
       --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.25);
       --shadow-card-hover: 0 8px 32px rgba(0, 0, 0, 0.35);
-
-      /* Transitions */
       --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
       --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       --transition-slow: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-
-      /* Layout */
       --drawer-width: 360px;
     }
 
@@ -77,7 +62,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Layout */
     .app { display: flex; flex-direction: column; min-height: 100vh; }
 
     .navbar {
@@ -103,7 +87,6 @@
     }
     .navbar-right { display: flex; gap: var(--gap-sm); align-items: center; }
 
-    /* Main Layout with Drawer Push */
     .main-content {
       flex: 1;
       display: grid;
@@ -122,7 +105,6 @@
       transition: padding var(--transition-normal);
     }
 
-    /* Buttons */
     .btn {
       padding: var(--gap-sm) var(--gap-md);
       border: 1px solid var(--border-highlight);
@@ -152,13 +134,19 @@
       background: #79b8ff;
       border-color: #79b8ff;
     }
+    .btn-danger {
+      background: var(--low-bg);
+      border-color: var(--low);
+      color: var(--low);
+    }
+    .btn-danger:hover {
+      background: rgba(248, 113, 113, 0.2);
+    }
     .btn-sm { padding: var(--gap-xs) var(--gap-sm); font-size: 12px; }
     .btn-icon { padding: var(--gap-sm) 10px; }
 
-    /* Week Grid */
     .week-grid {
       display: grid;
-      grid-template-columns: 100px repeat(7, 1fr);
       gap: 1px;
       background: var(--border-subtle);
       border: 1px solid var(--border);
@@ -188,22 +176,14 @@
       color: var(--text-secondary);
     }
 
-    /* Premium Day Header Selection */
     .grid-header.selected {
       background: linear-gradient(180deg, rgba(96, 165, 250, 0.15) 0%, rgba(96, 165, 250, 0.08) 100%);
       color: var(--text);
-      box-shadow:
-        inset 0 0 0 1px rgba(96, 165, 250, 0.25),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05),
-        0 0 20px rgba(96, 165, 250, 0.1);
+      box-shadow: inset 0 0 0 1px rgba(96, 165, 250, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 0 20px rgba(96, 165, 250, 0.1);
     }
 
-    .grid-header.today {
-      color: var(--accent);
-    }
-    .grid-header.today.selected {
-      color: var(--accent);
-    }
+    .grid-header.today { color: var(--accent); }
+    .grid-header.today.selected { color: var(--accent); }
     .grid-header .header-date {
       display: block;
       font-size: 10px;
@@ -227,11 +207,8 @@
       align-items: center;
       justify-content: center;
     }
-    .grid-cell:hover {
-      background: var(--panel-2);
-    }
+    .grid-cell:hover { background: var(--panel-2); }
 
-    /* Premium Cell Content - Status Badges */
     .cell-content {
       font-size: 11px;
       font-weight: 600;
@@ -240,20 +217,10 @@
       letter-spacing: 0.02em;
       transition: all var(--transition-fast);
     }
-    .cell-done {
-      color: var(--completed);
-      background: var(--completed-bg);
-    }
-    .cell-partial {
-      color: var(--progress);
-      background: var(--progress-bg);
-    }
-    .cell-none {
-      color: var(--muted);
-      background: transparent;
-    }
+    .cell-done { color: var(--completed); background: var(--completed-bg); }
+    .cell-partial { color: var(--progress); background: var(--progress-bg); }
+    .cell-none { color: var(--muted); background: transparent; }
 
-    /* Day Drawer - Push Layout */
     .drawer {
       background: var(--panel);
       border-left: 1px solid var(--border);
@@ -306,7 +273,6 @@
       letter-spacing: 0.5px;
     }
 
-    /* Form Controls */
     .checkbox-group { display: flex; flex-direction: column; gap: var(--gap-sm); }
     .checkbox-item {
       display: flex;
@@ -317,9 +283,7 @@
       border-radius: var(--radius-md);
       transition: background var(--transition-fast);
     }
-    .checkbox-item:hover {
-      background: var(--panel-2);
-    }
+    .checkbox-item:hover { background: var(--panel-2); }
     .checkbox-item input[type="checkbox"] {
       width: 18px;
       height: 18px;
@@ -337,9 +301,7 @@
       border-radius: var(--radius-md);
       transition: background var(--transition-fast);
     }
-    .radio-item:hover {
-      background: var(--panel-2);
-    }
+    .radio-item:hover { background: var(--panel-2); }
     .radio-item input[type="radio"] {
       width: 18px;
       height: 18px;
@@ -347,11 +309,7 @@
       cursor: pointer;
     }
 
-    /* Rating buttons (Guitar and Work) */
-    .rating-buttons {
-      display: flex;
-      gap: var(--gap-sm);
-    }
+    .rating-buttons { display: flex; gap: var(--gap-sm); flex-wrap: wrap; }
     .rating-btn {
       width: 44px;
       height: 44px;
@@ -378,13 +336,7 @@
       color: #000;
     }
 
-    /* ============================================
-       PREMIUM WEEK SUMMARY DASHBOARD
-       ============================================ */
-    .week-summary {
-      background: transparent;
-      transition: all var(--transition-normal);
-    }
+    .week-summary { background: transparent; transition: all var(--transition-normal); }
 
     .summary-header-section {
       display: flex;
@@ -409,11 +361,7 @@
       height: 100%;
       transform: rotate(-90deg);
     }
-    .overall-donut .track {
-      fill: none;
-      stroke: var(--panel-3);
-      stroke-width: 8;
-    }
+    .overall-donut .track { fill: none; stroke: var(--panel-3); stroke-width: 8; }
     .overall-donut .progress {
       fill: none;
       stroke-width: 8;
@@ -428,11 +376,7 @@
       align-items: center;
       justify-content: center;
     }
-    .overall-donut .percent {
-      font-size: 22px;
-      font-weight: 700;
-      line-height: 1;
-    }
+    .overall-donut .percent { font-size: 22px; font-weight: 700; line-height: 1; }
     .overall-donut .label {
       font-size: 10px;
       color: var(--muted);
@@ -441,30 +385,16 @@
       margin-top: 2px;
     }
 
-    .summary-header-info h2 {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: var(--gap-xs);
-    }
-    .summary-header-info p {
-      color: var(--muted);
-      font-size: 13px;
-    }
+    .summary-header-info h2 { font-size: 18px; font-weight: 600; margin-bottom: var(--gap-xs); }
+    .summary-header-info p { color: var(--muted); font-size: 13px; }
 
-    /* Premium Cards Grid */
     .summary-cards {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: var(--gap-lg);
       transition: grid-template-columns var(--transition-normal);
     }
 
-    /* Responsive cards when drawer is open */
-    .main-content.drawer-open .summary-cards {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    /* Premium Card Design */
     .summary-card {
       background: linear-gradient(180deg, var(--panel) 0%, rgba(22, 27, 36, 0.9) 100%);
       border: 1px solid var(--border);
@@ -499,13 +429,8 @@
       margin-bottom: var(--gap-lg);
     }
 
-    .card-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-    }
+    .card-title { font-size: 14px; font-weight: 600; color: var(--text); }
 
-    /* Status Chips */
     .status-chip {
       display: inline-flex;
       align-items: center;
@@ -518,59 +443,18 @@
       letter-spacing: 0.03em;
     }
 
-    .status-chip.completed {
-      background: var(--completed-bg);
-      color: var(--completed);
-      box-shadow: 0 0 12px var(--completed-glow);
-    }
-    .status-chip.almost {
-      background: var(--almost-bg);
-      color: var(--almost);
-      box-shadow: 0 0 12px var(--almost-glow);
-    }
-    .status-chip.in-progress {
-      background: var(--progress-bg);
-      color: var(--progress);
-    }
-    .status-chip.low {
-      background: var(--low-bg);
-      color: var(--low);
-    }
+    .status-chip.completed { background: var(--completed-bg); color: var(--completed); box-shadow: 0 0 12px var(--completed-glow); }
+    .status-chip.almost { background: var(--almost-bg); color: var(--almost); box-shadow: 0 0 12px var(--almost-glow); }
+    .status-chip.in-progress { background: var(--progress-bg); color: var(--progress); }
+    .status-chip.low { background: var(--low-bg); color: var(--low); }
+    .status-chip svg { width: 10px; height: 10px; }
 
-    .status-chip svg {
-      width: 10px;
-      height: 10px;
-    }
+    .card-content { display: flex; gap: var(--gap-lg); align-items: flex-start; }
 
-    /* Card Content with Mini Donut */
-    .card-content {
-      display: flex;
-      gap: var(--gap-lg);
-      align-items: flex-start;
-    }
-
-    .mini-donut {
-      position: relative;
-      width: 56px;
-      height: 56px;
-      flex-shrink: 0;
-    }
-    .mini-donut svg {
-      width: 100%;
-      height: 100%;
-      transform: rotate(-90deg);
-    }
-    .mini-donut .track {
-      fill: none;
-      stroke: var(--panel-3);
-      stroke-width: 5;
-    }
-    .mini-donut .progress {
-      fill: none;
-      stroke-width: 5;
-      stroke-linecap: round;
-      transition: stroke-dashoffset var(--transition-slow);
-    }
+    .mini-donut { position: relative; width: 56px; height: 56px; flex-shrink: 0; }
+    .mini-donut svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .mini-donut .track { fill: none; stroke: var(--panel-3); stroke-width: 5; }
+    .mini-donut .progress { fill: none; stroke-width: 5; stroke-linecap: round; transition: stroke-dashoffset var(--transition-slow); }
     .mini-donut .center {
       position: absolute;
       inset: 0;
@@ -581,10 +465,7 @@
       font-weight: 700;
     }
 
-    .card-details {
-      flex: 1;
-      min-width: 0;
-    }
+    .card-details { flex: 1; min-width: 0; }
 
     .card-stat-row {
       display: flex;
@@ -594,45 +475,19 @@
       font-size: 12px;
       border-bottom: 1px solid var(--border-subtle);
     }
-    .card-stat-row:last-child {
-      border-bottom: none;
-    }
-    .card-stat-label {
-      color: var(--text-secondary);
-    }
-    .card-stat-value {
-      font-weight: 600;
-      color: var(--text);
-    }
+    .card-stat-row:last-child { border-bottom: none; }
+    .card-stat-label { color: var(--text-secondary); }
+    .card-stat-value { font-weight: 600; color: var(--text); }
 
-    /* Guitar Card Special Layout */
-    .guitar-stats {
-      display: flex;
-      gap: var(--gap-xl);
-      justify-content: center;
-      padding-top: var(--gap-sm);
-    }
-    .guitar-stat {
-      text-align: center;
-    }
-    .guitar-stat-value {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1;
-    }
-    .guitar-stat-label {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 4px;
-    }
+    .scale-stats { display: flex; gap: var(--gap-xl); justify-content: center; padding-top: var(--gap-sm); }
+    .scale-stat { text-align: center; }
+    .scale-stat-value { font-size: 28px; font-weight: 700; color: var(--text); line-height: 1; }
+    .scale-stat-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
 
-    /* History View */
     .history-list { display: flex; flex-direction: column; gap: var(--gap-sm); }
 
     .history-item {
-      display: grid;
-      grid-template-columns: 1fr repeat(5, 80px);
+      display: flex;
       gap: var(--gap-lg);
       align-items: center;
       padding: var(--gap-md) var(--gap-lg);
@@ -641,17 +496,17 @@
       border-radius: var(--radius-lg);
       cursor: pointer;
       transition: all var(--transition-fast);
+      flex-wrap: wrap;
     }
     .history-item:hover {
       background: var(--panel-2);
       border-color: var(--border-highlight);
     }
 
-    .history-date { font-weight: 500; }
-    .history-stat { text-align: center; font-size: 13px; }
+    .history-date { font-weight: 500; min-width: 200px; }
+    .history-stat { text-align: center; font-size: 13px; min-width: 60px; }
     .history-stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; }
 
-    /* Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -664,17 +519,14 @@
       transition: opacity var(--transition-normal);
       backdrop-filter: blur(4px);
     }
-    .modal-overlay.open {
-      display: flex;
-      opacity: 1;
-    }
+    .modal-overlay.open { display: flex; opacity: 1; }
 
     .modal {
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: var(--radius-xl);
       padding: var(--gap-2xl);
-      max-width: 480px;
+      max-width: 560px;
       width: 90%;
       max-height: 90vh;
       overflow-y: auto;
@@ -682,9 +534,8 @@
       transition: transform var(--transition-normal);
       box-shadow: var(--shadow-2);
     }
-    .modal-overlay.open .modal {
-      transform: scale(1);
-    }
+    .modal-overlay.open .modal { transform: scale(1); }
+    .modal.wide { max-width: 700px; }
 
     .modal-header {
       display: flex;
@@ -703,14 +554,11 @@
       border-radius: var(--radius-sm);
       transition: all var(--transition-fast);
     }
-    .modal-close:hover {
-      color: var(--text);
-      background: var(--panel-2);
-    }
+    .modal-close:hover { color: var(--text); background: var(--panel-2); }
 
     .form-group { margin-bottom: var(--gap-lg); }
     .form-label { display: block; margin-bottom: var(--gap-sm); font-size: 13px; color: var(--text-secondary); }
-    .form-input {
+    .form-input, .form-select {
       width: 100%;
       padding: var(--gap-sm) var(--gap-md);
       border: 1px solid var(--border);
@@ -720,15 +568,71 @@
       font-size: 14px;
       transition: all var(--transition-fast);
     }
-    .form-input:focus {
+    .form-input:focus, .form-select:focus {
       outline: none;
       border-color: var(--accent);
       box-shadow: 0 0 0 3px var(--accent-subtle);
     }
 
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap-md); }
+
     .modal-footer { display: flex; justify-content: flex-end; gap: var(--gap-sm); margin-top: var(--gap-xl); }
 
-    /* Overall View */
+    .habit-list { display: flex; flex-direction: column; gap: var(--gap-sm); margin-bottom: var(--gap-xl); }
+
+    .habit-item {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-md);
+      padding: var(--gap-md);
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      transition: all var(--transition-fast);
+    }
+    .habit-item.archived { opacity: 0.5; }
+    .habit-item-info { flex: 1; }
+    .habit-item-label { font-weight: 500; }
+    .habit-item-type { font-size: 11px; color: var(--muted); text-transform: uppercase; }
+    .habit-item-actions { display: flex; gap: var(--gap-xs); }
+    .habit-item-actions .btn { padding: 4px 8px; font-size: 11px; }
+
+    .reorder-btns { display: flex; flex-direction: column; gap: 2px; }
+    .reorder-btn {
+      background: var(--panel-3);
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 10px;
+      transition: all var(--transition-fast);
+    }
+    .reorder-btn:hover { background: var(--accent); color: #000; }
+
+    .items-editor { margin-top: var(--gap-md); }
+    .items-list { display: flex; flex-direction: column; gap: var(--gap-sm); margin-bottom: var(--gap-sm); }
+    .item-row {
+      display: flex;
+      gap: var(--gap-sm);
+      align-items: center;
+    }
+    .item-row input { flex: 1; }
+    .item-row .btn { padding: 4px 8px; }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: var(--gap-lg);
+      font-size: 13px;
+    }
+    .toggle-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+    }
+
     .overall-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -750,83 +654,54 @@
       font-weight: 600;
     }
 
-    .toggle-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: var(--gap-lg);
-      font-size: 13px;
-    }
-    .toggle-row input[type="checkbox"] {
-      width: 16px;
-      height: 16px;
-      accent-color: var(--accent);
-    }
-
-    .overall-percent {
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: var(--gap-lg);
-    }
+    .overall-percent { font-size: 24px; font-weight: 700; margin-bottom: var(--gap-lg); }
     .overall-percent.success { color: var(--completed); }
     .overall-percent.warning { color: var(--progress); }
     .overall-percent.danger { color: var(--low); }
 
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      padding: var(--gap-xs) 0;
-      font-size: 13px;
-    }
+    .summary-row { display: flex; justify-content: space-between; padding: var(--gap-xs) 0; font-size: 13px; }
     .summary-label { color: var(--text-secondary); }
     .summary-value { font-weight: 500; }
-    .summary-value.success { color: var(--completed); }
-    .summary-value.warning { color: var(--progress); }
-    .summary-value.danger { color: var(--low); }
 
-    /* View headers */
-    .view-header {
-      margin-bottom: var(--gap-xl);
-    }
-    .view-title {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: var(--gap-xs);
-    }
-    .view-subtitle {
-      color: var(--text-secondary);
-      font-size: 13px;
-    }
+    .view-header { margin-bottom: var(--gap-xl); }
+    .view-title { font-size: 20px; font-weight: 600; margin-bottom: var(--gap-xs); }
+    .view-subtitle { color: var(--text-secondary); font-size: 13px; }
 
-    /* Data actions */
     .data-actions {
       display: flex;
       gap: var(--gap-sm);
       padding: var(--gap-md) var(--gap-lg);
       background: var(--panel);
       border-top: 1px solid var(--border);
+      flex-wrap: wrap;
     }
 
-    /* Responsive */
-    @media (max-width: 1200px) {
-      .summary-cards {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    .import-summary { background: var(--panel-2); padding: var(--gap-md); border-radius: var(--radius-md); margin-top: var(--gap-md); font-size: 13px; }
+
+    .tabs { display: flex; gap: var(--gap-xs); margin-bottom: var(--gap-xl); border-bottom: 1px solid var(--border); }
+    .tab {
+      padding: var(--gap-sm) var(--gap-lg);
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all var(--transition-fast);
     }
+    .tab:hover { color: var(--text); }
+    .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
     @media (max-width: 768px) {
       .navbar { padding: 10px; gap: var(--gap-sm); }
       .navbar-center { display: none; }
-      .week-grid { grid-template-columns: 80px repeat(7, 1fr); font-size: 12px; }
+      .week-grid { font-size: 12px; }
       .grid-cell { min-height: 36px; padding: var(--gap-sm) var(--gap-xs); }
 
-      /* Drawer overlay on mobile */
-      .main-content {
-        grid-template-columns: 1fr;
-      }
-      .main-content.drawer-open {
-        grid-template-columns: 1fr;
-      }
+      .main-content { grid-template-columns: 1fr; }
+      .main-content.drawer-open { grid-template-columns: 1fr; }
       .drawer {
         position: fixed;
         right: 0;
@@ -836,25 +711,17 @@
         transform: translateX(100%);
         transition: transform var(--transition-normal), opacity var(--transition-normal);
       }
-      .main-content.drawer-open .drawer {
-        transform: translateX(0);
-      }
+      .main-content.drawer-open .drawer { transform: translateX(0); }
 
-      .summary-cards {
-        grid-template-columns: 1fr;
-      }
-      .summary-header-section {
-        flex-direction: column;
-        text-align: center;
-      }
-      .history-item { grid-template-columns: 1fr; gap: var(--gap-sm); }
-      .history-stat { text-align: left; }
+      .summary-cards { grid-template-columns: 1fr; }
+      .summary-header-section { flex-direction: column; text-align: center; }
+      .history-item { flex-direction: column; align-items: flex-start; }
+      .form-row { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <div class="app" id="app">
-    <!-- Navbar -->
     <nav class="navbar">
       <div class="navbar-left">
         <button class="btn btn-icon" id="prevWeekBtn" title="Previous Week">&#9664;</button>
@@ -863,6 +730,7 @@
       </div>
       <div class="navbar-center" id="weekLabel">Week</div>
       <div class="navbar-right">
+        <button class="btn" id="habitsBtn">Habits</button>
         <button class="btn" id="targetsBtn">Targets</button>
         <button class="btn" id="historyBtn">History</button>
         <button class="btn" id="overallBtn">Overall</button>
@@ -870,96 +738,66 @@
       </div>
     </nav>
 
-    <!-- Main Content -->
     <div class="main-content" id="mainContent">
-      <!-- Week View -->
       <div class="view-container" id="weekView">
         <div class="week-grid" id="weekGrid"></div>
         <div class="week-summary" id="weekSummary"></div>
       </div>
 
-      <!-- History View -->
       <div class="view-container" id="historyView" style="display:none;">
         <div class="view-header">
           <h1 class="view-title">History</h1>
           <p class="view-subtitle">All tracked weeks</p>
         </div>
+        <div class="toggle-row">
+          <input type="checkbox" id="showArchivedHistory">
+          <label for="showArchivedHistory">Show archived habits</label>
+        </div>
         <div class="history-list" id="historyList"></div>
       </div>
 
-      <!-- Overall View -->
       <div class="view-container" id="overallView" style="display:none;">
         <div class="view-header">
           <h1 class="view-title">Overall Statistics</h1>
           <p class="view-subtitle">All-time aggregated data</p>
         </div>
-        <div class="toggle-row">
-          <input type="checkbox" id="useWeekTargets" checked>
-          <label for="useWeekTargets">Use week targets (vs default targets)</label>
-        </div>
         <div class="overall-grid" id="overallGrid"></div>
       </div>
 
-      <!-- Day Drawer -->
       <div class="drawer" id="dayDrawer">
         <div class="drawer-header">
           <span class="drawer-title" id="drawerTitle">Monday</span>
           <button class="drawer-close" id="drawerClose">&times;</button>
         </div>
-
-        <div class="drawer-section">
-          <div class="drawer-section-title">Voice</div>
-          <div class="checkbox-group">
-            <label class="checkbox-item">
-              <input type="checkbox" id="voiceMini">
-              <span>Mini Activation</span>
-            </label>
-            <label class="checkbox-item">
-              <input type="checkbox" id="voiceArticulation">
-              <span>Articulation</span>
-            </label>
-            <label class="checkbox-item">
-              <input type="checkbox" id="voiceVocal">
-              <span>Vocal Session</span>
-            </label>
-          </div>
-        </div>
-
-        <div class="drawer-section">
-          <div class="drawer-section-title">Sport</div>
-          <div class="radio-group">
-            <label class="radio-item">
-              <input type="radio" name="sport" value="none">
-              <span>None</span>
-            </label>
-            <label class="radio-item">
-              <input type="radio" name="sport" value="cardio">
-              <span>Cardio</span>
-            </label>
-            <label class="radio-item">
-              <input type="radio" name="sport" value="weights_cardio">
-              <span>Weights + Cardio</span>
-            </label>
-          </div>
-        </div>
-
-        <div class="drawer-section">
-          <div class="drawer-section-title">Work Deep Blocks</div>
-          <div class="rating-buttons" id="workRating"></div>
-        </div>
-
-        <div class="drawer-section">
-          <div class="drawer-section-title">Guitar</div>
-          <div class="rating-buttons" id="guitarRating"></div>
-        </div>
+        <div id="drawerContent"></div>
       </div>
     </div>
 
-    <!-- Data Actions -->
     <div class="data-actions">
       <button class="btn btn-sm" id="exportBtn">Export JSON</button>
       <button class="btn btn-sm" id="importBtn">Import JSON</button>
+      <button class="btn btn-sm" id="backupBtn">Backup Now</button>
       <input type="file" id="importFile" accept=".json" style="display:none">
+      <span style="flex:1"></span>
+      <label class="toggle-row" style="margin:0">
+        <input type="checkbox" id="autoBackupToggle" checked>
+        <span style="font-size:12px;color:var(--muted)">Auto backup</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Habit Manager Modal -->
+  <div class="modal-overlay" id="habitsModal">
+    <div class="modal wide">
+      <div class="modal-header">
+        <h2 class="modal-title">Habit Manager</h2>
+        <button class="modal-close" id="habitsClose">&times;</button>
+      </div>
+      <div class="tabs">
+        <button class="tab active" data-tab="list">Habits</button>
+        <button class="tab" data-tab="add">Add New</button>
+      </div>
+      <div id="habitsTabContent"></div>
     </div>
   </div>
 
@@ -967,32 +805,12 @@
   <div class="modal-overlay" id="targetsModal">
     <div class="modal">
       <div class="modal-header">
-        <h2 class="modal-title">Week Targets</h2>
+        <h2 class="modal-title">Weekly Targets</h2>
         <button class="modal-close" id="targetsClose">&times;</button>
       </div>
-      <div class="form-group">
-        <label class="form-label">Voice - Mini Activation (days/week)</label>
-        <input type="number" class="form-input" id="targetMini" min="0" max="7">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Voice - Articulation (days/week)</label>
-        <input type="number" class="form-input" id="targetArticulation" min="0" max="7">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Voice - Vocal Session (days/week)</label>
-        <input type="number" class="form-input" id="targetVocal" min="0" max="7">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Sport (days/week)</label>
-        <input type="number" class="form-input" id="targetSport" min="0" max="7">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Work - Deep Blocks (total/week)</label>
-        <input type="number" class="form-input" id="targetWork" min="0">
-      </div>
+      <div id="targetsContent"></div>
       <div class="modal-footer">
-        <button class="btn" id="targetsUseDefaults">Use Defaults</button>
-        <button class="btn btn-primary" id="targetsSave">Save</button>
+        <button class="btn btn-primary" id="targetsSave">Save Targets</button>
       </div>
     </div>
   </div>
@@ -1001,101 +819,150 @@
   <div class="modal-overlay" id="settingsModal">
     <div class="modal">
       <div class="modal-header">
-        <h2 class="modal-title">Settings (Default Targets)</h2>
+        <h2 class="modal-title">Settings</h2>
         <button class="modal-close" id="settingsClose">&times;</button>
       </div>
-      <div class="form-group">
-        <label class="form-label">Voice - Mini Activation (days/week)</label>
-        <input type="number" class="form-input" id="defaultMini" min="0" max="7">
+      <div class="toggle-row">
+        <input type="checkbox" id="settingsAutoBackup" checked>
+        <label for="settingsAutoBackup">Enable auto backup on week change</label>
       </div>
-      <div class="form-group">
-        <label class="form-label">Voice - Articulation (days/week)</label>
-        <input type="number" class="form-input" id="defaultArticulation" min="0" max="7">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Voice - Vocal Session (days/week)</label>
-        <input type="number" class="form-input" id="defaultVocal" min="0" max="7">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Sport (days/week)</label>
-        <input type="number" class="form-input" id="defaultSport" min="0" max="7">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Work - Deep Blocks (total/week)</label>
-        <input type="number" class="form-input" id="defaultWork" min="0">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Deep Blocks Max per Day</label>
-        <input type="number" class="form-input" id="defaultBlocksMax" min="1" max="20">
-      </div>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:var(--gap-lg)">
+        When enabled, a backup file will automatically download when you start a new week.
+      </p>
       <div class="modal-footer">
         <button class="btn btn-primary" id="settingsSave">Save</button>
       </div>
     </div>
   </div>
 
+  <!-- Import Result Modal -->
+  <div class="modal-overlay" id="importResultModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Import Complete</h2>
+        <button class="modal-close" id="importResultClose">&times;</button>
+      </div>
+      <div id="importResultContent"></div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="importResultOk">OK</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // ============ STORAGE KEYS ============
-    const STORAGE_KEY = 'weeklyTracker';
-    const SETTINGS_KEY = 'weeklyTrackerSettings';
-
-    // ============ DEFAULT SETTINGS ============
-    const DEFAULT_SETTINGS = {
-      targets: {
-        mini: 7,
-        articulation: 7,
-        vocal: 3,
-        sport: 5,
-        work: 10
-      },
-      blocksMaxPerDay: 5
-    };
-
-    // ============ STATE ============
-    let state = {
-      weeks: {},
-      currentWeekId: null
-    };
-    let settings = { ...DEFAULT_SETTINGS };
-    let selectedDay = null;
-    let currentView = 'week';
-
-    // ============ HELPERS ============
+    // ============ CONSTANTS ============
+    const STORAGE_KEY = 'weeklyTracker.data';
+    const CURRENT_SCHEMA_VERSION = 2;
     const DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     const DAY_FULL_NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-    const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June',
-                         'July', 'August', 'September', 'October', 'November', 'December'];
+    const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-    /**
-     * Normalize a date to local noon to avoid timezone/DST issues.
-     */
+    // ============ DEFAULT HABITS ============
+    function getDefaultHabits() {
+      return [
+        {
+          id: 'voice',
+          label: 'Voice',
+          type: 'checklist',
+          items: [
+            { id: 'miniActivation', label: 'Mini Activation' },
+            { id: 'articulation', label: 'Articulation' },
+            { id: 'vocalSession', label: 'Vocal Session' }
+          ],
+          includeInOverall: true,
+          weight: 1,
+          isArchived: false,
+          order: 0
+        },
+        {
+          id: 'sport',
+          label: 'Sport',
+          type: 'singleChoice',
+          options: [
+            { id: 'none', label: 'None' },
+            { id: 'cardio', label: 'Cardio' },
+            { id: 'weightsCardio', label: 'Weights + Cardio' }
+          ],
+          includeInOverall: true,
+          weight: 1,
+          isArchived: false,
+          order: 1
+        },
+        {
+          id: 'work',
+          label: 'Work',
+          type: 'scale',
+          min: 0,
+          max: 5,
+          step: 1,
+          includeInOverall: true,
+          weight: 1,
+          isArchived: false,
+          order: 2
+        },
+        {
+          id: 'guitar',
+          label: 'Guitar',
+          type: 'scale',
+          min: 0,
+          max: 5,
+          step: 1,
+          includeInOverall: false,
+          weight: 1,
+          isArchived: false,
+          order: 3
+        }
+      ];
+    }
+
+    function getDefaultTargets() {
+      return {
+        'voice.miniActivation': 7,
+        'voice.articulation': 7,
+        'voice.vocalSession': 3,
+        'sport': 5,
+        'work': 10,
+        'guitar': 5
+      };
+    }
+
+    // ============ STATE ============
+    let db = {
+      schemaVersion: CURRENT_SCHEMA_VERSION,
+      habitsConfig: getDefaultHabits(),
+      targets: getDefaultTargets(),
+      weeks: {},
+      meta: {
+        lastSeenWeekKey: null,
+        lastAutoBackupWeekKey: null,
+        autoBackupEnabled: true
+      }
+    };
+
+    let selectedDay = null;
+    let currentWeekId = null;
+    let currentView = 'week';
+    let currentHabitTab = 'list';
+    let editingHabit = null;
+
+    // ============ DATE HELPERS ============
     function normalizeToLocalNoon(date) {
       const d = new Date(date);
       d.setHours(12, 0, 0, 0);
       return d;
     }
 
-    /**
-     * Parse a YYYY-MM-DD string and return a Date normalized to local noon.
-     */
     function parseDateString(dateStr) {
       const [year, month, day] = dateStr.split('-').map(Number);
-      const d = new Date(year, month - 1, day, 12, 0, 0, 0);
-      return d;
+      return new Date(year, month - 1, day, 12, 0, 0, 0);
     }
 
-    /**
-     * Get the ISO weekday (1=Monday, 7=Sunday) for a date.
-     */
     function getISOWeekday(date) {
       const d = normalizeToLocalNoon(date);
-      const day = d.getDay(); // 0=Sunday, 1=Monday, ...
-      return day === 0 ? 7 : day; // Convert to ISO: 1=Monday, 7=Sunday
+      const day = d.getDay();
+      return day === 0 ? 7 : day;
     }
 
-    /**
-     * Get ISO week ID (e.g., "2025-W51") for a given date.
-     */
     function getISOWeekId(date) {
       const d = normalizeToLocalNoon(date);
       const dayOfWeek = getISOWeekday(d);
@@ -1110,9 +977,6 @@
       return `${year}-W${String(weekNum).padStart(2, '0')}`;
     }
 
-    /**
-     * Get the Monday of a given ISO week.
-     */
     function getWeekMonday(weekId) {
       const [yearStr, weekPart] = weekId.split('-W');
       const year = parseInt(yearStr);
@@ -1126,9 +990,12 @@
       return targetMonday;
     }
 
-    /**
-     * Format a date as YYYY-MM-DD using local date parts.
-     */
+    function getPreviousWeekId(weekId) {
+      const monday = getWeekMonday(weekId);
+      monday.setDate(monday.getDate() - 7);
+      return getISOWeekId(monday);
+    }
+
     function formatDate(date) {
       const d = normalizeToLocalNoon(date);
       const year = d.getFullYear();
@@ -1137,32 +1004,15 @@
       return `${year}-${month}-${day}`;
     }
 
-    /**
-     * Add days to a date, returning normalized result.
-     */
     function addDays(date, days) {
       const d = normalizeToLocalNoon(date);
       d.setDate(d.getDate() + days);
       return d;
     }
 
-    /**
-     * Get day index (0-6, Mon-Sun) from a date string.
-     */
-    function getDayIndex(dateStr) {
-      const d = parseDateString(dateStr);
-      const weekday = getISOWeekday(d);
-      return weekday - 1;
-    }
-
-    /**
-     * Format date range with proper en dash and year handling.
-     * Format: "15 – 21 December 2025" or "29 December 2025 – 4 January 2026"
-     */
     function formatDateRange(startDateStr, endDateStr) {
       const start = parseDateString(startDateStr);
       const end = parseDateString(endDateStr);
-
       const startDay = start.getDate();
       const endDay = end.getDate();
       const startMonth = MONTH_NAMES[start.getMonth()];
@@ -1170,179 +1020,321 @@
       const startYear = start.getFullYear();
       const endYear = end.getFullYear();
 
-      // Cross-year case
       if (startYear !== endYear) {
         return `${startDay} ${startMonth} ${startYear} – ${endDay} ${endMonth} ${endYear}`;
       }
-
-      // Cross-month, same year
       if (startMonth !== endMonth) {
         return `${startDay} ${startMonth} – ${endDay} ${endMonth} ${startYear}`;
       }
-
-      // Same month, same year
       return `${startDay} – ${endDay} ${startMonth} ${startYear}`;
     }
 
-    function createEmptyDay() {
+    // ============ ID GENERATION ============
+    function generateId() {
+      return 'h' + Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+    }
+
+    // ============ DATA MIGRATION ============
+    function migrateData(raw) {
+      if (!raw) return null;
+
+      // Check for old format (v0 - no schemaVersion, has state.weeks structure)
+      if (raw.state && raw.state.weeks && !raw.schemaVersion) {
+        return migrateFromV0(raw);
+      }
+
+      // Check for v1 format
+      if (raw.schemaVersion === 1) {
+        return migrateFromV1(raw);
+      }
+
+      // Already v2
+      if (raw.schemaVersion === 2) {
+        return raw;
+      }
+
+      // Unknown format - try to preserve under legacy
       return {
-        voice: { miniActivation: false, articulation: false, vocalSession: false },
-        sport: 'none',
-        work: { deepBlocks: 0 },
-        guitar: { rating: 0 }
+        schemaVersion: CURRENT_SCHEMA_VERSION,
+        habitsConfig: getDefaultHabits(),
+        targets: getDefaultTargets(),
+        weeks: {},
+        meta: { lastSeenWeekKey: null, lastAutoBackupWeekKey: null, autoBackupEnabled: true },
+        legacy: raw
       };
     }
 
-    function createWeek(weekId) {
-      const monday = getWeekMonday(weekId);
-      const sunday = addDays(monday, 6);
-      return {
-        weekId,
-        startDate: formatDate(monday),
-        endDate: formatDate(sunday),
-        targets: { ...settings.targets },
-        days: Array(7).fill(null).map(() => createEmptyDay())
+    function migrateFromV0(raw) {
+      const oldState = raw.state || {};
+      const oldSettings = raw.settings || {};
+      const oldWeeks = oldState.weeks || {};
+
+      const newWeeks = {};
+
+      for (const [weekId, oldWeek] of Object.entries(oldWeeks)) {
+        const newDays = [];
+        const oldDays = oldWeek.days || [];
+
+        for (let i = 0; i < 7; i++) {
+          const oldDay = oldDays[i] || {};
+          newDays.push({
+            updatedAt: new Date().toISOString(),
+            habits: {
+              voice: {
+                miniActivation: oldDay.voice?.miniActivation || false,
+                articulation: oldDay.voice?.articulation || false,
+                vocalSession: oldDay.voice?.vocalSession || false
+              },
+              sport: mapOldSportValue(oldDay.sport),
+              work: oldDay.work?.deepBlocks || 0,
+              guitar: oldDay.guitar?.rating || 0
+            }
+          });
+        }
+
+        newWeeks[weekId] = {
+          weekId,
+          startDate: oldWeek.startDate,
+          endDate: oldWeek.endDate,
+          days: newDays
+        };
+      }
+
+      // Migrate targets
+      const oldTargets = oldWeek?.targets || oldSettings.targets || {};
+      const newTargets = {
+        'voice.miniActivation': oldTargets.mini || 7,
+        'voice.articulation': oldTargets.articulation || 7,
+        'voice.vocalSession': oldTargets.vocal || 3,
+        'sport': oldTargets.sport || 5,
+        'work': oldTargets.work || 10,
+        'guitar': 5
       };
+
+      return {
+        schemaVersion: CURRENT_SCHEMA_VERSION,
+        habitsConfig: getDefaultHabits(),
+        targets: newTargets,
+        weeks: newWeeks,
+        meta: {
+          lastSeenWeekKey: oldState.currentWeekId || null,
+          lastAutoBackupWeekKey: null,
+          autoBackupEnabled: true
+        }
+      };
+    }
+
+    function migrateFromV1(raw) {
+      // V1 to V2 migration (placeholder - structure similar)
+      return {
+        ...raw,
+        schemaVersion: CURRENT_SCHEMA_VERSION
+      };
+    }
+
+    function mapOldSportValue(val) {
+      if (val === 'cardio') return 'cardio';
+      if (val === 'weights_cardio') return 'weightsCardio';
+      return 'none';
     }
 
     // ============ PERSISTENCE ============
-    function saveState() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    function saveDB() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
     }
 
-    function loadState() {
+    function loadDB() {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        state = JSON.parse(saved);
+        try {
+          const raw = JSON.parse(saved);
+          const migrated = migrateData(raw);
+          if (migrated) {
+            db = migrated;
+            // Ensure all required fields exist
+            if (!db.habitsConfig) db.habitsConfig = getDefaultHabits();
+            if (!db.targets) db.targets = getDefaultTargets();
+            if (!db.weeks) db.weeks = {};
+            if (!db.meta) db.meta = { lastSeenWeekKey: null, lastAutoBackupWeekKey: null, autoBackupEnabled: true };
+            db.schemaVersion = CURRENT_SCHEMA_VERSION;
+          }
+        } catch (e) {
+          console.error('Failed to load data:', e);
+        }
+      }
+
+      // Also try to migrate from old storage keys
+      const oldStorage = localStorage.getItem('weeklyTracker');
+      if (oldStorage && !saved) {
+        try {
+          const oldData = JSON.parse(oldStorage);
+          const migrated = migrateData({ state: oldData, settings: JSON.parse(localStorage.getItem('weeklyTrackerSettings') || '{}') });
+          if (migrated) {
+            db = migrated;
+            saveDB();
+          }
+        } catch (e) {
+          console.error('Failed to migrate old data:', e);
+        }
       }
     }
 
-    function saveSettings() {
-      localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+    // ============ WEEK MANAGEMENT ============
+    function getActiveHabits() {
+      return db.habitsConfig.filter(h => !h.isArchived).sort((a, b) => a.order - b.order);
     }
 
-    function loadSettings() {
-      const saved = localStorage.getItem(SETTINGS_KEY);
-      if (saved) {
-        settings = { ...DEFAULT_SETTINGS, ...JSON.parse(saved) };
+    function getAllHabits() {
+      return db.habitsConfig.sort((a, b) => a.order - b.order);
+    }
+
+    function getHabitById(id) {
+      return db.habitsConfig.find(h => h.id === id);
+    }
+
+    function createEmptyDayData() {
+      const habits = {};
+      for (const habit of db.habitsConfig) {
+        if (habit.type === 'checklist') {
+          habits[habit.id] = {};
+          for (const item of habit.items) {
+            habits[habit.id][item.id] = false;
+          }
+        } else if (habit.type === 'singleChoice') {
+          habits[habit.id] = habit.options[0]?.id || 'none';
+        } else if (habit.type === 'scale') {
+          habits[habit.id] = habit.min || 0;
+        }
       }
+      return { updatedAt: new Date().toISOString(), habits };
+    }
+
+    function ensureWeekExists(weekId) {
+      if (!db.weeks[weekId]) {
+        const monday = getWeekMonday(weekId);
+        const sunday = addDays(monday, 6);
+        db.weeks[weekId] = {
+          weekId,
+          startDate: formatDate(monday),
+          endDate: formatDate(sunday),
+          days: Array(7).fill(null).map(() => createEmptyDayData())
+        };
+      }
+      // Ensure all habits exist in each day
+      const week = db.weeks[weekId];
+      for (const day of week.days) {
+        if (!day.habits) day.habits = {};
+        for (const habit of db.habitsConfig) {
+          if (!(habit.id in day.habits)) {
+            if (habit.type === 'checklist') {
+              day.habits[habit.id] = {};
+              for (const item of habit.items) {
+                day.habits[habit.id][item.id] = false;
+              }
+            } else if (habit.type === 'singleChoice') {
+              day.habits[habit.id] = habit.options[0]?.id || 'none';
+            } else if (habit.type === 'scale') {
+              day.habits[habit.id] = habit.min || 0;
+            }
+          }
+        }
+      }
+      return db.weeks[weekId];
+    }
+
+    function getCurrentWeek() {
+      return db.weeks[currentWeekId];
     }
 
     // ============ CALCULATIONS ============
-    function calcVoiceStats(week) {
-      let mini = 0, articulation = 0, vocal = 0;
-      week.days.forEach(day => {
-        if (day.voice.miniActivation) mini++;
-        if (day.voice.articulation) articulation++;
-        if (day.voice.vocalSession) vocal++;
-      });
-      const targets = week.targets;
-      const miniPct = targets.mini > 0 ? Math.min(mini / targets.mini, 1) * 100 : 100;
-      const artPct = targets.articulation > 0 ? Math.min(articulation / targets.articulation, 1) * 100 : 100;
-      const vocalPct = targets.vocal > 0 ? Math.min(vocal / targets.vocal, 1) * 100 : 100;
-      const categoryPct = (miniPct + artPct + vocalPct) / 3;
-      return { mini, articulation, vocal, miniPct, artPct, vocalPct, categoryPct };
+    function calcHabitStats(week, habit) {
+      const target = getHabitTarget(habit);
+
+      if (habit.type === 'checklist') {
+        const itemStats = {};
+        let totalDone = 0;
+        let totalTarget = 0;
+
+        for (const item of habit.items) {
+          const itemTarget = db.targets[`${habit.id}.${item.id}`] || 7;
+          let done = 0;
+          for (const day of week.days) {
+            if (day.habits[habit.id]?.[item.id]) done++;
+          }
+          itemStats[item.id] = { done, target: itemTarget, pct: itemTarget > 0 ? Math.min(done / itemTarget, 1) * 100 : 100 };
+          totalDone += done;
+          totalTarget += itemTarget;
+        }
+
+        const avgPct = habit.items.length > 0
+          ? habit.items.reduce((sum, item) => sum + itemStats[item.id].pct, 0) / habit.items.length
+          : 100;
+
+        return { type: 'checklist', itemStats, avgPct };
+      }
+
+      if (habit.type === 'singleChoice') {
+        let completed = 0;
+        const breakdown = {};
+        for (const opt of habit.options) {
+          breakdown[opt.id] = 0;
+        }
+
+        for (const day of week.days) {
+          const val = day.habits[habit.id] || 'none';
+          if (breakdown.hasOwnProperty(val)) breakdown[val]++;
+          if (val !== 'none' && val !== habit.options[0]?.id) completed++;
+        }
+
+        const pct = target > 0 ? Math.min(completed / target, 1) * 100 : 100;
+        return { type: 'singleChoice', completed, target, pct, breakdown };
+      }
+
+      if (habit.type === 'scale') {
+        let total = 0;
+        let daysWithValue = 0;
+        for (const day of week.days) {
+          const val = day.habits[habit.id] || 0;
+          total += val;
+          if (val > 0) daysWithValue++;
+        }
+        const avg = daysWithValue > 0 ? total / daysWithValue : 0;
+        const pct = target > 0 ? Math.min(total / target, 1) * 100 : 100;
+        return { type: 'scale', total, daysWithValue, avg, target, pct };
+      }
+
+      return { pct: 0 };
     }
 
-    function calcSportStats(week) {
-      let sportDays = 0, cardioDays = 0, weightsCardioDays = 0;
-      week.days.forEach(day => {
-        if (day.sport === 'cardio') { sportDays++; cardioDays++; }
-        else if (day.sport === 'weights_cardio') { sportDays++; weightsCardioDays++; }
-      });
-      const target = week.targets.sport;
-      const sportPct = target > 0 ? Math.min(sportDays / target, 1) * 100 : 100;
-      return { sportDays, cardioDays, weightsCardioDays, sportPct };
-    }
-
-    function calcWorkStats(week) {
-      let totalBlocks = 0;
-      week.days.forEach(day => { totalBlocks += day.work.deepBlocks; });
-      const target = week.targets.work;
-      const workPct = target > 0 ? Math.min(totalBlocks / target, 1) * 100 : 100;
-      return { totalBlocks, workPct };
-    }
-
-    function calcGuitarStats(week) {
-      let sum = 0, practicedDays = 0;
-      week.days.forEach(day => {
-        if (day.guitar.rating > 0) { sum += day.guitar.rating; practicedDays++; }
-      });
-      const avg = practicedDays > 0 ? sum / practicedDays : 0;
-      return { avg, practicedDays };
+    function getHabitTarget(habit) {
+      if (habit.type === 'checklist') {
+        let total = 0;
+        for (const item of habit.items) {
+          total += db.targets[`${habit.id}.${item.id}`] || 7;
+        }
+        return total;
+      }
+      return db.targets[habit.id] || (habit.type === 'scale' ? 10 : 5);
     }
 
     function calcOverallPct(week) {
-      const voice = calcVoiceStats(week);
-      const sport = calcSportStats(week);
-      const work = calcWorkStats(week);
-      // Guitar excluded from overall
-      return (voice.categoryPct + sport.sportPct + work.workPct) / 3;
-    }
+      const activeHabits = getActiveHabits().filter(h => h.includeInOverall);
+      if (activeHabits.length === 0) return 100;
 
-    function calcAllTimeStats(useWeekTargets = true) {
-      const weeks = Object.values(state.weeks);
-      if (weeks.length === 0) return null;
+      let totalWeightedPct = 0;
+      let totalWeight = 0;
 
-      let totalMini = 0, totalArticulation = 0, totalVocal = 0;
-      let totalSportDays = 0, totalCardioDays = 0, totalWeightsCardioDays = 0;
-      let totalDeepBlocks = 0;
-      let totalGuitarSum = 0, totalGuitarPracticedDays = 0;
-      let targetMini = 0, targetArticulation = 0, targetVocal = 0, targetSport = 0, targetWork = 0;
+      for (const habit of activeHabits) {
+        const stats = calcHabitStats(week, habit);
+        const pct = habit.type === 'checklist' ? stats.avgPct : stats.pct;
+        totalWeightedPct += pct * (habit.weight || 1);
+        totalWeight += habit.weight || 1;
+      }
 
-      weeks.forEach(week => {
-        const targets = useWeekTargets ? week.targets : settings.targets;
-        targetMini += targets.mini;
-        targetArticulation += targets.articulation;
-        targetVocal += targets.vocal;
-        targetSport += targets.sport;
-        targetWork += targets.work;
-
-        week.days.forEach(day => {
-          if (day.voice.miniActivation) totalMini++;
-          if (day.voice.articulation) totalArticulation++;
-          if (day.voice.vocalSession) totalVocal++;
-          if (day.sport === 'cardio') { totalSportDays++; totalCardioDays++; }
-          else if (day.sport === 'weights_cardio') { totalSportDays++; totalWeightsCardioDays++; }
-          totalDeepBlocks += day.work.deepBlocks;
-          if (day.guitar.rating > 0) { totalGuitarSum += day.guitar.rating; totalGuitarPracticedDays++; }
-        });
-      });
-
-      const miniPct = targetMini > 0 ? Math.min(totalMini / targetMini, 1) * 100 : 100;
-      const artPct = targetArticulation > 0 ? Math.min(totalArticulation / targetArticulation, 1) * 100 : 100;
-      const vocalPct = targetVocal > 0 ? Math.min(totalVocal / targetVocal, 1) * 100 : 100;
-      const voiceCategoryPct = (miniPct + artPct + vocalPct) / 3;
-      const sportPct = targetSport > 0 ? Math.min(totalSportDays / targetSport, 1) * 100 : 100;
-      const workPct = targetWork > 0 ? Math.min(totalDeepBlocks / targetWork, 1) * 100 : 100;
-      const overallPct = (voiceCategoryPct + sportPct + workPct) / 3;
-      const guitarAvg = totalGuitarPracticedDays > 0 ? totalGuitarSum / totalGuitarPracticedDays : 0;
-
-      return {
-        overallPct, voiceCategoryPct, miniPct, artPct, vocalPct,
-        sportPct, totalSportDays, totalCardioDays, totalWeightsCardioDays,
-        workPct, totalDeepBlocks,
-        guitarAvg, totalGuitarPracticedDays,
-        totalMini, totalArticulation, totalVocal,
-        weeksCount: weeks.length
-      };
+      return totalWeight > 0 ? totalWeightedPct / totalWeight : 100;
     }
 
     // ============ UI HELPERS ============
-    function getPctClass(pct) {
-      if (pct >= 100) return 'success';
-      if (pct >= 80) return 'warning';
-      return 'danger';
-    }
-
-    function formatPct(pct) {
-      return Math.round(pct) + '%';
-    }
-
-    /**
-     * Get status tier based on percentage
-     * Completed: 100%, Almost: 85-99%, In Progress: 35-84%, Low: <35%
-     */
     function getStatusTier(pct) {
       if (pct >= 100) return 'completed';
       if (pct >= 85) return 'almost';
@@ -1364,8 +1356,7 @@
       switch(tier) {
         case 'completed': return '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"/></svg>';
         case 'almost': return '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 4a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 018 4zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg>';
-        case 'in-progress': return '<svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="3"/></svg>';
-        default: return '<svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 4a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 018 4zm0 8a1 1 0 100-2 1 1 0 000 2z"/></svg>';
+        default: return '<svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="3"/></svg>';
       }
     }
 
@@ -1378,6 +1369,10 @@
       }
     }
 
+    function formatPct(pct) {
+      return Math.round(pct) + '%';
+    }
+
     function createDonutSVG(pct, radius, strokeWidth, color) {
       const circumference = 2 * Math.PI * radius;
       const offset = circumference - (Math.min(pct, 100) / 100) * circumference;
@@ -1385,20 +1380,22 @@
         <svg viewBox="0 0 ${(radius + strokeWidth) * 2} ${(radius + strokeWidth) * 2}">
           <circle class="track" cx="${radius + strokeWidth}" cy="${radius + strokeWidth}" r="${radius}"/>
           <circle class="progress" cx="${radius + strokeWidth}" cy="${radius + strokeWidth}" r="${radius}"
-            stroke="${color}"
-            stroke-dasharray="${circumference}"
-            stroke-dashoffset="${offset}"/>
+            stroke="${color}" stroke-dasharray="${circumference}" stroke-dashoffset="${offset}"/>
         </svg>
       `;
     }
 
     // ============ RENDER FUNCTIONS ============
     function renderWeekGrid() {
-      const week = state.weeks[state.currentWeekId];
+      const week = getCurrentWeek();
       if (!week) return;
 
+      const activeHabits = getActiveHabits();
       const today = formatDate(new Date());
       const monday = getWeekMonday(week.weekId);
+      const cols = activeHabits.length + 1;
+
+      document.getElementById('weekGrid').style.gridTemplateColumns = `100px repeat(7, 1fr)`;
 
       let html = '<div class="grid-header"></div>';
       DAY_NAMES.forEach((name, i) => {
@@ -1411,76 +1408,64 @@
         html += `<div class="${headerClasses}" data-day="${i}">${name}<span class="header-date">${date.slice(8)}</span></div>`;
       });
 
-      // Voice row
-      html += '<div class="grid-label">Voice</div>';
-      week.days.forEach((day, i) => {
-        const count = (day.voice.miniActivation ? 1 : 0) + (day.voice.articulation ? 1 : 0) + (day.voice.vocalSession ? 1 : 0);
-        const cls = count === 3 ? 'cell-done' : count > 0 ? 'cell-partial' : 'cell-none';
-        html += `<div class="grid-cell" data-day="${i}"><span class="cell-content ${cls}">${count}/3</span></div>`;
-      });
-
-      // Sport row
-      html += '<div class="grid-label">Sport</div>';
-      week.days.forEach((day, i) => {
-        const label = day.sport === 'none' ? '–' : day.sport === 'cardio' ? 'C' : 'W+C';
-        const cls = day.sport !== 'none' ? 'cell-done' : 'cell-none';
-        html += `<div class="grid-cell" data-day="${i}"><span class="cell-content ${cls}">${label}</span></div>`;
-      });
-
-      // Work row
-      html += '<div class="grid-label">Work</div>';
-      week.days.forEach((day, i) => {
-        const blocks = day.work.deepBlocks;
-        const cls = blocks > 0 ? 'cell-done' : 'cell-none';
-        html += `<div class="grid-cell" data-day="${i}"><span class="cell-content ${cls}">${blocks}</span></div>`;
-      });
-
-      // Guitar row
-      html += '<div class="grid-label">Guitar</div>';
-      week.days.forEach((day, i) => {
-        const rating = day.guitar.rating;
-        const cls = rating > 0 ? 'cell-done' : 'cell-none';
-        html += `<div class="grid-cell" data-day="${i}"><span class="cell-content ${cls}">${rating > 0 ? rating : '–'}</span></div>`;
-      });
+      for (const habit of activeHabits) {
+        html += `<div class="grid-label">${habit.label}</div>`;
+        week.days.forEach((day, i) => {
+          const cellContent = renderCellContent(habit, day.habits[habit.id]);
+          html += `<div class="grid-cell" data-day="${i}">${cellContent}</div>`;
+        });
+      }
 
       document.getElementById('weekGrid').innerHTML = html;
       document.getElementById('weekLabel').textContent = formatDateRange(week.startDate, week.endDate);
 
-      // Add click handlers
       document.querySelectorAll('.grid-header[data-day]').forEach(header => {
-        header.addEventListener('click', () => {
-          const dayIndex = parseInt(header.dataset.day);
-          openDayDrawer(dayIndex);
-        });
+        header.addEventListener('click', () => openDayDrawer(parseInt(header.dataset.day)));
       });
 
       document.querySelectorAll('.grid-cell').forEach(cell => {
-        cell.addEventListener('click', () => {
-          const dayIndex = parseInt(cell.dataset.day);
-          openDayDrawer(dayIndex);
-        });
+        cell.addEventListener('click', () => openDayDrawer(parseInt(cell.dataset.day)));
       });
     }
 
+    function renderCellContent(habit, value) {
+      if (habit.type === 'checklist') {
+        const total = habit.items.length;
+        const done = habit.items.filter(item => value?.[item.id]).length;
+        const cls = done === total ? 'cell-done' : done > 0 ? 'cell-partial' : 'cell-none';
+        return `<span class="cell-content ${cls}">${done}/${total}</span>`;
+      }
+
+      if (habit.type === 'singleChoice') {
+        const opt = habit.options.find(o => o.id === value);
+        const isNone = !value || value === 'none' || value === habit.options[0]?.id;
+        const cls = isNone ? 'cell-none' : 'cell-done';
+        const label = isNone ? '–' : (opt?.label?.charAt(0) || '?');
+        return `<span class="cell-content ${cls}">${label}</span>`;
+      }
+
+      if (habit.type === 'scale') {
+        const val = value || 0;
+        const cls = val > 0 ? 'cell-done' : 'cell-none';
+        return `<span class="cell-content ${cls}">${val > 0 ? val : '–'}</span>`;
+      }
+
+      return '';
+    }
+
     function renderWeekSummary() {
-      const week = state.weeks[state.currentWeekId];
+      const week = getCurrentWeek();
       if (!week) {
         document.getElementById('weekSummary').innerHTML = '<p style="color:var(--muted)">No week selected</p>';
         return;
       }
 
-      const voice = calcVoiceStats(week);
-      const sport = calcSportStats(week);
-      const work = calcWorkStats(week);
-      const guitar = calcGuitarStats(week);
+      const activeHabits = getActiveHabits();
       const overall = calcOverallPct(week);
+      const includedHabits = activeHabits.filter(h => h.includeInOverall);
+      const excludedHabits = activeHabits.filter(h => !h.includeInOverall);
 
-      const overallTier = getStatusTier(overall);
-      const voiceTier = getStatusTier(voice.categoryPct);
-      const sportTier = getStatusTier(sport.sportPct);
-      const workTier = getStatusTier(work.workPct);
-
-      const html = `
+      let html = `
         <div class="summary-header-section">
           <div class="overall-donut">
             ${createDonutSVG(overall, 42, 8, getStatusColor(overall))}
@@ -1491,266 +1476,697 @@
           </div>
           <div class="summary-header-info">
             <h2>Week Summary</h2>
-            <p>Voice, Sport & Work completion (Guitar excluded)</p>
+            <p>${includedHabits.map(h => h.label).join(', ')} completion${excludedHabits.length ? ` (${excludedHabits.map(h => h.label).join(', ')} excluded)` : ''}</p>
           </div>
         </div>
-
         <div class="summary-cards">
-          <!-- Voice Card -->
-          <div class="summary-card">
-            <div class="card-header">
-              <span class="card-title">Voice</span>
-              <span class="status-chip ${voiceTier}">${getStatusIcon(voiceTier)} ${getStatusLabel(voiceTier)}</span>
-            </div>
-            <div class="card-content">
-              <div class="mini-donut">
-                ${createDonutSVG(voice.categoryPct, 23, 5, getStatusColor(voice.categoryPct))}
-                <div class="center" style="color: ${getStatusColor(voice.categoryPct)}">${formatPct(voice.categoryPct)}</div>
-              </div>
-              <div class="card-details">
-                <div class="card-stat-row">
-                  <span class="card-stat-label">Mini Activation</span>
-                  <span class="card-stat-value">${voice.mini}/${week.targets.mini}</span>
-                </div>
-                <div class="card-stat-row">
-                  <span class="card-stat-label">Articulation</span>
-                  <span class="card-stat-value">${voice.articulation}/${week.targets.articulation}</span>
-                </div>
-                <div class="card-stat-row">
-                  <span class="card-stat-label">Vocal Session</span>
-                  <span class="card-stat-value">${voice.vocal}/${week.targets.vocal}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Sport Card -->
-          <div class="summary-card">
-            <div class="card-header">
-              <span class="card-title">Sport</span>
-              <span class="status-chip ${sportTier}">${getStatusIcon(sportTier)} ${getStatusLabel(sportTier)}</span>
-            </div>
-            <div class="card-content">
-              <div class="mini-donut">
-                ${createDonutSVG(sport.sportPct, 23, 5, getStatusColor(sport.sportPct))}
-                <div class="center" style="color: ${getStatusColor(sport.sportPct)}">${formatPct(sport.sportPct)}</div>
-              </div>
-              <div class="card-details">
-                <div class="card-stat-row">
-                  <span class="card-stat-label">Total Days</span>
-                  <span class="card-stat-value">${sport.sportDays}/${week.targets.sport}</span>
-                </div>
-                <div class="card-stat-row">
-                  <span class="card-stat-label">Cardio</span>
-                  <span class="card-stat-value">${sport.cardioDays} days</span>
-                </div>
-                <div class="card-stat-row">
-                  <span class="card-stat-label">Weights + Cardio</span>
-                  <span class="card-stat-value">${sport.weightsCardioDays} days</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Work Card -->
-          <div class="summary-card">
-            <div class="card-header">
-              <span class="card-title">Work</span>
-              <span class="status-chip ${workTier}">${getStatusIcon(workTier)} ${getStatusLabel(workTier)}</span>
-            </div>
-            <div class="card-content">
-              <div class="mini-donut">
-                ${createDonutSVG(work.workPct, 23, 5, getStatusColor(work.workPct))}
-                <div class="center" style="color: ${getStatusColor(work.workPct)}">${formatPct(work.workPct)}</div>
-              </div>
-              <div class="card-details">
-                <div class="card-stat-row">
-                  <span class="card-stat-label">Deep Blocks</span>
-                  <span class="card-stat-value">${work.totalBlocks}/${week.targets.work}</span>
-                </div>
-                <div class="card-stat-row">
-                  <span class="card-stat-label">Completion</span>
-                  <span class="card-stat-value" style="color: ${getStatusColor(work.workPct)}">${formatPct(work.workPct)}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Guitar Card -->
-          <div class="summary-card">
-            <div class="card-header">
-              <span class="card-title">Guitar</span>
-              <span class="status-chip" style="background: var(--panel-3); color: var(--muted);">Not in Overall</span>
-            </div>
-            <div class="guitar-stats">
-              <div class="guitar-stat">
-                <div class="guitar-stat-value">${guitar.avg > 0 ? guitar.avg.toFixed(1) : '–'}</div>
-                <div class="guitar-stat-label">Avg Rating</div>
-              </div>
-              <div class="guitar-stat">
-                <div class="guitar-stat-value">${guitar.practicedDays}</div>
-                <div class="guitar-stat-label">Practice Days</div>
-              </div>
-            </div>
-          </div>
-        </div>
       `;
 
+      for (const habit of activeHabits) {
+        html += renderHabitCard(week, habit);
+      }
+
+      html += '</div>';
       document.getElementById('weekSummary').innerHTML = html;
     }
 
+    function renderHabitCard(week, habit) {
+      const stats = calcHabitStats(week, habit);
+      const pct = habit.type === 'checklist' ? stats.avgPct : stats.pct;
+      const tier = getStatusTier(pct);
+      const notInOverall = !habit.includeInOverall;
+
+      let contentHtml = '';
+
+      if (habit.type === 'checklist') {
+        contentHtml = `
+          <div class="card-content">
+            <div class="mini-donut">
+              ${createDonutSVG(pct, 23, 5, getStatusColor(pct))}
+              <div class="center" style="color: ${getStatusColor(pct)}">${formatPct(pct)}</div>
+            </div>
+            <div class="card-details">
+              ${habit.items.map(item => {
+                const is = stats.itemStats[item.id];
+                return `<div class="card-stat-row">
+                  <span class="card-stat-label">${item.label}</span>
+                  <span class="card-stat-value">${is.done}/${is.target}</span>
+                </div>`;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      } else if (habit.type === 'singleChoice') {
+        contentHtml = `
+          <div class="card-content">
+            <div class="mini-donut">
+              ${createDonutSVG(pct, 23, 5, getStatusColor(pct))}
+              <div class="center" style="color: ${getStatusColor(pct)}">${formatPct(pct)}</div>
+            </div>
+            <div class="card-details">
+              <div class="card-stat-row">
+                <span class="card-stat-label">Days Active</span>
+                <span class="card-stat-value">${stats.completed}/${stats.target}</span>
+              </div>
+              ${habit.options.slice(1).map(opt => `
+                <div class="card-stat-row">
+                  <span class="card-stat-label">${opt.label}</span>
+                  <span class="card-stat-value">${stats.breakdown[opt.id] || 0} days</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } else if (habit.type === 'scale') {
+        contentHtml = `
+          <div class="scale-stats">
+            <div class="scale-stat">
+              <div class="scale-stat-value">${stats.avg > 0 ? stats.avg.toFixed(1) : '–'}</div>
+              <div class="scale-stat-label">Avg Rating</div>
+            </div>
+            <div class="scale-stat">
+              <div class="scale-stat-value">${stats.total}</div>
+              <div class="scale-stat-label">Total</div>
+            </div>
+            <div class="scale-stat">
+              <div class="scale-stat-value">${stats.daysWithValue}</div>
+              <div class="scale-stat-label">Days</div>
+            </div>
+          </div>
+        `;
+      }
+
+      const chipClass = notInOverall ? '' : tier;
+      const chipStyle = notInOverall ? 'style="background: var(--panel-3); color: var(--muted);"' : '';
+      const chipText = notInOverall ? 'Not in Overall' : getStatusLabel(tier);
+
+      return `
+        <div class="summary-card">
+          <div class="card-header">
+            <span class="card-title">${habit.label}</span>
+            <span class="status-chip ${chipClass}" ${chipStyle}>${notInOverall ? '' : getStatusIcon(tier)} ${chipText}</span>
+          </div>
+          ${contentHtml}
+        </div>
+      `;
+    }
+
+    function renderDayDrawer() {
+      const week = getCurrentWeek();
+      if (!week || selectedDay === null) return;
+
+      const day = week.days[selectedDay];
+      const activeHabits = getActiveHabits();
+      const monday = getWeekMonday(week.weekId);
+      const date = formatDate(addDays(monday, selectedDay));
+
+      document.getElementById('drawerTitle').textContent = `${DAY_FULL_NAMES[selectedDay]}, ${date}`;
+
+      let html = '';
+      for (const habit of activeHabits) {
+        html += `<div class="drawer-section">
+          <div class="drawer-section-title">${habit.label}</div>
+          ${renderHabitInput(habit, day.habits[habit.id])}
+        </div>`;
+      }
+
+      document.getElementById('drawerContent').innerHTML = html;
+      attachDayInputListeners();
+    }
+
+    function renderHabitInput(habit, value) {
+      if (habit.type === 'checklist') {
+        return `<div class="checkbox-group">
+          ${habit.items.map(item => `
+            <label class="checkbox-item">
+              <input type="checkbox" data-habit="${habit.id}" data-item="${item.id}" ${value?.[item.id] ? 'checked' : ''}>
+              <span>${item.label}</span>
+            </label>
+          `).join('')}
+        </div>`;
+      }
+
+      if (habit.type === 'singleChoice') {
+        return `<div class="radio-group">
+          ${habit.options.map(opt => `
+            <label class="radio-item">
+              <input type="radio" name="habit-${habit.id}" value="${opt.id}" ${value === opt.id ? 'checked' : ''} data-habit="${habit.id}">
+              <span>${opt.label}</span>
+            </label>
+          `).join('')}
+        </div>`;
+      }
+
+      if (habit.type === 'scale') {
+        const min = habit.min || 0;
+        const max = habit.max || 5;
+        let btns = '';
+        for (let i = min; i <= max; i += (habit.step || 1)) {
+          btns += `<button class="rating-btn ${value === i ? 'active' : ''}" data-habit="${habit.id}" data-value="${i}">${i}</button>`;
+        }
+        return `<div class="rating-buttons">${btns}</div>`;
+      }
+
+      return '';
+    }
+
+    function attachDayInputListeners() {
+      document.querySelectorAll('#drawerContent input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', () => {
+          updateDayHabit(cb.dataset.habit, cb.dataset.item, cb.checked);
+        });
+      });
+
+      document.querySelectorAll('#drawerContent input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+          updateDayHabit(radio.dataset.habit, null, radio.value);
+        });
+      });
+
+      document.querySelectorAll('#drawerContent .rating-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const habitId = btn.dataset.habit;
+          const value = parseInt(btn.dataset.value);
+          updateDayHabit(habitId, null, value);
+          document.querySelectorAll(`#drawerContent .rating-btn[data-habit="${habitId}"]`).forEach(b => {
+            b.classList.toggle('active', parseInt(b.dataset.value) === value);
+          });
+        });
+      });
+    }
+
+    function updateDayHabit(habitId, itemId, value) {
+      const week = getCurrentWeek();
+      if (!week || selectedDay === null) return;
+
+      const day = week.days[selectedDay];
+      day.updatedAt = new Date().toISOString();
+
+      if (!day.habits[habitId]) {
+        const habit = getHabitById(habitId);
+        if (habit?.type === 'checklist') {
+          day.habits[habitId] = {};
+        }
+      }
+
+      if (itemId) {
+        day.habits[habitId][itemId] = value;
+      } else {
+        day.habits[habitId] = value;
+      }
+
+      saveDB();
+      renderWeekGrid();
+      renderWeekSummary();
+    }
+
+    // ============ HISTORY VIEW ============
     function renderHistory() {
-      const weekIds = Object.keys(state.weeks).sort().reverse();
+      const weekIds = Object.keys(db.weeks).sort().reverse();
+      const showArchived = document.getElementById('showArchivedHistory')?.checked;
 
       if (weekIds.length === 0) {
         document.getElementById('historyList').innerHTML = '<p style="color:var(--muted)">No weeks tracked yet</p>';
         return;
       }
 
+      const habits = showArchived ? getAllHabits() : getActiveHabits();
+
       let html = `
         <div class="history-item" style="cursor:default;background:var(--panel-2)">
-          <div style="font-weight:600">Week</div>
-          <div class="history-stat"><div class="history-stat-label">Voice</div></div>
-          <div class="history-stat"><div class="history-stat-label">Sport</div></div>
-          <div class="history-stat"><div class="history-stat-label">Work</div></div>
+          <div style="font-weight:600;min-width:200px">Week</div>
+          ${habits.map(h => `<div class="history-stat"><div class="history-stat-label">${h.label}</div></div>`).join('')}
           <div class="history-stat"><div class="history-stat-label">Overall</div></div>
-          <div class="history-stat"><div class="history-stat-label">Guitar</div></div>
         </div>
       `;
 
-      weekIds.forEach(weekId => {
-        const week = state.weeks[weekId];
-        const voice = calcVoiceStats(week);
-        const sport = calcSportStats(week);
-        const work = calcWorkStats(week);
-        const guitar = calcGuitarStats(week);
+      for (const weekId of weekIds) {
+        const week = db.weeks[weekId];
         const overall = calcOverallPct(week);
 
         html += `
           <div class="history-item" data-week="${weekId}">
             <div class="history-date">${formatDateRange(week.startDate, week.endDate)}</div>
-            <div class="history-stat"><span style="color: ${getStatusColor(voice.categoryPct)}">${formatPct(voice.categoryPct)}</span></div>
-            <div class="history-stat"><span style="color: ${getStatusColor(sport.sportPct)}">${formatPct(sport.sportPct)}</span></div>
-            <div class="history-stat"><span style="color: ${getStatusColor(work.workPct)}">${formatPct(work.workPct)}</span></div>
+            ${habits.map(h => {
+              const stats = calcHabitStats(week, h);
+              const pct = h.type === 'checklist' ? stats.avgPct : stats.pct;
+              return `<div class="history-stat"><span style="color: ${getStatusColor(pct)}">${formatPct(pct)}</span></div>`;
+            }).join('')}
             <div class="history-stat"><span style="color: ${getStatusColor(overall)}">${formatPct(overall)}</span></div>
-            <div class="history-stat"><span>${guitar.avg > 0 ? guitar.avg.toFixed(1) : '–'}</span></div>
           </div>
         `;
-      });
+      }
 
       document.getElementById('historyList').innerHTML = html;
 
       document.querySelectorAll('.history-item[data-week]').forEach(item => {
         item.addEventListener('click', () => {
-          state.currentWeekId = item.dataset.week;
+          currentWeekId = item.dataset.week;
           showView('week');
         });
       });
     }
 
+    // ============ OVERALL VIEW ============
     function renderOverall() {
-      const useWeekTargets = document.getElementById('useWeekTargets').checked;
-      const stats = calcAllTimeStats(useWeekTargets);
-
-      if (!stats) {
+      const weeks = Object.values(db.weeks);
+      if (weeks.length === 0) {
         document.getElementById('overallGrid').innerHTML = '<p style="color:var(--muted)">No data yet</p>';
         return;
       }
 
-      const html = `
+      const activeHabits = getActiveHabits();
+      let totalOverall = 0;
+
+      for (const week of weeks) {
+        totalOverall += calcOverallPct(week);
+      }
+
+      const avgOverall = totalOverall / weeks.length;
+
+      let html = `
         <div class="overall-card">
-          <div class="overall-card-title">Overall</div>
-          <div class="overall-percent" style="color: ${getStatusColor(stats.overallPct)}">${formatPct(stats.overallPct)}</div>
+          <div class="overall-card-title">Overall Average</div>
+          <div class="overall-percent" style="color: ${getStatusColor(avgOverall)}">${formatPct(avgOverall)}</div>
           <div class="summary-row">
             <span class="summary-label">Weeks tracked</span>
-            <span class="summary-value">${stats.weeksCount}</span>
-          </div>
-        </div>
-
-        <div class="overall-card">
-          <div class="overall-card-title">Voice (${formatPct(stats.voiceCategoryPct)})</div>
-          <div class="summary-row">
-            <span class="summary-label">Mini Activation</span>
-            <span class="summary-value" style="color: ${getStatusColor(stats.miniPct)}">${stats.totalMini} (${formatPct(stats.miniPct)})</span>
-          </div>
-          <div class="summary-row">
-            <span class="summary-label">Articulation</span>
-            <span class="summary-value" style="color: ${getStatusColor(stats.artPct)}">${stats.totalArticulation} (${formatPct(stats.artPct)})</span>
-          </div>
-          <div class="summary-row">
-            <span class="summary-label">Vocal Session</span>
-            <span class="summary-value" style="color: ${getStatusColor(stats.vocalPct)}">${stats.totalVocal} (${formatPct(stats.vocalPct)})</span>
-          </div>
-        </div>
-
-        <div class="overall-card">
-          <div class="overall-card-title">Sport (${formatPct(stats.sportPct)})</div>
-          <div class="summary-row">
-            <span class="summary-label">Total sport days</span>
-            <span class="summary-value">${stats.totalSportDays}</span>
-          </div>
-          <div class="summary-row">
-            <span class="summary-label">Cardio days</span>
-            <span class="summary-value">${stats.totalCardioDays}</span>
-          </div>
-          <div class="summary-row">
-            <span class="summary-label">Weights + Cardio days</span>
-            <span class="summary-value">${stats.totalWeightsCardioDays}</span>
-          </div>
-        </div>
-
-        <div class="overall-card">
-          <div class="overall-card-title">Work (${formatPct(stats.workPct)})</div>
-          <div class="summary-row">
-            <span class="summary-label">Total deep blocks</span>
-            <span class="summary-value">${stats.totalDeepBlocks}</span>
-          </div>
-        </div>
-
-        <div class="overall-card">
-          <div class="overall-card-title">Guitar</div>
-          <div class="summary-row">
-            <span class="summary-label">All-time avg rating</span>
-            <span class="summary-value">${stats.guitarAvg > 0 ? stats.guitarAvg.toFixed(2) : '–'}</span>
-          </div>
-          <div class="summary-row">
-            <span class="summary-label">Total practice days</span>
-            <span class="summary-value">${stats.totalGuitarPracticedDays}</span>
+            <span class="summary-value">${weeks.length}</span>
           </div>
         </div>
       `;
 
+      for (const habit of activeHabits) {
+        let totalPct = 0;
+        for (const week of weeks) {
+          const stats = calcHabitStats(week, habit);
+          totalPct += habit.type === 'checklist' ? stats.avgPct : stats.pct;
+        }
+        const avgPct = totalPct / weeks.length;
+
+        html += `
+          <div class="overall-card">
+            <div class="overall-card-title">${habit.label}</div>
+            <div class="overall-percent" style="color: ${getStatusColor(avgPct)}">${formatPct(avgPct)}</div>
+          </div>
+        `;
+      }
+
       document.getElementById('overallGrid').innerHTML = html;
     }
 
-    function renderGuitarButtons() {
-      let html = '';
-      for (let i = 0; i <= 5; i++) {
-        html += `<button class="rating-btn" data-rating="${i}">${i}</button>`;
-      }
-      document.getElementById('guitarRating').innerHTML = html;
+    // ============ HABIT MANAGER ============
+    function renderHabitsModal() {
+      const container = document.getElementById('habitsTabContent');
 
-      document.querySelectorAll('#guitarRating .rating-btn').forEach(btn => {
+      document.querySelectorAll('#habitsModal .tab').forEach(t => {
+        t.classList.toggle('active', t.dataset.tab === currentHabitTab);
+      });
+
+      if (currentHabitTab === 'list') {
+        renderHabitsList(container);
+      } else if (currentHabitTab === 'add' || currentHabitTab === 'edit') {
+        renderHabitForm(container);
+      }
+    }
+
+    function renderHabitsList(container) {
+      const habits = getAllHabits();
+
+      let html = '<div class="habit-list">';
+      for (const habit of habits) {
+        html += `
+          <div class="habit-item ${habit.isArchived ? 'archived' : ''}">
+            <div class="reorder-btns">
+              <button class="reorder-btn" data-id="${habit.id}" data-dir="-1">▲</button>
+              <button class="reorder-btn" data-id="${habit.id}" data-dir="1">▼</button>
+            </div>
+            <div class="habit-item-info">
+              <div class="habit-item-label">${habit.label} ${habit.isArchived ? '(archived)' : ''}</div>
+              <div class="habit-item-type">${habit.type}${habit.includeInOverall ? '' : ' • not in overall'}</div>
+            </div>
+            <div class="habit-item-actions">
+              <button class="btn btn-sm" data-edit="${habit.id}">Edit</button>
+              ${habit.isArchived
+                ? `<button class="btn btn-sm" data-restore="${habit.id}">Restore</button>`
+                : `<button class="btn btn-sm btn-danger" data-archive="${habit.id}">Archive</button>`}
+            </div>
+          </div>
+        `;
+      }
+      html += '</div>';
+      html += '<button class="btn btn-primary" id="addHabitBtn">+ Add Habit</button>';
+
+      container.innerHTML = html;
+
+      document.getElementById('addHabitBtn')?.addEventListener('click', () => {
+        editingHabit = null;
+        currentHabitTab = 'add';
+        renderHabitsModal();
+      });
+
+      container.querySelectorAll('[data-edit]').forEach(btn => {
         btn.addEventListener('click', () => {
-          const rating = parseInt(btn.dataset.rating);
-          updateDayData('guitar', rating);
+          editingHabit = getHabitById(btn.dataset.edit);
+          currentHabitTab = 'edit';
+          renderHabitsModal();
+        });
+      });
+
+      container.querySelectorAll('[data-archive]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const habit = getHabitById(btn.dataset.archive);
+          if (habit) {
+            habit.isArchived = true;
+            saveDB();
+            renderHabitsModal();
+            renderWeekGrid();
+            renderWeekSummary();
+          }
+        });
+      });
+
+      container.querySelectorAll('[data-restore]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const habit = getHabitById(btn.dataset.restore);
+          if (habit) {
+            habit.isArchived = false;
+            saveDB();
+            renderHabitsModal();
+            renderWeekGrid();
+            renderWeekSummary();
+          }
+        });
+      });
+
+      container.querySelectorAll('.reorder-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          reorderHabit(btn.dataset.id, parseInt(btn.dataset.dir));
         });
       });
     }
 
-    function renderWorkButtons() {
-      let html = '';
-      for (let i = 0; i <= 5; i++) {
-        html += `<button class="rating-btn" data-blocks="${i}">${i}</button>`;
-      }
-      document.getElementById('workRating').innerHTML = html;
+    function renderHabitForm(container) {
+      const isEdit = !!editingHabit;
+      const habit = editingHabit || { id: '', label: '', type: 'checklist', items: [], options: [], min: 0, max: 5, step: 1, includeInOverall: true, weight: 1 };
 
-      document.querySelectorAll('#workRating .rating-btn').forEach(btn => {
+      let html = `
+        <form id="habitForm">
+          <div class="form-group">
+            <label class="form-label">Habit Name</label>
+            <input type="text" class="form-input" id="habitLabel" value="${habit.label}" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Type</label>
+            <select class="form-select" id="habitType" ${isEdit ? 'disabled' : ''}>
+              <option value="checklist" ${habit.type === 'checklist' ? 'selected' : ''}>Checklist (multiple items)</option>
+              <option value="singleChoice" ${habit.type === 'singleChoice' ? 'selected' : ''}>Single Choice</option>
+              <option value="scale" ${habit.type === 'scale' ? 'selected' : ''}>Scale (numeric)</option>
+            </select>
+          </div>
+
+          <div id="typeSpecificFields"></div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="checkbox-item">
+                <input type="checkbox" id="habitIncludeOverall" ${habit.includeInOverall ? 'checked' : ''}>
+                <span>Include in Overall %</span>
+              </label>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Weight</label>
+              <input type="number" class="form-input" id="habitWeight" value="${habit.weight || 1}" min="0.1" step="0.1">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn" id="habitCancel">Cancel</button>
+            <button type="submit" class="btn btn-primary">${isEdit ? 'Save Changes' : 'Create Habit'}</button>
+          </div>
+        </form>
+      `;
+
+      container.innerHTML = html;
+      renderTypeSpecificFields(habit);
+
+      document.getElementById('habitType').addEventListener('change', (e) => {
+        renderTypeSpecificFields({ ...habit, type: e.target.value });
+      });
+
+      document.getElementById('habitCancel').addEventListener('click', () => {
+        currentHabitTab = 'list';
+        editingHabit = null;
+        renderHabitsModal();
+      });
+
+      document.getElementById('habitForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        saveHabit();
+      });
+    }
+
+    function renderTypeSpecificFields(habit) {
+      const container = document.getElementById('typeSpecificFields');
+      if (!container) return;
+
+      if (habit.type === 'checklist') {
+        const items = habit.items || [];
+        container.innerHTML = `
+          <div class="form-group">
+            <label class="form-label">Checklist Items</label>
+            <div class="items-editor">
+              <div class="items-list" id="checklistItems">
+                ${items.map((item, i) => `
+                  <div class="item-row">
+                    <input type="text" class="form-input" value="${item.label}" data-index="${i}">
+                    <button type="button" class="btn btn-sm btn-danger" data-remove="${i}">×</button>
+                  </div>
+                `).join('')}
+              </div>
+              <button type="button" class="btn btn-sm" id="addChecklistItem">+ Add Item</button>
+            </div>
+          </div>
+        `;
+
+        document.getElementById('addChecklistItem')?.addEventListener('click', () => {
+          const list = document.getElementById('checklistItems');
+          const idx = list.children.length;
+          const row = document.createElement('div');
+          row.className = 'item-row';
+          row.innerHTML = `
+            <input type="text" class="form-input" value="" data-index="${idx}">
+            <button type="button" class="btn btn-sm btn-danger" data-remove="${idx}">×</button>
+          `;
+          list.appendChild(row);
+          attachRemoveListeners();
+        });
+
+        attachRemoveListeners();
+      } else if (habit.type === 'singleChoice') {
+        const options = habit.options || [{ id: 'none', label: 'None' }];
+        container.innerHTML = `
+          <div class="form-group">
+            <label class="form-label">Options (first is "None"/default)</label>
+            <div class="items-editor">
+              <div class="items-list" id="choiceOptions">
+                ${options.map((opt, i) => `
+                  <div class="item-row">
+                    <input type="text" class="form-input" value="${opt.label}" data-index="${i}">
+                    ${i > 0 ? `<button type="button" class="btn btn-sm btn-danger" data-remove="${i}">×</button>` : ''}
+                  </div>
+                `).join('')}
+              </div>
+              <button type="button" class="btn btn-sm" id="addChoiceOption">+ Add Option</button>
+            </div>
+          </div>
+        `;
+
+        document.getElementById('addChoiceOption')?.addEventListener('click', () => {
+          const list = document.getElementById('choiceOptions');
+          const idx = list.children.length;
+          const row = document.createElement('div');
+          row.className = 'item-row';
+          row.innerHTML = `
+            <input type="text" class="form-input" value="" data-index="${idx}">
+            <button type="button" class="btn btn-sm btn-danger" data-remove="${idx}">×</button>
+          `;
+          list.appendChild(row);
+          attachRemoveListeners();
+        });
+
+        attachRemoveListeners();
+      } else if (habit.type === 'scale') {
+        container.innerHTML = `
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Min</label>
+              <input type="number" class="form-input" id="scaleMin" value="${habit.min || 0}">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Max</label>
+              <input type="number" class="form-input" id="scaleMax" value="${habit.max || 5}">
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function attachRemoveListeners() {
+      document.querySelectorAll('#typeSpecificFields [data-remove]').forEach(btn => {
         btn.addEventListener('click', () => {
-          const blocks = parseInt(btn.dataset.blocks);
-          updateDayData('work', blocks);
+          btn.parentElement.remove();
         });
       });
+    }
+
+    function saveHabit() {
+      const label = document.getElementById('habitLabel').value.trim();
+      const type = document.getElementById('habitType').value;
+      const includeInOverall = document.getElementById('habitIncludeOverall').checked;
+      const weight = parseFloat(document.getElementById('habitWeight').value) || 1;
+
+      if (!label) return;
+
+      let habit;
+
+      if (editingHabit) {
+        habit = editingHabit;
+        habit.label = label;
+        habit.includeInOverall = includeInOverall;
+        habit.weight = weight;
+      } else {
+        habit = {
+          id: generateId(),
+          label,
+          type,
+          includeInOverall,
+          weight,
+          isArchived: false,
+          order: db.habitsConfig.length
+        };
+        db.habitsConfig.push(habit);
+      }
+
+      if (type === 'checklist') {
+        const items = [];
+        document.querySelectorAll('#checklistItems input').forEach((input, i) => {
+          const itemLabel = input.value.trim();
+          if (itemLabel) {
+            const existingItem = habit.items?.[i];
+            items.push({
+              id: existingItem?.id || generateId(),
+              label: itemLabel
+            });
+          }
+        });
+        habit.items = items;
+
+        // Set default targets for new items
+        for (const item of items) {
+          if (!((`${habit.id}.${item.id}`) in db.targets)) {
+            db.targets[`${habit.id}.${item.id}`] = 7;
+          }
+        }
+      } else if (type === 'singleChoice') {
+        const options = [];
+        document.querySelectorAll('#choiceOptions input').forEach((input, i) => {
+          const optLabel = input.value.trim();
+          if (optLabel) {
+            const existingOpt = habit.options?.[i];
+            options.push({
+              id: existingOpt?.id || (i === 0 ? 'none' : generateId()),
+              label: optLabel
+            });
+          }
+        });
+        habit.options = options;
+
+        if (!(habit.id in db.targets)) {
+          db.targets[habit.id] = 5;
+        }
+      } else if (type === 'scale') {
+        habit.min = parseInt(document.getElementById('scaleMin').value) || 0;
+        habit.max = parseInt(document.getElementById('scaleMax').value) || 5;
+        habit.step = 1;
+
+        if (!(habit.id in db.targets)) {
+          db.targets[habit.id] = 10;
+        }
+      }
+
+      saveDB();
+      currentHabitTab = 'list';
+      editingHabit = null;
+      renderHabitsModal();
+      renderWeekGrid();
+      renderWeekSummary();
+    }
+
+    function reorderHabit(habitId, direction) {
+      const habits = getAllHabits();
+      const idx = habits.findIndex(h => h.id === habitId);
+      if (idx < 0) return;
+
+      const newIdx = idx + direction;
+      if (newIdx < 0 || newIdx >= habits.length) return;
+
+      // Swap orders
+      const temp = habits[idx].order;
+      habits[idx].order = habits[newIdx].order;
+      habits[newIdx].order = temp;
+
+      saveDB();
+      renderHabitsModal();
+      renderWeekGrid();
+    }
+
+    // ============ TARGETS MODAL ============
+    function renderTargetsModal() {
+      const activeHabits = getActiveHabits();
+      let html = '';
+
+      for (const habit of activeHabits) {
+        if (habit.type === 'checklist') {
+          html += `<div class="form-group"><label class="form-label" style="font-weight:600">${habit.label}</label></div>`;
+          for (const item of habit.items) {
+            const key = `${habit.id}.${item.id}`;
+            const val = db.targets[key] || 7;
+            html += `
+              <div class="form-group">
+                <label class="form-label">${item.label} (days/week)</label>
+                <input type="number" class="form-input" data-target="${key}" value="${val}" min="0" max="7">
+              </div>
+            `;
+          }
+        } else if (habit.type === 'singleChoice') {
+          const val = db.targets[habit.id] || 5;
+          html += `
+            <div class="form-group">
+              <label class="form-label">${habit.label} (active days/week)</label>
+              <input type="number" class="form-input" data-target="${habit.id}" value="${val}" min="0" max="7">
+            </div>
+          `;
+        } else if (habit.type === 'scale') {
+          const val = db.targets[habit.id] || 10;
+          html += `
+            <div class="form-group">
+              <label class="form-label">${habit.label} (total points/week)</label>
+              <input type="number" class="form-input" data-target="${habit.id}" value="${val}" min="0">
+            </div>
+          `;
+        }
+      }
+
+      document.getElementById('targetsContent').innerHTML = html;
+    }
+
+    function saveTargets() {
+      document.querySelectorAll('#targetsContent input[data-target]').forEach(input => {
+        db.targets[input.dataset.target] = parseInt(input.value) || 0;
+      });
+      saveDB();
+      closeModal('targetsModal');
+      renderWeekSummary();
     }
 
     // ============ VIEW MANAGEMENT ============
@@ -1762,6 +2178,7 @@
       closeDayDrawer();
 
       if (view === 'week') {
+        ensureWeekExists(currentWeekId);
         renderWeekGrid();
         renderWeekSummary();
       } else if (view === 'history') {
@@ -1771,203 +2188,84 @@
       }
     }
 
-    // ============ DAY DRAWER ============
     function openDayDrawer(dayIndex) {
-      const week = state.weeks[state.currentWeekId];
-      if (!week) return;
-
       selectedDay = dayIndex;
-      const day = week.days[dayIndex];
-      const monday = getWeekMonday(week.weekId);
-      const date = formatDate(addDays(monday, dayIndex));
-
-      document.getElementById('drawerTitle').textContent = `${DAY_FULL_NAMES[dayIndex]}, ${date}`;
-      document.getElementById('voiceMini').checked = day.voice.miniActivation;
-      document.getElementById('voiceArticulation').checked = day.voice.articulation;
-      document.getElementById('voiceVocal').checked = day.voice.vocalSession;
-
-      document.querySelectorAll('input[name="sport"]').forEach(radio => {
-        radio.checked = radio.value === day.sport;
-      });
-
-      // Update work buttons
-      document.querySelectorAll('#workRating .rating-btn').forEach(btn => {
-        btn.classList.toggle('active', parseInt(btn.dataset.blocks) === day.work.deepBlocks);
-      });
-
-      // Update guitar buttons
-      document.querySelectorAll('#guitarRating .rating-btn').forEach(btn => {
-        btn.classList.toggle('active', parseInt(btn.dataset.rating) === day.guitar.rating);
-      });
-
       document.getElementById('mainContent').classList.add('drawer-open');
+      renderDayDrawer();
       renderWeekGrid();
     }
 
     function closeDayDrawer() {
       selectedDay = null;
       document.getElementById('mainContent').classList.remove('drawer-open');
-      renderWeekGrid();
+      if (currentView === 'week') renderWeekGrid();
     }
 
-    function updateDayData(field, value) {
-      if (selectedDay === null) return;
-      const week = state.weeks[state.currentWeekId];
-      if (!week) return;
+    function openModal(id) {
+      document.getElementById(id).classList.add('open');
+    }
 
-      const day = week.days[selectedDay];
-
-      switch (field) {
-        case 'voiceMini':
-          day.voice.miniActivation = value;
-          break;
-        case 'voiceArticulation':
-          day.voice.articulation = value;
-          break;
-        case 'voiceVocal':
-          day.voice.vocalSession = value;
-          break;
-        case 'sport':
-          day.sport = value;
-          break;
-        case 'work':
-          day.work.deepBlocks = Math.max(0, Math.min(5, value));
-          document.querySelectorAll('#workRating .rating-btn').forEach(btn => {
-            btn.classList.toggle('active', parseInt(btn.dataset.blocks) === day.work.deepBlocks);
-          });
-          break;
-        case 'guitar':
-          day.guitar.rating = Math.max(0, Math.min(5, value));
-          document.querySelectorAll('#guitarRating .rating-btn').forEach(btn => {
-            btn.classList.toggle('active', parseInt(btn.dataset.rating) === day.guitar.rating);
-          });
-          break;
-      }
-
-      saveState();
-      renderWeekGrid();
-      renderWeekSummary();
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
     }
 
     // ============ WEEK NAVIGATION ============
     function navigateWeek(direction) {
-      const weekIds = Object.keys(state.weeks).sort();
+      const weekIds = Object.keys(db.weeks).sort();
       if (weekIds.length === 0) return;
 
-      const currentIndex = weekIds.indexOf(state.currentWeekId);
+      const currentIndex = weekIds.indexOf(currentWeekId);
       const newIndex = currentIndex + direction;
 
       if (newIndex >= 0 && newIndex < weekIds.length) {
-        state.currentWeekId = weekIds[newIndex];
+        currentWeekId = weekIds[newIndex];
         showView('week');
       }
     }
 
     function createNewWeek() {
-      const currentWeekId = getISOWeekId(new Date());
+      const todayWeekId = getISOWeekId(new Date());
 
-      if (!state.weeks[currentWeekId]) {
-        state.weeks[currentWeekId] = createWeek(currentWeekId);
-        state.currentWeekId = currentWeekId;
+      if (!db.weeks[todayWeekId]) {
+        currentWeekId = todayWeekId;
       } else {
-        const weekIds = Object.keys(state.weeks).sort();
+        const weekIds = Object.keys(db.weeks).sort();
         const lastWeekId = weekIds[weekIds.length - 1];
         const lastMonday = getWeekMonday(lastWeekId);
         const nextMonday = addDays(lastMonday, 7);
-        const nextWeekId = getISOWeekId(nextMonday);
-
-        if (!state.weeks[nextWeekId]) {
-          state.weeks[nextWeekId] = createWeek(nextWeekId);
-        }
-        state.currentWeekId = nextWeekId;
+        currentWeekId = getISOWeekId(nextMonday);
       }
 
-      saveState();
+      ensureWeekExists(currentWeekId);
+      saveDB();
       showView('week');
     }
 
-    // ============ MODALS ============
-    function openTargetsModal() {
-      const week = state.weeks[state.currentWeekId];
-      if (!week) return;
-
-      document.getElementById('targetMini').value = week.targets.mini;
-      document.getElementById('targetArticulation').value = week.targets.articulation;
-      document.getElementById('targetVocal').value = week.targets.vocal;
-      document.getElementById('targetSport').value = week.targets.sport;
-      document.getElementById('targetWork').value = week.targets.work;
-      document.getElementById('targetsModal').classList.add('open');
-    }
-
-    function closeTargetsModal() {
-      document.getElementById('targetsModal').classList.remove('open');
-    }
-
-    function saveTargets() {
-      const week = state.weeks[state.currentWeekId];
-      if (!week) return;
-
-      week.targets.mini = Math.max(0, parseInt(document.getElementById('targetMini').value) || 0);
-      week.targets.articulation = Math.max(0, parseInt(document.getElementById('targetArticulation').value) || 0);
-      week.targets.vocal = Math.max(0, parseInt(document.getElementById('targetVocal').value) || 0);
-      week.targets.sport = Math.max(0, parseInt(document.getElementById('targetSport').value) || 0);
-      week.targets.work = Math.max(0, parseInt(document.getElementById('targetWork').value) || 0);
-
-      saveState();
-      closeTargetsModal();
-      renderWeekSummary();
-    }
-
-    function useDefaultTargets() {
-      const week = state.weeks[state.currentWeekId];
-      if (!week) return;
-
-      week.targets = { ...settings.targets };
-      saveState();
-      closeTargetsModal();
-      renderWeekSummary();
-    }
-
-    function openSettingsModal() {
-      document.getElementById('defaultMini').value = settings.targets.mini;
-      document.getElementById('defaultArticulation').value = settings.targets.articulation;
-      document.getElementById('defaultVocal').value = settings.targets.vocal;
-      document.getElementById('defaultSport').value = settings.targets.sport;
-      document.getElementById('defaultWork').value = settings.targets.work;
-      document.getElementById('defaultBlocksMax').value = settings.blocksMaxPerDay;
-      document.getElementById('settingsModal').classList.add('open');
-    }
-
-    function closeSettingsModal() {
-      document.getElementById('settingsModal').classList.remove('open');
-    }
-
-    function saveSettingsData() {
-      settings.targets.mini = Math.max(0, parseInt(document.getElementById('defaultMini').value) || 0);
-      settings.targets.articulation = Math.max(0, parseInt(document.getElementById('defaultArticulation').value) || 0);
-      settings.targets.vocal = Math.max(0, parseInt(document.getElementById('defaultVocal').value) || 0);
-      settings.targets.sport = Math.max(0, parseInt(document.getElementById('defaultSport').value) || 0);
-      settings.targets.work = Math.max(0, parseInt(document.getElementById('defaultWork').value) || 0);
-      settings.blocksMaxPerDay = Math.max(1, parseInt(document.getElementById('defaultBlocksMax').value) || 5);
-
-      saveSettings();
-      closeSettingsModal();
-    }
-
-    // ============ EXPORT/IMPORT ============
-    function exportData() {
-      const data = {
-        state,
-        settings,
+    // ============ EXPORT / IMPORT / BACKUP ============
+    function exportData(filename) {
+      const exportObj = {
+        schemaVersion: db.schemaVersion,
+        habitsConfig: db.habitsConfig,
+        targets: db.targets,
+        weeks: db.weeks,
         exportedAt: new Date().toISOString()
       };
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+
+      const blob = new Blob([JSON.stringify(exportObj, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `weekly-tracker-${formatDate(new Date())}.json`;
+      a.download = filename || `tracker-export-${formatDate(new Date())}.json`;
       a.click();
       URL.revokeObjectURL(url);
+    }
+
+    function triggerBackup(weekKey) {
+      exportData(`tracker-backup-${weekKey}.json`);
+    }
+
+    function manualBackup() {
+      exportData(`tracker-backup-manual-${formatDate(new Date())}.json`);
     }
 
     function importData() {
@@ -1981,27 +2279,32 @@
       const reader = new FileReader();
       reader.onload = (e) => {
         try {
-          const data = JSON.parse(e.target.result);
-          if (data.state && data.state.weeks) {
-            state = data.state;
-            if (data.settings) {
-              settings = { ...DEFAULT_SETTINGS, ...data.settings };
-              saveSettings();
-            }
-            saveState();
+          const raw = JSON.parse(e.target.result);
+          const imported = migrateData(raw);
 
-            const weekIds = Object.keys(state.weeks).sort();
-            if (weekIds.length > 0) {
-              const currentWeekId = getISOWeekId(new Date());
-              state.currentWeekId = weekIds.includes(currentWeekId) ? currentWeekId : weekIds[weekIds.length - 1];
-            }
-
-            showView('week');
-            alert('Data imported successfully!');
-          } else {
+          if (!imported) {
             alert('Invalid data format');
+            return;
           }
+
+          // Merge logic
+          const result = mergeData(db, imported);
+
+          db = result.merged;
+          saveDB();
+
+          // Show result modal
+          showImportResult(result.stats);
+
+          // Refresh view
+          if (!db.weeks[currentWeekId]) {
+            const weekIds = Object.keys(db.weeks).sort();
+            currentWeekId = weekIds.length > 0 ? weekIds[weekIds.length - 1] : getISOWeekId(new Date());
+          }
+          showView('week');
+
         } catch (err) {
+          console.error(err);
           alert('Failed to parse JSON file');
         }
       };
@@ -2009,55 +2312,176 @@
       event.target.value = '';
     }
 
+    function mergeData(local, imported) {
+      const stats = { weeksImported: 0, weeksMerged: 0, habitsAdded: 0 };
+      const merged = JSON.parse(JSON.stringify(local));
+
+      // Merge weeks
+      for (const [weekId, importedWeek] of Object.entries(imported.weeks || {})) {
+        if (!merged.weeks[weekId]) {
+          merged.weeks[weekId] = importedWeek;
+          stats.weeksImported++;
+        } else {
+          // Merge day by day
+          const localWeek = merged.weeks[weekId];
+          for (let d = 0; d < 7; d++) {
+            const localDay = localWeek.days[d];
+            const importedDay = importedWeek.days?.[d];
+
+            if (!importedDay) continue;
+
+            const localTime = new Date(localDay.updatedAt || 0).getTime();
+            const importedTime = new Date(importedDay.updatedAt || 0).getTime();
+
+            if (importedTime > localTime) {
+              // Use imported day data
+              localWeek.days[d] = importedDay;
+            } else if (!localDay.updatedAt && importedDay.habits) {
+              // Local has no timestamp, merge habits
+              for (const [hid, val] of Object.entries(importedDay.habits)) {
+                if (!localDay.habits[hid]) {
+                  localDay.habits[hid] = val;
+                }
+              }
+            }
+          }
+          stats.weeksMerged++;
+        }
+      }
+
+      // Merge habits config - add new habits from import
+      const localHabitIds = new Set(merged.habitsConfig.map(h => h.id));
+      for (const habit of (imported.habitsConfig || [])) {
+        if (!localHabitIds.has(habit.id)) {
+          habit.order = merged.habitsConfig.length;
+          merged.habitsConfig.push(habit);
+          stats.habitsAdded++;
+        }
+      }
+
+      // Merge targets
+      for (const [key, val] of Object.entries(imported.targets || {})) {
+        if (!(key in merged.targets)) {
+          merged.targets[key] = val;
+        }
+      }
+
+      return { merged, stats };
+    }
+
+    function showImportResult(stats) {
+      document.getElementById('importResultContent').innerHTML = `
+        <div class="import-summary">
+          <p><strong>Import complete!</strong></p>
+          <p>Weeks imported: ${stats.weeksImported}</p>
+          <p>Weeks merged: ${stats.weeksMerged}</p>
+          <p>Habits added: ${stats.habitsAdded}</p>
+        </div>
+      `;
+      openModal('importResultModal');
+    }
+
+    // ============ AUTO BACKUP ============
+    function checkAutoBackup() {
+      const currentWeekKey = getISOWeekId(new Date());
+
+      if (db.meta.lastSeenWeekKey !== currentWeekKey) {
+        const previousWeekKey = db.meta.lastSeenWeekKey || getPreviousWeekId(currentWeekKey);
+
+        if (
+          db.meta.autoBackupEnabled &&
+          db.weeks[previousWeekKey] &&
+          db.meta.lastAutoBackupWeekKey !== previousWeekKey
+        ) {
+          // Trigger backup for previous week
+          setTimeout(() => triggerBackup(previousWeekKey), 1000);
+          db.meta.lastAutoBackupWeekKey = previousWeekKey;
+        }
+
+        db.meta.lastSeenWeekKey = currentWeekKey;
+        saveDB();
+      }
+    }
+
     // ============ INITIALIZATION ============
     function init() {
-      loadSettings();
-      loadState();
+      loadDB();
 
-      const currentWeekId = getISOWeekId(new Date());
-      if (!state.weeks[currentWeekId]) {
-        state.weeks[currentWeekId] = createWeek(currentWeekId);
-      }
-      state.currentWeekId = currentWeekId;
-      saveState();
+      // Ensure current week exists
+      currentWeekId = getISOWeekId(new Date());
+      ensureWeekExists(currentWeekId);
+      saveDB();
 
-      renderGuitarButtons();
-      renderWorkButtons();
+      // Check for auto backup
+      checkAutoBackup();
+
+      // Update auto backup toggle
+      document.getElementById('autoBackupToggle').checked = db.meta.autoBackupEnabled;
 
       // Event listeners - Navigation
       document.getElementById('prevWeekBtn').addEventListener('click', () => navigateWeek(-1));
       document.getElementById('nextWeekBtn').addEventListener('click', () => navigateWeek(1));
       document.getElementById('newWeekBtn').addEventListener('click', createNewWeek);
-      document.getElementById('targetsBtn').addEventListener('click', openTargetsModal);
+
+      // Event listeners - Navbar buttons
+      document.getElementById('habitsBtn').addEventListener('click', () => {
+        currentHabitTab = 'list';
+        renderHabitsModal();
+        openModal('habitsModal');
+      });
+
+      document.getElementById('targetsBtn').addEventListener('click', () => {
+        renderTargetsModal();
+        openModal('targetsModal');
+      });
+
       document.getElementById('historyBtn').addEventListener('click', () => showView('history'));
       document.getElementById('overallBtn').addEventListener('click', () => showView('overall'));
-      document.getElementById('settingsBtn').addEventListener('click', openSettingsModal);
+      document.getElementById('settingsBtn').addEventListener('click', () => {
+        document.getElementById('settingsAutoBackup').checked = db.meta.autoBackupEnabled;
+        openModal('settingsModal');
+      });
 
       // Event listeners - Drawer
       document.getElementById('drawerClose').addEventListener('click', closeDayDrawer);
-      document.getElementById('voiceMini').addEventListener('change', (e) => updateDayData('voiceMini', e.target.checked));
-      document.getElementById('voiceArticulation').addEventListener('change', (e) => updateDayData('voiceArticulation', e.target.checked));
-      document.getElementById('voiceVocal').addEventListener('change', (e) => updateDayData('voiceVocal', e.target.checked));
-      document.querySelectorAll('input[name="sport"]').forEach(radio => {
-        radio.addEventListener('change', (e) => updateDayData('sport', e.target.value));
+
+      // Event listeners - Modals
+      document.getElementById('habitsClose').addEventListener('click', () => closeModal('habitsModal'));
+      document.getElementById('targetsClose').addEventListener('click', () => closeModal('targetsModal'));
+      document.getElementById('targetsSave').addEventListener('click', saveTargets);
+      document.getElementById('settingsClose').addEventListener('click', () => closeModal('settingsModal'));
+      document.getElementById('settingsSave').addEventListener('click', () => {
+        db.meta.autoBackupEnabled = document.getElementById('settingsAutoBackup').checked;
+        document.getElementById('autoBackupToggle').checked = db.meta.autoBackupEnabled;
+        saveDB();
+        closeModal('settingsModal');
       });
 
-      // Event listeners - Targets Modal
-      document.getElementById('targetsClose').addEventListener('click', closeTargetsModal);
-      document.getElementById('targetsSave').addEventListener('click', saveTargets);
-      document.getElementById('targetsUseDefaults').addEventListener('click', useDefaultTargets);
+      document.getElementById('importResultClose').addEventListener('click', () => closeModal('importResultModal'));
+      document.getElementById('importResultOk').addEventListener('click', () => closeModal('importResultModal'));
 
-      // Event listeners - Settings Modal
-      document.getElementById('settingsClose').addEventListener('click', closeSettingsModal);
-      document.getElementById('settingsSave').addEventListener('click', saveSettingsData);
+      // Habit modal tabs
+      document.querySelectorAll('#habitsModal .tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          currentHabitTab = tab.dataset.tab;
+          if (currentHabitTab === 'add') editingHabit = null;
+          renderHabitsModal();
+        });
+      });
 
-      // Event listeners - Export/Import
-      document.getElementById('exportBtn').addEventListener('click', exportData);
+      // Export/Import
+      document.getElementById('exportBtn').addEventListener('click', () => exportData());
       document.getElementById('importBtn').addEventListener('click', importData);
       document.getElementById('importFile').addEventListener('change', handleImport);
+      document.getElementById('backupBtn').addEventListener('click', manualBackup);
 
-      // Event listener - Overall toggle
-      document.getElementById('useWeekTargets').addEventListener('change', renderOverall);
+      document.getElementById('autoBackupToggle').addEventListener('change', (e) => {
+        db.meta.autoBackupEnabled = e.target.checked;
+        saveDB();
+      });
+
+      // History view toggle
+      document.getElementById('showArchivedHistory')?.addEventListener('change', renderHistory);
 
       // Close modals on overlay click
       document.querySelectorAll('.modal-overlay').forEach(overlay => {
@@ -2072,22 +2496,11 @@
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
           closeDayDrawer();
-          closeTargetsModal();
-          closeSettingsModal();
+          document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
         }
       });
 
       showView('week');
-
-      // Test: Log date verification for Dec 19, 2025
-      console.log('Date verification test:');
-      const testDate = new Date(2025, 11, 19, 12, 0, 0); // Dec 19, 2025
-      console.log('Dec 19, 2025 weekday:', DAY_FULL_NAMES[getISOWeekday(testDate) - 1]); // Should be Friday
-
-      // Test cross-year formatting
-      const crossYearStart = '2025-12-29';
-      const crossYearEnd = '2026-01-04';
-      console.log('Cross-year test:', formatDateRange(crossYearStart, crossYearEnd));
     }
 
     init();
