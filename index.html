@@ -8,19 +8,52 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
+      /* Colors - Dark theme */
       --bg-primary: #0d1117;
       --bg-secondary: #161b22;
       --bg-tertiary: #21262d;
       --bg-hover: #30363d;
+      --bg-elevated: #1c2128;
       --border: #30363d;
+      --border-subtle: #262c36;
       --text-primary: #e6edf3;
       --text-secondary: #8b949e;
       --text-muted: #6e7681;
       --accent: #58a6ff;
       --accent-hover: #79b8ff;
+      --accent-glow: rgba(88, 166, 255, 0.15);
+      --accent-subtle: rgba(88, 166, 255, 0.1);
       --success: #3fb950;
+      --success-muted: rgba(63, 185, 80, 0.15);
       --warning: #d29922;
+      --warning-muted: rgba(210, 153, 34, 0.15);
       --danger: #f85149;
+      --danger-muted: rgba(248, 81, 73, 0.15);
+
+      /* Spacing */
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 12px;
+      --space-lg: 16px;
+      --space-xl: 20px;
+      --space-2xl: 24px;
+
+      /* Radii */
+      --radius-sm: 4px;
+      --radius-md: 6px;
+      --radius-lg: 8px;
+      --radius-xl: 12px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+      --shadow-glow: 0 0 20px var(--accent-glow);
+
+      /* Transitions */
+      --transition-fast: 0.15s ease;
+      --transition-normal: 0.2s ease;
+      --transition-slow: 0.3s ease;
     }
 
     body {
@@ -38,16 +71,23 @@
     .navbar {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 12px 16px;
+      gap: var(--space-sm);
+      padding: var(--space-md) var(--space-lg);
       background: var(--bg-secondary);
       border-bottom: 1px solid var(--border);
       flex-wrap: wrap;
     }
 
-    .navbar-left { display: flex; gap: 8px; align-items: center; }
-    .navbar-center { flex: 1; text-align: center; font-weight: 600; color: var(--text-secondary); }
-    .navbar-right { display: flex; gap: 8px; align-items: center; }
+    .navbar-left { display: flex; gap: var(--space-sm); align-items: center; }
+    .navbar-center {
+      flex: 1;
+      text-align: center;
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-size: 15px;
+      letter-spacing: -0.01em;
+    }
+    .navbar-right { display: flex; gap: var(--space-sm); align-items: center; }
 
     .main-content {
       flex: 1;
@@ -55,87 +95,176 @@
       position: relative;
     }
 
-    .view-container { flex: 1; padding: 16px; overflow-y: auto; }
+    .view-container { flex: 1; padding: var(--space-lg); overflow-y: auto; }
 
     /* Buttons */
     .btn {
-      padding: 6px 12px;
+      padding: var(--space-sm) var(--space-md);
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: var(--radius-md);
       background: var(--bg-tertiary);
       color: var(--text-primary);
       cursor: pointer;
       font-size: 13px;
-      transition: background 0.15s;
+      font-weight: 500;
+      transition: all var(--transition-fast);
     }
-    .btn:hover { background: var(--bg-hover); }
-    .btn-primary { background: var(--accent); border-color: var(--accent); color: #000; font-weight: 500; }
-    .btn-primary:hover { background: var(--accent-hover); }
-    .btn-sm { padding: 4px 8px; font-size: 12px; }
-    .btn-icon { padding: 6px 10px; }
+    .btn:hover {
+      background: var(--bg-hover);
+      border-color: var(--text-muted);
+    }
+    .btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--bg-primary), 0 0 0 4px var(--accent);
+    }
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+      font-weight: 600;
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+    }
+    .btn-sm { padding: var(--space-xs) var(--space-sm); font-size: 12px; }
+    .btn-icon { padding: var(--space-sm) 10px; }
 
     /* Week Grid */
     .week-grid {
       display: grid;
       grid-template-columns: 100px repeat(7, 1fr);
       gap: 1px;
-      background: var(--border);
+      background: var(--border-subtle);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: var(--radius-lg);
       overflow: hidden;
-      margin-bottom: 16px;
+      margin-bottom: var(--space-lg);
     }
 
     .grid-header, .grid-cell, .grid-label {
-      padding: 10px 8px;
+      padding: 10px var(--space-sm);
       background: var(--bg-secondary);
       text-align: center;
+      transition: background var(--transition-fast);
     }
 
-    .grid-header { font-weight: 600; color: var(--text-secondary); font-size: 12px; text-transform: uppercase; }
-    .grid-label { text-align: left; font-weight: 500; background: var(--bg-tertiary); }
+    .grid-header {
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      position: relative;
+    }
+    .grid-header:hover {
+      background: var(--bg-tertiary);
+    }
+    .grid-header.selected {
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      box-shadow: inset 0 -2px 0 var(--accent), var(--shadow-glow);
+    }
+    .grid-header.today {
+      color: var(--accent);
+    }
+    .grid-header.today.selected {
+      color: var(--accent);
+    }
+    .grid-header .header-date {
+      display: block;
+      font-size: 10px;
+      font-weight: 400;
+      margin-top: 2px;
+      opacity: 0.7;
+    }
+
+    .grid-label {
+      text-align: left;
+      font-weight: 500;
+      background: var(--bg-tertiary);
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
 
     .grid-cell {
       cursor: pointer;
-      transition: background 0.15s;
       min-height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .grid-cell:hover { background: var(--bg-hover); }
-    .grid-cell.today { box-shadow: inset 0 0 0 2px var(--accent); }
+    .grid-cell.column-selected {
+      background: var(--accent-subtle);
+    }
+    .grid-cell.column-selected:hover {
+      background: rgba(88, 166, 255, 0.2);
+    }
 
-    .cell-content { font-size: 12px; }
-    .cell-done { color: var(--success); }
-    .cell-partial { color: var(--warning); }
-    .cell-none { color: var(--text-muted); }
+    .cell-content {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+    }
+    .cell-done {
+      color: var(--success);
+      background: var(--success-muted);
+    }
+    .cell-partial {
+      color: var(--warning);
+      background: var(--warning-muted);
+    }
+    .cell-none {
+      color: var(--text-muted);
+    }
 
     /* Day Drawer */
     .drawer {
-      width: 320px;
+      width: 340px;
       background: var(--bg-secondary);
       border-left: 1px solid var(--border);
-      padding: 16px;
+      padding: var(--space-lg);
       overflow-y: auto;
-      display: none;
+      transform: translateX(100%);
+      transition: transform var(--transition-slow);
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
     }
-    .drawer.open { display: block; }
+    .drawer.open {
+      transform: translateX(0);
+    }
 
     .drawer-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
-      padding-bottom: 12px;
+      margin-bottom: var(--space-xl);
+      padding-bottom: var(--space-md);
       border-bottom: 1px solid var(--border);
     }
 
     .drawer-title { font-weight: 600; font-size: 16px; }
-    .drawer-close { background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 20px; }
-    .drawer-close:hover { color: var(--text-primary); }
+    .drawer-close {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 20px;
+      padding: var(--space-xs);
+      border-radius: var(--radius-sm);
+      transition: all var(--transition-fast);
+    }
+    .drawer-close:hover {
+      color: var(--text-primary);
+      background: var(--bg-hover);
+    }
 
-    .drawer-section { margin-bottom: 20px; }
+    .drawer-section { margin-bottom: var(--space-xl); }
     .drawer-section-title {
       font-size: 11px;
       text-transform: uppercase;
@@ -146,12 +275,18 @@
     }
 
     /* Form Controls */
-    .checkbox-group { display: flex; flex-direction: column; gap: 8px; }
+    .checkbox-group { display: flex; flex-direction: column; gap: var(--space-sm); }
     .checkbox-item {
       display: flex;
       align-items: center;
       gap: 10px;
       cursor: pointer;
+      padding: var(--space-sm);
+      border-radius: var(--radius-md);
+      transition: background var(--transition-fast);
+    }
+    .checkbox-item:hover {
+      background: var(--bg-hover);
     }
     .checkbox-item input[type="checkbox"] {
       width: 18px;
@@ -159,13 +294,23 @@
       accent-color: var(--accent);
       cursor: pointer;
     }
+    .checkbox-item input[type="checkbox"]:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
 
-    .radio-group { display: flex; flex-direction: column; gap: 8px; }
+    .radio-group { display: flex; flex-direction: column; gap: var(--space-sm); }
     .radio-item {
       display: flex;
       align-items: center;
       gap: 10px;
       cursor: pointer;
+      padding: var(--space-sm);
+      border-radius: var(--radius-md);
+      transition: background var(--transition-fast);
+    }
+    .radio-item:hover {
+      background: var(--bg-hover);
     }
     .radio-item input[type="radio"] {
       width: 18px;
@@ -174,102 +319,221 @@
       cursor: pointer;
     }
 
-    .counter {
+    /* Rating buttons (shared for Guitar and Work) */
+    .rating-buttons {
       display: flex;
-      align-items: center;
-      gap: 12px;
+      gap: var(--space-sm);
     }
-    .counter-btn {
-      width: 32px;
-      height: 32px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      background: var(--bg-tertiary);
-      color: var(--text-primary);
-      cursor: pointer;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .counter-btn:hover { background: var(--bg-hover); }
-    .counter-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-    .counter-value { font-size: 20px; font-weight: 600; min-width: 40px; text-align: center; }
-
-    .rating-buttons { display: flex; gap: 6px; }
     .rating-btn {
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: var(--radius-md);
       background: var(--bg-tertiary);
       color: var(--text-primary);
       cursor: pointer;
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 600;
+      transition: all var(--transition-fast);
     }
-    .rating-btn:hover { background: var(--bg-hover); }
-    .rating-btn.active { background: var(--accent); border-color: var(--accent); color: #000; }
+    .rating-btn:hover {
+      background: var(--bg-hover);
+      border-color: var(--text-muted);
+    }
+    .rating-btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--bg-primary), 0 0 0 4px var(--accent);
+    }
+    .rating-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+    }
 
-    /* Week Summary */
+    /* Week Summary - Premium Redesign */
     .week-summary {
       background: var(--bg-secondary);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px;
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
     }
 
-    .summary-title {
-      font-weight: 600;
-      margin-bottom: 16px;
-      padding-bottom: 8px;
+    .summary-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xl);
+      margin-bottom: var(--space-xl);
+      padding-bottom: var(--space-lg);
       border-bottom: 1px solid var(--border);
     }
 
-    .summary-section { margin-bottom: 16px; }
-    .summary-section:last-child { margin-bottom: 0; }
-    .summary-section-title {
-      font-size: 12px;
+    .donut-container {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      flex-shrink: 0;
+    }
+    .donut-svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+    .donut-track {
+      fill: none;
+      stroke: var(--bg-tertiary);
+      stroke-width: 8;
+    }
+    .donut-progress {
+      fill: none;
+      stroke-width: 8;
+      stroke-linecap: round;
+      transition: stroke-dashoffset var(--transition-slow);
+    }
+    .donut-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .donut-percent {
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .donut-label {
+      font-size: 10px;
+      color: var(--text-muted);
       text-transform: uppercase;
-      color: var(--text-secondary);
-      margin-bottom: 8px;
-      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
     }
 
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 4px 0;
+    .summary-header-info {
+      flex: 1;
+    }
+    .summary-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: var(--space-xs);
+    }
+    .summary-subtitle {
+      color: var(--text-muted);
       font-size: 13px;
     }
-    .summary-label { color: var(--text-secondary); }
-    .summary-value { font-weight: 500; }
-    .summary-value.success { color: var(--success); }
-    .summary-value.warning { color: var(--warning); }
-    .summary-value.danger { color: var(--danger); }
 
-    .overall-percent {
-      font-size: 24px;
+    .summary-stats {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    .stat-category {
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+    }
+
+    .stat-category-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-sm);
+    }
+    .stat-category-title {
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .stat-category-pct {
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .stat-progress-bar {
+      height: 6px;
+      background: var(--bg-hover);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: var(--space-sm);
+    }
+    .stat-progress-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width var(--transition-slow);
+    }
+    .stat-progress-fill.success { background: var(--success); }
+    .stat-progress-fill.warning { background: var(--warning); }
+    .stat-progress-fill.danger { background: var(--danger); }
+
+    .stat-detail {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .stat-subitems {
+      display: flex;
+      gap: var(--space-sm);
+      margin-top: var(--space-sm);
+    }
+    .stat-subitem {
+      flex: 1;
+      text-align: center;
+      padding: var(--space-xs) var(--space-sm);
+      background: var(--bg-secondary);
+      border-radius: var(--radius-sm);
+    }
+    .stat-subitem-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.3px;
+    }
+    .stat-subitem-value {
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 1px;
+    }
+
+    .stat-guitar {
+      display: flex;
+      gap: var(--space-lg);
+    }
+    .stat-guitar-item {
+      flex: 1;
+      text-align: center;
+    }
+    .stat-guitar-value {
+      font-size: 20px;
       font-weight: 700;
-      margin-bottom: 16px;
+    }
+    .stat-guitar-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
     }
 
     /* History View */
-    .history-list { display: flex; flex-direction: column; gap: 8px; }
+    .history-list { display: flex; flex-direction: column; gap: var(--space-sm); }
 
     .history-item {
       display: grid;
       grid-template-columns: 1fr repeat(5, 80px);
-      gap: 16px;
+      gap: var(--space-lg);
       align-items: center;
-      padding: 12px 16px;
+      padding: var(--space-md) var(--space-lg);
       background: var(--bg-secondary);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: var(--radius-lg);
       cursor: pointer;
-      transition: background 0.15s;
+      transition: all var(--transition-fast);
     }
-    .history-item:hover { background: var(--bg-tertiary); }
+    .history-item:hover {
+      background: var(--bg-tertiary);
+      border-color: var(--text-muted);
+    }
 
     .history-date { font-weight: 500; }
     .history-stat { text-align: center; font-size: 13px; }
@@ -279,70 +543,99 @@
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0, 0, 0, 0.7);
       display: none;
       align-items: center;
       justify-content: center;
       z-index: 100;
+      opacity: 0;
+      transition: opacity var(--transition-normal);
     }
-    .modal-overlay.open { display: flex; }
+    .modal-overlay.open {
+      display: flex;
+      opacity: 1;
+    }
 
     .modal {
       background: var(--bg-secondary);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
+      border-radius: var(--radius-xl);
+      padding: var(--space-2xl);
       max-width: 480px;
       width: 90%;
       max-height: 90vh;
       overflow-y: auto;
+      transform: scale(0.95);
+      transition: transform var(--transition-normal);
+      box-shadow: var(--shadow-lg);
+    }
+    .modal-overlay.open .modal {
+      transform: scale(1);
     }
 
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: var(--space-xl);
     }
     .modal-title { font-size: 18px; font-weight: 600; }
-    .modal-close { background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 24px; }
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 24px;
+      padding: var(--space-xs);
+      border-radius: var(--radius-sm);
+      transition: all var(--transition-fast);
+    }
+    .modal-close:hover {
+      color: var(--text-primary);
+      background: var(--bg-hover);
+    }
 
-    .form-group { margin-bottom: 16px; }
-    .form-label { display: block; margin-bottom: 6px; font-size: 13px; color: var(--text-secondary); }
+    .form-group { margin-bottom: var(--space-lg); }
+    .form-label { display: block; margin-bottom: var(--space-sm); font-size: 13px; color: var(--text-secondary); }
     .form-input {
       width: 100%;
-      padding: 8px 12px;
+      padding: var(--space-sm) var(--space-md);
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: var(--radius-md);
       background: var(--bg-tertiary);
       color: var(--text-primary);
       font-size: 14px;
+      transition: all var(--transition-fast);
     }
-    .form-input:focus { outline: none; border-color: var(--accent); }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
 
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
 
-    .modal-footer { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }
+    .modal-footer { display: flex; justify-content: flex-end; gap: var(--space-sm); margin-top: var(--space-xl); }
 
     /* Overall View */
     .overall-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 16px;
+      gap: var(--space-lg);
     }
 
     .overall-card {
       background: var(--bg-secondary);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px;
+      border-radius: var(--radius-lg);
+      padding: var(--space-lg);
     }
 
     .overall-card-title {
       font-size: 12px;
       text-transform: uppercase;
       color: var(--text-secondary);
-      margin-bottom: 12px;
+      margin-bottom: var(--space-md);
       font-weight: 600;
     }
 
@@ -350,7 +643,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 16px;
+      margin-bottom: var(--space-lg);
       font-size: 13px;
     }
     .toggle-row input[type="checkbox"] {
@@ -361,12 +654,12 @@
 
     /* View headers */
     .view-header {
-      margin-bottom: 20px;
+      margin-bottom: var(--space-xl);
     }
     .view-title {
       font-size: 20px;
       font-weight: 600;
-      margin-bottom: 4px;
+      margin-bottom: var(--space-xs);
     }
     .view-subtitle {
       color: var(--text-secondary);
@@ -376,21 +669,44 @@
     /* Data actions */
     .data-actions {
       display: flex;
-      gap: 8px;
-      padding: 12px 16px;
+      gap: var(--space-sm);
+      padding: var(--space-md) var(--space-lg);
       background: var(--bg-secondary);
       border-top: 1px solid var(--border);
     }
 
+    /* Overall percent (reused in cards) */
+    .overall-percent {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: var(--space-lg);
+    }
+    .overall-percent.success { color: var(--success); }
+    .overall-percent.warning { color: var(--warning); }
+    .overall-percent.danger { color: var(--danger); }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--space-xs) 0;
+      font-size: 13px;
+    }
+    .summary-label { color: var(--text-secondary); }
+    .summary-value { font-weight: 500; }
+    .summary-value.success { color: var(--success); }
+    .summary-value.warning { color: var(--warning); }
+    .summary-value.danger { color: var(--danger); }
+
     /* Responsive */
     @media (max-width: 768px) {
-      .navbar { padding: 10px; gap: 6px; }
+      .navbar { padding: 10px; gap: var(--space-sm); }
       .navbar-center { display: none; }
       .week-grid { grid-template-columns: 80px repeat(7, 1fr); font-size: 12px; }
-      .grid-cell { min-height: 36px; padding: 6px 4px; }
+      .grid-cell { min-height: 36px; padding: var(--space-sm) var(--space-xs); }
       .drawer { width: 100%; position: fixed; right: 0; top: 0; bottom: 0; z-index: 50; }
-      .history-item { grid-template-columns: 1fr; gap: 8px; }
+      .history-item { grid-template-columns: 1fr; gap: var(--space-sm); }
       .history-stat { text-align: left; }
+      .summary-header { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
@@ -486,13 +802,8 @@
         </div>
 
         <div class="drawer-section">
-          <div class="drawer-section-title">Work</div>
-          <div class="counter">
-            <button class="counter-btn" id="workMinus">−</button>
-            <span class="counter-value" id="workValue">0</span>
-            <button class="counter-btn" id="workPlus">+</button>
-            <span style="color: var(--text-muted); font-size: 12px;">deep blocks</span>
-          </div>
+          <div class="drawer-section-title">Work Deep Blocks</div>
+          <div class="rating-buttons" id="workRating"></div>
         </div>
 
         <div class="drawer-section">
@@ -610,34 +921,135 @@
     // ============ HELPERS ============
     const DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     const DAY_FULL_NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June',
+                         'July', 'August', 'September', 'October', 'November', 'December'];
 
-    function getISOWeekId(date) {
+    /**
+     * Normalize a date to local noon to avoid timezone/DST issues.
+     * This ensures consistent weekday calculations.
+     */
+    function normalizeToLocalNoon(date) {
       const d = new Date(date);
-      d.setHours(0, 0, 0, 0);
-      d.setDate(d.getDate() + 3 - (d.getDay() + 6) % 7);
-      const week1 = new Date(d.getFullYear(), 0, 4);
-      const weekNum = 1 + Math.round(((d - week1) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
-      return `${d.getFullYear()}-W${String(weekNum).padStart(2, '0')}`;
+      d.setHours(12, 0, 0, 0);
+      return d;
     }
 
+    /**
+     * Parse a YYYY-MM-DD string and return a Date normalized to local noon.
+     * This avoids issues where parsing as ISO can shift to previous day in certain timezones.
+     */
+    function parseDateString(dateStr) {
+      const [year, month, day] = dateStr.split('-').map(Number);
+      const d = new Date(year, month - 1, day, 12, 0, 0, 0);
+      return d;
+    }
+
+    /**
+     * Get the ISO weekday (1=Monday, 7=Sunday) for a date.
+     * Uses local noon normalization for consistency.
+     */
+    function getISOWeekday(date) {
+      const d = normalizeToLocalNoon(date);
+      const day = d.getDay(); // 0=Sunday, 1=Monday, ...
+      return day === 0 ? 7 : day; // Convert to ISO: 1=Monday, 7=Sunday
+    }
+
+    /**
+     * Get ISO week ID (e.g., "2025-W51") for a given date.
+     * Uses local date operations to avoid timezone issues.
+     */
+    function getISOWeekId(date) {
+      const d = normalizeToLocalNoon(date);
+      // Find Thursday of this week (ISO weeks are defined by their Thursday)
+      const dayOfWeek = getISOWeekday(d);
+      const thursday = new Date(d);
+      thursday.setDate(d.getDate() + (4 - dayOfWeek));
+
+      // Get the year of the Thursday (this is the ISO week year)
+      const year = thursday.getFullYear();
+
+      // Find January 4th of that year (always in week 1)
+      const jan4 = new Date(year, 0, 4, 12, 0, 0, 0);
+      const jan4Weekday = getISOWeekday(jan4);
+      const week1Thursday = new Date(jan4);
+      week1Thursday.setDate(jan4.getDate() + (4 - jan4Weekday));
+
+      // Calculate week number
+      const weekNum = 1 + Math.round((thursday - week1Thursday) / (7 * 24 * 60 * 60 * 1000));
+
+      return `${year}-W${String(weekNum).padStart(2, '0')}`;
+    }
+
+    /**
+     * Get the Monday of a given ISO week.
+     */
     function getWeekMonday(weekId) {
-      const [year, weekPart] = weekId.split('-W');
+      const [yearStr, weekPart] = weekId.split('-W');
+      const year = parseInt(yearStr);
       const weekNum = parseInt(weekPart);
-      const jan4 = new Date(parseInt(year), 0, 4);
-      const dayOfWeek = jan4.getDay() || 7;
-      const monday = new Date(jan4);
-      monday.setDate(jan4.getDate() - dayOfWeek + 1 + (weekNum - 1) * 7);
-      return monday;
+
+      // Find January 4th (always in week 1)
+      const jan4 = new Date(year, 0, 4, 12, 0, 0, 0);
+      const jan4Weekday = getISOWeekday(jan4);
+
+      // Find Monday of week 1
+      const week1Monday = new Date(jan4);
+      week1Monday.setDate(jan4.getDate() - (jan4Weekday - 1));
+
+      // Add weeks to get to target week's Monday
+      const targetMonday = new Date(week1Monday);
+      targetMonday.setDate(week1Monday.getDate() + (weekNum - 1) * 7);
+
+      return targetMonday;
     }
 
+    /**
+     * Format a date as YYYY-MM-DD using local date parts.
+     */
     function formatDate(date) {
-      return date.toISOString().split('T')[0];
+      const d = normalizeToLocalNoon(date);
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
     }
 
+    /**
+     * Add days to a date, returning normalized result.
+     */
     function addDays(date, days) {
-      const result = new Date(date);
-      result.setDate(result.getDate() + days);
-      return result;
+      const d = normalizeToLocalNoon(date);
+      d.setDate(d.getDate() + days);
+      return d;
+    }
+
+    /**
+     * Get day index (0-6, Mon-Sun) from a date string.
+     */
+    function getDayIndex(dateStr) {
+      const d = parseDateString(dateStr);
+      const weekday = getISOWeekday(d);
+      return weekday - 1; // Convert to 0-6 (Mon=0, Sun=6)
+    }
+
+    /**
+     * Format date range in human-readable format.
+     * Examples: "14 December–20 December" or "28 December–3 January"
+     */
+    function formatDateRange(startDateStr, endDateStr) {
+      const start = parseDateString(startDateStr);
+      const end = parseDateString(endDateStr);
+
+      const startDay = start.getDate();
+      const endDay = end.getDate();
+      const startMonth = MONTH_NAMES[start.getMonth()];
+      const endMonth = MONTH_NAMES[end.getMonth()];
+
+      if (startMonth === endMonth) {
+        return `${startDay}–${endDay} ${startMonth}`;
+      } else {
+        return `${startDay} ${startMonth}–${endDay} ${endMonth}`;
+      }
     }
 
     function createEmptyDay() {
@@ -794,6 +1206,12 @@
       return pct.toFixed(0) + '%';
     }
 
+    function getDonutColor(pct) {
+      if (pct >= 80) return 'var(--success)';
+      if (pct >= 50) return 'var(--warning)';
+      return 'var(--danger)';
+    }
+
     // ============ RENDER FUNCTIONS ============
     function renderWeekGrid() {
       const week = state.weeks[state.currentWeekId];
@@ -806,7 +1224,11 @@
       DAY_NAMES.forEach((name, i) => {
         const date = formatDate(addDays(monday, i));
         const isToday = date === today;
-        html += `<div class="grid-header">${name}<br><span style="font-size:10px;font-weight:normal">${date.slice(5)}</span></div>`;
+        const isSelected = selectedDay === i;
+        let headerClasses = 'grid-header';
+        if (isToday) headerClasses += ' today';
+        if (isSelected) headerClasses += ' selected';
+        html += `<div class="${headerClasses}" data-day="${i}">${name}<span class="header-date">${date.slice(8)}</span></div>`;
       });
 
       // Voice row
@@ -815,44 +1237,48 @@
         const date = formatDate(addDays(monday, i));
         const count = (day.voice.miniActivation ? 1 : 0) + (day.voice.articulation ? 1 : 0) + (day.voice.vocalSession ? 1 : 0);
         const cls = count === 3 ? 'cell-done' : count > 0 ? 'cell-partial' : 'cell-none';
-        const isToday = date === today ? ' today' : '';
-        html += `<div class="grid-cell${isToday}" data-day="${i}"><span class="cell-content ${cls}">${count}/3</span></div>`;
+        const colSelected = selectedDay === i ? ' column-selected' : '';
+        html += `<div class="grid-cell${colSelected}" data-day="${i}"><span class="cell-content ${cls}">${count}/3</span></div>`;
       });
 
       // Sport row
       html += '<div class="grid-label">Sport</div>';
       week.days.forEach((day, i) => {
-        const date = formatDate(addDays(monday, i));
         const label = day.sport === 'none' ? '−' : day.sport === 'cardio' ? 'C' : 'W+C';
         const cls = day.sport !== 'none' ? 'cell-done' : 'cell-none';
-        const isToday = date === today ? ' today' : '';
-        html += `<div class="grid-cell${isToday}" data-day="${i}"><span class="cell-content ${cls}">${label}</span></div>`;
+        const colSelected = selectedDay === i ? ' column-selected' : '';
+        html += `<div class="grid-cell${colSelected}" data-day="${i}"><span class="cell-content ${cls}">${label}</span></div>`;
       });
 
       // Work row
       html += '<div class="grid-label">Work</div>';
       week.days.forEach((day, i) => {
-        const date = formatDate(addDays(monday, i));
         const blocks = day.work.deepBlocks;
         const cls = blocks > 0 ? 'cell-done' : 'cell-none';
-        const isToday = date === today ? ' today' : '';
-        html += `<div class="grid-cell${isToday}" data-day="${i}"><span class="cell-content ${cls}">${blocks}</span></div>`;
+        const colSelected = selectedDay === i ? ' column-selected' : '';
+        html += `<div class="grid-cell${colSelected}" data-day="${i}"><span class="cell-content ${cls}">${blocks}</span></div>`;
       });
 
       // Guitar row
       html += '<div class="grid-label">Guitar</div>';
       week.days.forEach((day, i) => {
-        const date = formatDate(addDays(monday, i));
         const rating = day.guitar.rating;
         const cls = rating > 0 ? 'cell-done' : 'cell-none';
-        const isToday = date === today ? ' today' : '';
-        html += `<div class="grid-cell${isToday}" data-day="${i}"><span class="cell-content ${cls}">${rating > 0 ? rating : '−'}</span></div>`;
+        const colSelected = selectedDay === i ? ' column-selected' : '';
+        html += `<div class="grid-cell${colSelected}" data-day="${i}"><span class="cell-content ${cls}">${rating > 0 ? rating : '−'}</span></div>`;
       });
 
       document.getElementById('weekGrid').innerHTML = html;
-      document.getElementById('weekLabel').textContent = `${week.startDate} to ${week.endDate}`;
+      document.getElementById('weekLabel').textContent = formatDateRange(week.startDate, week.endDate);
 
-      // Add click handlers
+      // Add click handlers to headers and cells
+      document.querySelectorAll('.grid-header[data-day]').forEach(header => {
+        header.addEventListener('click', () => {
+          const dayIndex = parseInt(header.dataset.day);
+          openDayDrawer(dayIndex);
+        });
+      });
+
       document.querySelectorAll('.grid-cell').forEach(cell => {
         cell.addEventListener('click', () => {
           const dayIndex = parseInt(cell.dataset.day);
@@ -874,59 +1300,99 @@
       const guitar = calcGuitarStats(week);
       const overall = calcOverallPct(week);
 
+      // SVG Donut chart calculations
+      const radius = 42;
+      const circumference = 2 * Math.PI * radius;
+      const strokeDashoffset = circumference - (overall / 100) * circumference;
+
       const html = `
-        <div class="summary-title">Week Summary</div>
-        <div class="overall-percent ${getPctClass(overall)}">${formatPct(overall)} Overall</div>
-
-        <div class="summary-section">
-          <div class="summary-section-title">Voice (${formatPct(voice.categoryPct)})</div>
-          <div class="summary-row">
-            <span class="summary-label">Mini Activation</span>
-            <span class="summary-value ${getPctClass(voice.miniPct)}">${voice.mini}/${week.targets.mini} (${formatPct(voice.miniPct)})</span>
+        <div class="summary-header">
+          <div class="donut-container">
+            <svg class="donut-svg" viewBox="0 0 100 100">
+              <circle class="donut-track" cx="50" cy="50" r="${radius}"/>
+              <circle class="donut-progress" cx="50" cy="50" r="${radius}"
+                stroke="${getDonutColor(overall)}"
+                stroke-dasharray="${circumference}"
+                stroke-dashoffset="${strokeDashoffset}"/>
+            </svg>
+            <div class="donut-center">
+              <span class="donut-percent" style="color: ${getDonutColor(overall)}">${formatPct(overall)}</span>
+              <span class="donut-label">Overall</span>
+            </div>
           </div>
-          <div class="summary-row">
-            <span class="summary-label">Articulation</span>
-            <span class="summary-value ${getPctClass(voice.artPct)}">${voice.articulation}/${week.targets.articulation} (${formatPct(voice.artPct)})</span>
-          </div>
-          <div class="summary-row">
-            <span class="summary-label">Vocal Session</span>
-            <span class="summary-value ${getPctClass(voice.vocalPct)}">${voice.vocal}/${week.targets.vocal} (${formatPct(voice.vocalPct)})</span>
-          </div>
-        </div>
-
-        <div class="summary-section">
-          <div class="summary-section-title">Sport (${formatPct(sport.sportPct)})</div>
-          <div class="summary-row">
-            <span class="summary-label">Days completed</span>
-            <span class="summary-value ${getPctClass(sport.sportPct)}">${sport.sportDays}/${week.targets.sport} (${formatPct(sport.sportPct)})</span>
-          </div>
-          <div class="summary-row">
-            <span class="summary-label">Cardio days</span>
-            <span class="summary-value">${sport.cardioDays}</span>
-          </div>
-          <div class="summary-row">
-            <span class="summary-label">Weights + Cardio days</span>
-            <span class="summary-value">${sport.weightsCardioDays}</span>
+          <div class="summary-header-info">
+            <div class="summary-title">Week Summary</div>
+            <div class="summary-subtitle">Voice, Sport & Work completion</div>
           </div>
         </div>
 
-        <div class="summary-section">
-          <div class="summary-section-title">Work (${formatPct(work.workPct)})</div>
-          <div class="summary-row">
-            <span class="summary-label">Deep blocks</span>
-            <span class="summary-value ${getPctClass(work.workPct)}">${work.totalBlocks}/${week.targets.work} (${formatPct(work.workPct)})</span>
+        <div class="summary-stats">
+          <div class="stat-category">
+            <div class="stat-category-header">
+              <span class="stat-category-title">Voice</span>
+              <span class="stat-category-pct" style="color: ${getDonutColor(voice.categoryPct)}">${formatPct(voice.categoryPct)}</span>
+            </div>
+            <div class="stat-progress-bar">
+              <div class="stat-progress-fill ${getPctClass(voice.categoryPct)}" style="width: ${Math.min(voice.categoryPct, 100)}%"></div>
+            </div>
+            <div class="stat-subitems">
+              <div class="stat-subitem">
+                <div class="stat-subitem-label">Mini</div>
+                <div class="stat-subitem-value" style="color: ${getDonutColor(voice.miniPct)}">${voice.mini}/${week.targets.mini}</div>
+              </div>
+              <div class="stat-subitem">
+                <div class="stat-subitem-label">Articulation</div>
+                <div class="stat-subitem-value" style="color: ${getDonutColor(voice.artPct)}">${voice.articulation}/${week.targets.articulation}</div>
+              </div>
+              <div class="stat-subitem">
+                <div class="stat-subitem-label">Vocal</div>
+                <div class="stat-subitem-value" style="color: ${getDonutColor(voice.vocalPct)}">${voice.vocal}/${week.targets.vocal}</div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="summary-section">
-          <div class="summary-section-title">Guitar</div>
-          <div class="summary-row">
-            <span class="summary-label">Avg rating</span>
-            <span class="summary-value">${guitar.avg > 0 ? guitar.avg.toFixed(1) : '−'}</span>
+          <div class="stat-category">
+            <div class="stat-category-header">
+              <span class="stat-category-title">Sport</span>
+              <span class="stat-category-pct" style="color: ${getDonutColor(sport.sportPct)}">${formatPct(sport.sportPct)}</span>
+            </div>
+            <div class="stat-progress-bar">
+              <div class="stat-progress-fill ${getPctClass(sport.sportPct)}" style="width: ${Math.min(sport.sportPct, 100)}%"></div>
+            </div>
+            <div class="stat-detail">
+              <span>${sport.sportDays}/${week.targets.sport} days</span>
+              <span>${sport.cardioDays}C + ${sport.weightsCardioDays}W+C</span>
+            </div>
           </div>
-          <div class="summary-row">
-            <span class="summary-label">Practice days</span>
-            <span class="summary-value">${guitar.practicedDays}</span>
+
+          <div class="stat-category">
+            <div class="stat-category-header">
+              <span class="stat-category-title">Work</span>
+              <span class="stat-category-pct" style="color: ${getDonutColor(work.workPct)}">${formatPct(work.workPct)}</span>
+            </div>
+            <div class="stat-progress-bar">
+              <div class="stat-progress-fill ${getPctClass(work.workPct)}" style="width: ${Math.min(work.workPct, 100)}%"></div>
+            </div>
+            <div class="stat-detail">
+              <span>${work.totalBlocks}/${week.targets.work} deep blocks</span>
+            </div>
+          </div>
+
+          <div class="stat-category">
+            <div class="stat-category-header">
+              <span class="stat-category-title">Guitar</span>
+              <span class="stat-category-pct" style="color: var(--text-secondary)">Not in overall</span>
+            </div>
+            <div class="stat-guitar">
+              <div class="stat-guitar-item">
+                <div class="stat-guitar-value">${guitar.avg > 0 ? guitar.avg.toFixed(1) : '−'}</div>
+                <div class="stat-guitar-label">Avg Rating</div>
+              </div>
+              <div class="stat-guitar-item">
+                <div class="stat-guitar-value">${guitar.practicedDays}</div>
+                <div class="stat-guitar-label">Practice Days</div>
+              </div>
+            </div>
           </div>
         </div>
       `;
@@ -963,7 +1429,7 @@
 
         html += `
           <div class="history-item" data-week="${weekId}">
-            <div class="history-date">${week.startDate} → ${week.endDate}</div>
+            <div class="history-date">${formatDateRange(week.startDate, week.endDate)}</div>
             <div class="history-stat"><span class="${getPctClass(voice.categoryPct)}">${formatPct(voice.categoryPct)}</span></div>
             <div class="history-stat"><span class="${getPctClass(sport.sportPct)}">${formatPct(sport.sportPct)}</span></div>
             <div class="history-stat"><span class="${getPctClass(work.workPct)}">${formatPct(work.workPct)}</span></div>
@@ -1065,10 +1531,25 @@
       }
       document.getElementById('guitarRating').innerHTML = html;
 
-      document.querySelectorAll('.rating-btn').forEach(btn => {
+      document.querySelectorAll('#guitarRating .rating-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const rating = parseInt(btn.dataset.rating);
           updateDayData('guitar', rating);
+        });
+      });
+    }
+
+    function renderWorkButtons() {
+      let html = '';
+      for (let i = 0; i <= 5; i++) {
+        html += `<button class="rating-btn" data-blocks="${i}">${i}</button>`;
+      }
+      document.getElementById('workRating').innerHTML = html;
+
+      document.querySelectorAll('#workRating .rating-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const blocks = parseInt(btn.dataset.blocks);
+          updateDayData('work', blocks);
         });
       });
     }
@@ -1101,7 +1582,7 @@
       const monday = getWeekMonday(week.weekId);
       const date = formatDate(addDays(monday, dayIndex));
 
-      document.getElementById('drawerTitle').textContent = `${DAY_FULL_NAMES[dayIndex]} (${date})`;
+      document.getElementById('drawerTitle').textContent = `${DAY_FULL_NAMES[dayIndex]}, ${date}`;
       document.getElementById('voiceMini').checked = day.voice.miniActivation;
       document.getElementById('voiceArticulation').checked = day.voice.articulation;
       document.getElementById('voiceVocal').checked = day.voice.vocalSession;
@@ -1110,18 +1591,24 @@
         radio.checked = radio.value === day.sport;
       });
 
-      document.getElementById('workValue').textContent = day.work.deepBlocks;
+      // Update work buttons
+      document.querySelectorAll('#workRating .rating-btn').forEach(btn => {
+        btn.classList.toggle('active', parseInt(btn.dataset.blocks) === day.work.deepBlocks);
+      });
 
-      document.querySelectorAll('.rating-btn').forEach(btn => {
+      // Update guitar buttons
+      document.querySelectorAll('#guitarRating .rating-btn').forEach(btn => {
         btn.classList.toggle('active', parseInt(btn.dataset.rating) === day.guitar.rating);
       });
 
       document.getElementById('dayDrawer').classList.add('open');
+      renderWeekGrid(); // Re-render to show selected column highlight
     }
 
     function closeDayDrawer() {
       selectedDay = null;
       document.getElementById('dayDrawer').classList.remove('open');
+      renderWeekGrid(); // Re-render to remove selected column highlight
     }
 
     function updateDayData(field, value) {
@@ -1145,12 +1632,14 @@
           day.sport = value;
           break;
         case 'work':
-          day.work.deepBlocks = Math.max(0, Math.min(settings.blocksMaxPerDay, value));
-          document.getElementById('workValue').textContent = day.work.deepBlocks;
+          day.work.deepBlocks = Math.max(0, Math.min(5, value));
+          document.querySelectorAll('#workRating .rating-btn').forEach(btn => {
+            btn.classList.toggle('active', parseInt(btn.dataset.blocks) === day.work.deepBlocks);
+          });
           break;
         case 'guitar':
           day.guitar.rating = Math.max(0, Math.min(5, value));
-          document.querySelectorAll('.rating-btn').forEach(btn => {
+          document.querySelectorAll('#guitarRating .rating-btn').forEach(btn => {
             btn.classList.toggle('active', parseInt(btn.dataset.rating) === day.guitar.rating);
           });
           break;
@@ -1337,6 +1826,7 @@
       saveState();
 
       renderGuitarButtons();
+      renderWorkButtons();
 
       // Event listeners - Navigation
       document.getElementById('prevWeekBtn').addEventListener('click', () => navigateWeek(-1));
@@ -1354,18 +1844,6 @@
       document.getElementById('voiceVocal').addEventListener('change', (e) => updateDayData('voiceVocal', e.target.checked));
       document.querySelectorAll('input[name="sport"]').forEach(radio => {
         radio.addEventListener('change', (e) => updateDayData('sport', e.target.value));
-      });
-      document.getElementById('workMinus').addEventListener('click', () => {
-        const week = state.weeks[state.currentWeekId];
-        if (week && selectedDay !== null) {
-          updateDayData('work', week.days[selectedDay].work.deepBlocks - 1);
-        }
-      });
-      document.getElementById('workPlus').addEventListener('click', () => {
-        const week = state.weeks[state.currentWeekId];
-        if (week && selectedDay !== null) {
-          updateDayData('work', week.days[selectedDay].work.deepBlocks + 1);
-        }
       });
 
       // Event listeners - Targets Modal
