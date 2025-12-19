@@ -84,6 +84,7 @@
       color: var(--text-secondary);
       font-size: 15px;
       letter-spacing: -0.01em;
+      cursor: pointer;
     }
     .navbar-right { display: flex; gap: var(--gap-sm); align-items: center; }
 
@@ -220,6 +221,7 @@
     .cell-done { color: var(--completed); background: var(--completed-bg); }
     .cell-partial { color: var(--progress); background: var(--progress-bg); }
     .cell-none { color: var(--muted); background: transparent; }
+    .cell-check { color: var(--completed); font-size: 16px; }
 
     .drawer {
       background: var(--panel);
@@ -730,6 +732,7 @@
       </div>
       <div class="navbar-center" id="weekLabel">Week</div>
       <div class="navbar-right">
+        <button class="btn" id="boardBtn">Board</button>
         <button class="btn" id="habitsBtn">Habits</button>
         <button class="btn" id="targetsBtn">Targets</button>
         <button class="btn" id="historyBtn">History</button>
@@ -849,6 +852,21 @@
     </div>
   </div>
 
+  <!-- Delete Habit Modal -->
+  <div class="modal-overlay" id="deleteHabitModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Delete Habit</h2>
+        <button class="modal-close" id="deleteHabitClose">&times;</button>
+      </div>
+      <p style="margin-bottom: var(--gap-lg); color: var(--text-secondary)">Delete habit permanently? This will remove all saved history for this habit.</p>
+      <div class="modal-footer">
+        <button class="btn" id="deleteHabitCancel">Cancel</button>
+        <button class="btn btn-danger" id="deleteHabitConfirm">Delete</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // ============ CONSTANTS ============
     const STORAGE_KEY = 'weeklyTracker.data';
@@ -879,9 +897,7 @@
           label: 'Sport',
           type: 'singleChoice',
           options: [
-            { id: 'none', label: 'None' },
-            { id: 'cardio', label: 'Cardio' },
-            { id: 'weightsCardio', label: 'Weights + Cardio' }
+            { id: 'done', label: 'Done' }
           ],
           includeInOverall: true,
           weight: 1,
@@ -944,6 +960,7 @@
     let currentView = 'week';
     let currentHabitTab = 'list';
     let editingHabit = null;
+    let habitToDelete = null;
 
     // ============ DATE HELPERS ============
     function normalizeToLocalNoon(date) {
@@ -1038,30 +1055,26 @@
     function migrateData(raw) {
       if (!raw) return null;
 
-      // Check for old format (v0 - no schemaVersion, has state.weeks structure)
+      let data;
+
       if (raw.state && raw.state.weeks && !raw.schemaVersion) {
-        return migrateFromV0(raw);
+        data = migrateFromV0(raw);
+      } else if (raw.schemaVersion === 1) {
+        data = migrateFromV1(raw);
+      } else if (raw.schemaVersion === 2) {
+        data = raw;
+      } else {
+        data = {
+          schemaVersion: CURRENT_SCHEMA_VERSION,
+          habitsConfig: getDefaultHabits(),
+          targets: getDefaultTargets(),
+          weeks: {},
+          meta: { lastSeenWeekKey: null, lastAutoBackupWeekKey: null, autoBackupEnabled: true },
+          legacy: raw
+        };
       }
 
-      // Check for v1 format
-      if (raw.schemaVersion === 1) {
-        return migrateFromV1(raw);
-      }
-
-      // Already v2
-      if (raw.schemaVersion === 2) {
-        return raw;
-      }
-
-      // Unknown format - try to preserve under legacy
-      return {
-        schemaVersion: CURRENT_SCHEMA_VERSION,
-        habitsConfig: getDefaultHabits(),
-        targets: getDefaultTargets(),
-        weeks: {},
-        meta: { lastSeenWeekKey: null, lastAutoBackupWeekKey: null, autoBackupEnabled: true },
-        legacy: raw
-      };
+      return normalizeSingleChoiceData(data);
     }
 
     function migrateFromV0(raw) {
@@ -1138,6 +1151,40 @@
       return 'none';
     }
 
+    function normalizeSingleChoiceValue(val) {
+      if (val === true) return true;
+      if (val === false || val === null || val === undefined) return false;
+      if (typeof val === 'string') return val !== 'none';
+      return !!val;
+    }
+
+    function normalizeSingleChoiceData(data) {
+      if (!data) return data;
+
+      const singleIds = [];
+      (data.habitsConfig || []).forEach(habit => {
+        if (habit.type === 'singleChoice') {
+          habit.options = [{ id: 'done', label: 'Done' }];
+          singleIds.push(habit.id);
+        }
+      });
+
+      if (data.weeks) {
+        for (const week of Object.values(data.weeks)) {
+          week.days?.forEach(day => {
+            if (!day.habits) day.habits = {};
+            for (const id of singleIds) {
+              if (id in day.habits) {
+                day.habits[id] = normalizeSingleChoiceValue(day.habits[id]);
+              }
+            }
+          });
+        }
+      }
+
+      return data;
+    }
+
     // ============ PERSISTENCE ============
     function saveDB() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
@@ -1201,7 +1248,7 @@
             habits[habit.id][item.id] = false;
           }
         } else if (habit.type === 'singleChoice') {
-          habits[habit.id] = habit.options[0]?.id || 'none';
+          habits[habit.id] = false;
         } else if (habit.type === 'scale') {
           habits[habit.id] = habit.min || 0;
         }
@@ -1232,10 +1279,12 @@
                 day.habits[habit.id][item.id] = false;
               }
             } else if (habit.type === 'singleChoice') {
-              day.habits[habit.id] = habit.options[0]?.id || 'none';
+              day.habits[habit.id] = false;
             } else if (habit.type === 'scale') {
               day.habits[habit.id] = habit.min || 0;
             }
+          } else if (habit.type === 'singleChoice') {
+            day.habits[habit.id] = normalizeSingleChoiceValue(day.habits[habit.id]);
           }
         }
       }
@@ -1273,21 +1322,14 @@
         return { type: 'checklist', itemStats, avgPct };
       }
 
-      if (habit.type === 'singleChoice') {
+    if (habit.type === 'singleChoice') {
         let completed = 0;
-        const breakdown = {};
-        for (const opt of habit.options) {
-          breakdown[opt.id] = 0;
-        }
-
         for (const day of week.days) {
-          const val = day.habits[habit.id] || 'none';
-          if (breakdown.hasOwnProperty(val)) breakdown[val]++;
-          if (val !== 'none' && val !== habit.options[0]?.id) completed++;
+          if (normalizeSingleChoiceValue(day.habits[habit.id])) completed++;
         }
 
         const pct = target > 0 ? Math.min(completed / target, 1) * 100 : 100;
-        return { type: 'singleChoice', completed, target, pct, breakdown };
+        return { type: 'singleChoice', completed, target, pct };
       }
 
       if (habit.type === 'scale') {
@@ -1437,10 +1479,9 @@
       }
 
       if (habit.type === 'singleChoice') {
-        const opt = habit.options.find(o => o.id === value);
-        const isNone = !value || value === 'none' || value === habit.options[0]?.id;
-        const cls = isNone ? 'cell-none' : 'cell-done';
-        const label = isNone ? '–' : (opt?.label?.charAt(0) || '?');
+        const done = normalizeSingleChoiceValue(value);
+        const cls = done ? 'cell-done cell-check' : 'cell-none';
+        const label = done ? '✓' : '–';
         return `<span class="cell-content ${cls}">${label}</span>`;
       }
 
@@ -1607,13 +1648,12 @@
       }
 
       if (habit.type === 'singleChoice') {
-        return `<div class="radio-group">
-          ${habit.options.map(opt => `
-            <label class="radio-item">
-              <input type="radio" name="habit-${habit.id}" value="${opt.id}" ${value === opt.id ? 'checked' : ''} data-habit="${habit.id}">
-              <span>${opt.label}</span>
-            </label>
-          `).join('')}
+        const done = normalizeSingleChoiceValue(value);
+        return `<div class="checkbox-group">
+          <label class="checkbox-item">
+            <input type="checkbox" data-habit="${habit.id}" ${done ? 'checked' : ''}>
+            <span>Done</span>
+          </label>
         </div>`;
       }
 
@@ -1809,6 +1849,7 @@
               ${habit.isArchived
                 ? `<button class="btn btn-sm" data-restore="${habit.id}">Restore</button>`
                 : `<button class="btn btn-sm btn-danger" data-archive="${habit.id}">Archive</button>`}
+              <button class="btn btn-sm btn-danger" data-delete="${habit.id}">Delete</button>
             </div>
           </div>
         `;
@@ -1855,6 +1896,13 @@
             renderWeekGrid();
             renderWeekSummary();
           }
+        });
+      });
+
+      container.querySelectorAll('[data-delete]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          habitToDelete = btn.dataset.delete;
+          openModal('deleteHabitModal');
         });
       });
 
@@ -1963,38 +2011,12 @@
 
         attachRemoveListeners();
       } else if (habit.type === 'singleChoice') {
-        const options = habit.options || [{ id: 'none', label: 'None' }];
         container.innerHTML = `
           <div class="form-group">
-            <label class="form-label">Options (first is "None"/default)</label>
-            <div class="items-editor">
-              <div class="items-list" id="choiceOptions">
-                ${options.map((opt, i) => `
-                  <div class="item-row">
-                    <input type="text" class="form-input" value="${opt.label}" data-index="${i}">
-                    ${i > 0 ? `<button type="button" class="btn btn-sm btn-danger" data-remove="${i}">×</button>` : ''}
-                  </div>
-                `).join('')}
-              </div>
-              <button type="button" class="btn btn-sm" id="addChoiceOption">+ Add Option</button>
-            </div>
+            <label class="form-label">Single Choice</label>
+            <p style="color: var(--muted); font-size: 12px">Automatically adds a single "Done" toggle.</p>
           </div>
         `;
-
-        document.getElementById('addChoiceOption')?.addEventListener('click', () => {
-          const list = document.getElementById('choiceOptions');
-          const idx = list.children.length;
-          const row = document.createElement('div');
-          row.className = 'item-row';
-          row.innerHTML = `
-            <input type="text" class="form-input" value="" data-index="${idx}">
-            <button type="button" class="btn btn-sm btn-danger" data-remove="${idx}">×</button>
-          `;
-          list.appendChild(row);
-          attachRemoveListeners();
-        });
-
-        attachRemoveListeners();
       } else if (habit.type === 'scale') {
         container.innerHTML = `
           <div class="form-row">
@@ -2068,18 +2090,7 @@
           }
         }
       } else if (type === 'singleChoice') {
-        const options = [];
-        document.querySelectorAll('#choiceOptions input').forEach((input, i) => {
-          const optLabel = input.value.trim();
-          if (optLabel) {
-            const existingOpt = habit.options?.[i];
-            options.push({
-              id: existingOpt?.id || (i === 0 ? 'none' : generateId()),
-              label: optLabel
-            });
-          }
-        });
-        habit.options = options;
+        habit.options = [{ id: 'done', label: 'Done' }];
 
         if (!(habit.id in db.targets)) {
           db.targets[habit.id] = 5;
@@ -2118,6 +2129,48 @@
       saveDB();
       renderHabitsModal();
       renderWeekGrid();
+    }
+
+    function deleteHabit(habitId) {
+      const idx = db.habitsConfig.findIndex(h => h.id === habitId);
+      if (idx < 0) return;
+
+      db.habitsConfig.splice(idx, 1);
+      db.habitsConfig.sort((a, b) => a.order - b.order).forEach((h, i) => h.order = i);
+
+      for (const key of Object.keys(db.targets)) {
+        if (key === habitId || key.startsWith(`${habitId}.`)) {
+          delete db.targets[key];
+        }
+      }
+
+      for (const week of Object.values(db.weeks)) {
+        week.days?.forEach(day => {
+          if (day?.habits && habitId in day.habits) {
+            delete day.habits[habitId];
+          }
+        });
+      }
+
+      saveDB();
+      renderHabitsModal();
+      renderWeekGrid();
+      renderWeekSummary();
+      if (selectedDay !== null) {
+        renderDayDrawer();
+      }
+    }
+
+    function closeDeleteHabitModal() {
+      habitToDelete = null;
+      closeModal('deleteHabitModal');
+    }
+
+    function confirmDeleteHabit() {
+      if (habitToDelete) {
+        deleteHabit(habitToDelete);
+      }
+      closeDeleteHabitModal();
     }
 
     // ============ TARGETS MODAL ============
@@ -2422,6 +2475,8 @@
       document.getElementById('prevWeekBtn').addEventListener('click', () => navigateWeek(-1));
       document.getElementById('nextWeekBtn').addEventListener('click', () => navigateWeek(1));
       document.getElementById('newWeekBtn').addEventListener('click', createNewWeek);
+      document.getElementById('weekLabel').addEventListener('click', () => showView('week'));
+      document.getElementById('boardBtn').addEventListener('click', () => showView('week'));
 
       // Event listeners - Navbar buttons
       document.getElementById('habitsBtn').addEventListener('click', () => {
@@ -2456,6 +2511,9 @@
         saveDB();
         closeModal('settingsModal');
       });
+      document.getElementById('deleteHabitClose').addEventListener('click', closeDeleteHabitModal);
+      document.getElementById('deleteHabitCancel').addEventListener('click', closeDeleteHabitModal);
+      document.getElementById('deleteHabitConfirm').addEventListener('click', confirmDeleteHabit);
 
       document.getElementById('importResultClose').addEventListener('click', () => closeModal('importResultModal'));
       document.getElementById('importResultOk').addEventListener('click', () => closeModal('importResultModal'));
@@ -2488,6 +2546,7 @@
         overlay.addEventListener('click', (e) => {
           if (e.target === overlay) {
             overlay.classList.remove('open');
+            if (overlay.id === 'deleteHabitModal') habitToDelete = null;
           }
         });
       });
