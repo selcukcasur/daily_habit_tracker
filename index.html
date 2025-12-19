@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Tracker</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-tertiary: #21262d;
+      --bg-hover: #30363d;
+      --border: #30363d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent: #58a6ff;
+      --accent-hover: #79b8ff;
+      --success: #3fb950;
+      --warning: #d29922;
+      --danger: #f85149;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* Layout */
+    .app { display: flex; flex-direction: column; min-height: 100vh; }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .navbar-left { display: flex; gap: 8px; align-items: center; }
+    .navbar-center { flex: 1; text-align: center; font-weight: 600; color: var(--text-secondary); }
+    .navbar-right { display: flex; gap: 8px; align-items: center; }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      position: relative;
+    }
+
+    .view-container { flex: 1; padding: 16px; overflow-y: auto; }
+
+    /* Buttons */
+    .btn {
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      cursor: pointer;
+      font-size: 13px;
+      transition: background 0.15s;
+    }
+    .btn:hover { background: var(--bg-hover); }
+    .btn-primary { background: var(--accent); border-color: var(--accent); color: #000; font-weight: 500; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-sm { padding: 4px 8px; font-size: 12px; }
+    .btn-icon { padding: 6px 10px; }
+
+    /* Week Grid */
+    .week-grid {
+      display: grid;
+      grid-template-columns: 100px repeat(7, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .grid-header, .grid-cell, .grid-label {
+      padding: 10px 8px;
+      background: var(--bg-secondary);
+      text-align: center;
+    }
+
+    .grid-header { font-weight: 600; color: var(--text-secondary); font-size: 12px; text-transform: uppercase; }
+    .grid-label { text-align: left; font-weight: 500; background: var(--bg-tertiary); }
+
+    .grid-cell {
+      cursor: pointer;
+      transition: background 0.15s;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .grid-cell:hover { background: var(--bg-hover); }
+    .grid-cell.today { box-shadow: inset 0 0 0 2px var(--accent); }
+
+    .cell-content { font-size: 12px; }
+    .cell-done { color: var(--success); }
+    .cell-partial { color: var(--warning); }
+    .cell-none { color: var(--text-muted); }
+
+    /* Day Drawer */
+    .drawer {
+      width: 320px;
+      background: var(--bg-secondary);
+      border-left: 1px solid var(--border);
+      padding: 16px;
+      overflow-y: auto;
+      display: none;
+    }
+    .drawer.open { display: block; }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .drawer-title { font-weight: 600; font-size: 16px; }
+    .drawer-close { background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 20px; }
+    .drawer-close:hover { color: var(--text-primary); }
+
+    .drawer-section { margin-bottom: 20px; }
+    .drawer-section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    /* Form Controls */
+    .checkbox-group { display: flex; flex-direction: column; gap: 8px; }
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .checkbox-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .radio-group { display: flex; flex-direction: column; gap: 8px; }
+    .radio-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .radio-item input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .counter {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .counter-btn {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .counter-btn:hover { background: var(--bg-hover); }
+    .counter-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .counter-value { font-size: 20px; font-weight: 600; min-width: 40px; text-align: center; }
+
+    .rating-buttons { display: flex; gap: 6px; }
+    .rating-btn {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .rating-btn:hover { background: var(--bg-hover); }
+    .rating-btn.active { background: var(--accent); border-color: var(--accent); color: #000; }
+
+    /* Week Summary */
+    .week-summary {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .summary-title {
+      font-weight: 600;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .summary-section { margin-bottom: 16px; }
+    .summary-section:last-child { margin-bottom: 0; }
+    .summary-section-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+      font-size: 13px;
+    }
+    .summary-label { color: var(--text-secondary); }
+    .summary-value { font-weight: 500; }
+    .summary-value.success { color: var(--success); }
+    .summary-value.warning { color: var(--warning); }
+    .summary-value.danger { color: var(--danger); }
+
+    .overall-percent {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    /* History View */
+    .history-list { display: flex; flex-direction: column; gap: 8px; }
+
+    .history-item {
+      display: grid;
+      grid-template-columns: 1fr repeat(5, 80px);
+      gap: 16px;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .history-item:hover { background: var(--bg-tertiary); }
+
+    .history-date { font-weight: 500; }
+    .history-stat { text-align: center; font-size: 13px; }
+    .history-stat-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 480px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .modal-title { font-size: 18px; font-weight: 600; }
+    .modal-close { background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 24px; }
+
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; margin-bottom: 6px; font-size: 13px; color: var(--text-secondary); }
+    .form-input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      font-size: 14px;
+    }
+    .form-input:focus { outline: none; border-color: var(--accent); }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .modal-footer { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }
+
+    /* Overall View */
+    .overall-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .overall-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .overall-card-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      font-size: 13px;
+    }
+    .toggle-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+    }
+
+    /* View headers */
+    .view-header {
+      margin-bottom: 20px;
+    }
+    .view-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .view-subtitle {
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    /* Data actions */
+    .data-actions {
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .navbar { padding: 10px; gap: 6px; }
+      .navbar-center { display: none; }
+      .week-grid { grid-template-columns: 80px repeat(7, 1fr); font-size: 12px; }
+      .grid-cell { min-height: 36px; padding: 6px 4px; }
+      .drawer { width: 100%; position: fixed; right: 0; top: 0; bottom: 0; z-index: 50; }
+      .history-item { grid-template-columns: 1fr; gap: 8px; }
+      .history-stat { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app" id="app">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="navbar-left">
+        <button class="btn btn-icon" id="prevWeekBtn" title="Previous Week">◀</button>
+        <button class="btn btn-icon" id="nextWeekBtn" title="Next Week">▶</button>
+        <button class="btn" id="newWeekBtn">+ New Week</button>
+      </div>
+      <div class="navbar-center" id="weekLabel">Week</div>
+      <div class="navbar-right">
+        <button class="btn" id="targetsBtn">Targets</button>
+        <button class="btn" id="historyBtn">History</button>
+        <button class="btn" id="overallBtn">Overall</button>
+        <button class="btn btn-sm" id="settingsBtn">⚙</button>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Week View -->
+      <div class="view-container" id="weekView">
+        <div class="week-grid" id="weekGrid"></div>
+        <div class="week-summary" id="weekSummary"></div>
+      </div>
+
+      <!-- History View -->
+      <div class="view-container" id="historyView" style="display:none;">
+        <div class="view-header">
+          <h1 class="view-title">History</h1>
+          <p class="view-subtitle">All tracked weeks</p>
+        </div>
+        <div class="history-list" id="historyList"></div>
+      </div>
+
+      <!-- Overall View -->
+      <div class="view-container" id="overallView" style="display:none;">
+        <div class="view-header">
+          <h1 class="view-title">Overall Statistics</h1>
+          <p class="view-subtitle">All-time aggregated data</p>
+        </div>
+        <div class="toggle-row">
+          <input type="checkbox" id="useWeekTargets" checked>
+          <label for="useWeekTargets">Use week targets (vs default targets)</label>
+        </div>
+        <div class="overall-grid" id="overallGrid"></div>
+      </div>
+
+      <!-- Day Drawer -->
+      <div class="drawer" id="dayDrawer">
+        <div class="drawer-header">
+          <span class="drawer-title" id="drawerTitle">Monday</span>
+          <button class="drawer-close" id="drawerClose">×</button>
+        </div>
+
+        <div class="drawer-section">
+          <div class="drawer-section-title">Voice</div>
+          <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input type="checkbox" id="voiceMini">
+              <span>Mini Activation</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" id="voiceArticulation">
+              <span>Articulation</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" id="voiceVocal">
+              <span>Vocal Session</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="drawer-section">
+          <div class="drawer-section-title">Sport</div>
+          <div class="radio-group">
+            <label class="radio-item">
+              <input type="radio" name="sport" value="none">
+              <span>None</span>
+            </label>
+            <label class="radio-item">
+              <input type="radio" name="sport" value="cardio">
+              <span>Cardio</span>
+            </label>
+            <label class="radio-item">
+              <input type="radio" name="sport" value="weights_cardio">
+              <span>Weights + Cardio</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="drawer-section">
+          <div class="drawer-section-title">Work</div>
+          <div class="counter">
+            <button class="counter-btn" id="workMinus">−</button>
+            <span class="counter-value" id="workValue">0</span>
+            <button class="counter-btn" id="workPlus">+</button>
+            <span style="color: var(--text-muted); font-size: 12px;">deep blocks</span>
+          </div>
+        </div>
+
+        <div class="drawer-section">
+          <div class="drawer-section-title">Guitar</div>
+          <div class="rating-buttons" id="guitarRating"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Actions -->
+    <div class="data-actions">
+      <button class="btn btn-sm" id="exportBtn">Export JSON</button>
+      <button class="btn btn-sm" id="importBtn">Import JSON</button>
+      <input type="file" id="importFile" accept=".json" style="display:none">
+    </div>
+  </div>
+
+  <!-- Targets Modal -->
+  <div class="modal-overlay" id="targetsModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Week Targets</h2>
+        <button class="modal-close" id="targetsClose">×</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Voice - Mini Activation (days/week)</label>
+        <input type="number" class="form-input" id="targetMini" min="0" max="7">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Voice - Articulation (days/week)</label>
+        <input type="number" class="form-input" id="targetArticulation" min="0" max="7">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Voice - Vocal Session (days/week)</label>
+        <input type="number" class="form-input" id="targetVocal" min="0" max="7">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Sport (days/week)</label>
+        <input type="number" class="form-input" id="targetSport" min="0" max="7">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Work - Deep Blocks (total/week)</label>
+        <input type="number" class="form-input" id="targetWork" min="0">
+      </div>
+      <div class="modal-footer">
+        <button class="btn" id="targetsUseDefaults">Use Defaults</button>
+        <button class="btn btn-primary" id="targetsSave">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Settings (Default Targets)</h2>
+        <button class="modal-close" id="settingsClose">×</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Voice - Mini Activation (days/week)</label>
+        <input type="number" class="form-input" id="defaultMini" min="0" max="7">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Voice - Articulation (days/week)</label>
+        <input type="number" class="form-input" id="defaultArticulation" min="0" max="7">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Voice - Vocal Session (days/week)</label>
+        <input type="number" class="form-input" id="defaultVocal" min="0" max="7">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Sport (days/week)</label>
+        <input type="number" class="form-input" id="defaultSport" min="0" max="7">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Work - Deep Blocks (total/week)</label>
+        <input type="number" class="form-input" id="defaultWork" min="0">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Deep Blocks Max per Day</label>
+        <input type="number" class="form-input" id="defaultBlocksMax" min="1" max="20">
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="settingsSave">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ============ STORAGE KEYS ============
+    const STORAGE_KEY = 'weeklyTracker';
+    const SETTINGS_KEY = 'weeklyTrackerSettings';
+
+    // ============ DEFAULT SETTINGS ============
+    const DEFAULT_SETTINGS = {
+      targets: {
+        mini: 7,
+        articulation: 7,
+        vocal: 3,
+        sport: 5,
+        work: 10
+      },
+      blocksMaxPerDay: 5
+    };
+
+    // ============ STATE ============
+    let state = {
+      weeks: {},
+      currentWeekId: null
+    };
+    let settings = { ...DEFAULT_SETTINGS };
+    let selectedDay = null;
+    let currentView = 'week';
+
+    // ============ HELPERS ============
+    const DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const DAY_FULL_NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+    function getISOWeekId(date) {
+      const d = new Date(date);
+      d.setHours(0, 0, 0, 0);
+      d.setDate(d.getDate() + 3 - (d.getDay() + 6) % 7);
+      const week1 = new Date(d.getFullYear(), 0, 4);
+      const weekNum = 1 + Math.round(((d - week1) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
+      return `${d.getFullYear()}-W${String(weekNum).padStart(2, '0')}`;
+    }
+
+    function getWeekMonday(weekId) {
+      const [year, weekPart] = weekId.split('-W');
+      const weekNum = parseInt(weekPart);
+      const jan4 = new Date(parseInt(year), 0, 4);
+      const dayOfWeek = jan4.getDay() || 7;
+      const monday = new Date(jan4);
+      monday.setDate(jan4.getDate() - dayOfWeek + 1 + (weekNum - 1) * 7);
+      return monday;
+    }
+
+    function formatDate(date) {
+      return date.toISOString().split('T')[0];
+    }
+
+    function addDays(date, days) {
+      const result = new Date(date);
+      result.setDate(result.getDate() + days);
+      return result;
+    }
+
+    function createEmptyDay() {
+      return {
+        voice: { miniActivation: false, articulation: false, vocalSession: false },
+        sport: 'none',
+        work: { deepBlocks: 0 },
+        guitar: { rating: 0 }
+      };
+    }
+
+    function createWeek(weekId) {
+      const monday = getWeekMonday(weekId);
+      const sunday = addDays(monday, 6);
+      return {
+        weekId,
+        startDate: formatDate(monday),
+        endDate: formatDate(sunday),
+        targets: { ...settings.targets },
+        days: Array(7).fill(null).map(() => createEmptyDay())
+      };
+    }
+
+    // ============ PERSISTENCE ============
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function loadState() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        state = JSON.parse(saved);
+      }
+    }
+
+    function saveSettings() {
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+    }
+
+    function loadSettings() {
+      const saved = localStorage.getItem(SETTINGS_KEY);
+      if (saved) {
+        settings = { ...DEFAULT_SETTINGS, ...JSON.parse(saved) };
+      }
+    }
+
+    // ============ CALCULATIONS ============
+    function calcVoiceStats(week) {
+      let mini = 0, articulation = 0, vocal = 0;
+      week.days.forEach(day => {
+        if (day.voice.miniActivation) mini++;
+        if (day.voice.articulation) articulation++;
+        if (day.voice.vocalSession) vocal++;
+      });
+      const targets = week.targets;
+      const miniPct = targets.mini > 0 ? Math.min(mini / targets.mini, 1) * 100 : 100;
+      const artPct = targets.articulation > 0 ? Math.min(articulation / targets.articulation, 1) * 100 : 100;
+      const vocalPct = targets.vocal > 0 ? Math.min(vocal / targets.vocal, 1) * 100 : 100;
+      const categoryPct = (miniPct + artPct + vocalPct) / 3;
+      return { mini, articulation, vocal, miniPct, artPct, vocalPct, categoryPct };
+    }
+
+    function calcSportStats(week) {
+      let sportDays = 0, cardioDays = 0, weightsCardioDays = 0;
+      week.days.forEach(day => {
+        if (day.sport === 'cardio') { sportDays++; cardioDays++; }
+        else if (day.sport === 'weights_cardio') { sportDays++; weightsCardioDays++; }
+      });
+      const target = week.targets.sport;
+      const sportPct = target > 0 ? Math.min(sportDays / target, 1) * 100 : 100;
+      return { sportDays, cardioDays, weightsCardioDays, sportPct };
+    }
+
+    function calcWorkStats(week) {
+      let totalBlocks = 0;
+      week.days.forEach(day => { totalBlocks += day.work.deepBlocks; });
+      const target = week.targets.work;
+      const workPct = target > 0 ? Math.min(totalBlocks / target, 1) * 100 : 100;
+      return { totalBlocks, workPct };
+    }
+
+    function calcGuitarStats(week) {
+      let sum = 0, practicedDays = 0;
+      week.days.forEach(day => {
+        if (day.guitar.rating > 0) { sum += day.guitar.rating; practicedDays++; }
+      });
+      const avg = practicedDays > 0 ? sum / practicedDays : 0;
+      return { avg, practicedDays };
+    }
+
+    function calcOverallPct(week) {
+      const voice = calcVoiceStats(week);
+      const sport = calcSportStats(week);
+      const work = calcWorkStats(week);
+      return (voice.categoryPct + sport.sportPct + work.workPct) / 3;
+    }
+
+    function calcAllTimeStats(useWeekTargets = true) {
+      const weeks = Object.values(state.weeks);
+      if (weeks.length === 0) return null;
+
+      let totalMini = 0, totalArticulation = 0, totalVocal = 0;
+      let totalSportDays = 0, totalCardioDays = 0, totalWeightsCardioDays = 0;
+      let totalDeepBlocks = 0;
+      let totalGuitarSum = 0, totalGuitarPracticedDays = 0;
+      let targetMini = 0, targetArticulation = 0, targetVocal = 0, targetSport = 0, targetWork = 0;
+
+      weeks.forEach(week => {
+        const targets = useWeekTargets ? week.targets : settings.targets;
+        targetMini += targets.mini;
+        targetArticulation += targets.articulation;
+        targetVocal += targets.vocal;
+        targetSport += targets.sport;
+        targetWork += targets.work;
+
+        week.days.forEach(day => {
+          if (day.voice.miniActivation) totalMini++;
+          if (day.voice.articulation) totalArticulation++;
+          if (day.voice.vocalSession) totalVocal++;
+          if (day.sport === 'cardio') { totalSportDays++; totalCardioDays++; }
+          else if (day.sport === 'weights_cardio') { totalSportDays++; totalWeightsCardioDays++; }
+          totalDeepBlocks += day.work.deepBlocks;
+          if (day.guitar.rating > 0) { totalGuitarSum += day.guitar.rating; totalGuitarPracticedDays++; }
+        });
+      });
+
+      const miniPct = targetMini > 0 ? Math.min(totalMini / targetMini, 1) * 100 : 100;
+      const artPct = targetArticulation > 0 ? Math.min(totalArticulation / targetArticulation, 1) * 100 : 100;
+      const vocalPct = targetVocal > 0 ? Math.min(totalVocal / targetVocal, 1) * 100 : 100;
+      const voiceCategoryPct = (miniPct + artPct + vocalPct) / 3;
+      const sportPct = targetSport > 0 ? Math.min(totalSportDays / targetSport, 1) * 100 : 100;
+      const workPct = targetWork > 0 ? Math.min(totalDeepBlocks / targetWork, 1) * 100 : 100;
+      const overallPct = (voiceCategoryPct + sportPct + workPct) / 3;
+      const guitarAvg = totalGuitarPracticedDays > 0 ? totalGuitarSum / totalGuitarPracticedDays : 0;
+
+      return {
+        overallPct, voiceCategoryPct, miniPct, artPct, vocalPct,
+        sportPct, totalSportDays, totalCardioDays, totalWeightsCardioDays,
+        workPct, totalDeepBlocks,
+        guitarAvg, totalGuitarPracticedDays,
+        totalMini, totalArticulation, totalVocal,
+        weeksCount: weeks.length
+      };
+    }
+
+    // ============ UI HELPERS ============
+    function getPctClass(pct) {
+      if (pct >= 80) return 'success';
+      if (pct >= 50) return 'warning';
+      return 'danger';
+    }
+
+    function formatPct(pct) {
+      return pct.toFixed(0) + '%';
+    }
+
+    // ============ RENDER FUNCTIONS ============
+    function renderWeekGrid() {
+      const week = state.weeks[state.currentWeekId];
+      if (!week) return;
+
+      const today = formatDate(new Date());
+      const monday = getWeekMonday(week.weekId);
+
+      let html = '<div class="grid-header"></div>';
+      DAY_NAMES.forEach((name, i) => {
+        const date = formatDate(addDays(monday, i));
+        const isToday = date === today;
+        html += `<div class="grid-header">${name}<br><span style="font-size:10px;font-weight:normal">${date.slice(5)}</span></div>`;
+      });
+
+      // Voice row
+      html += '<div class="grid-label">Voice</div>';
+      week.days.forEach((day, i) => {
+        const date = formatDate(addDays(monday, i));
+        const count = (day.voice.miniActivation ? 1 : 0) + (day.voice.articulation ? 1 : 0) + (day.voice.vocalSession ? 1 : 0);
+        const cls = count === 3 ? 'cell-done' : count > 0 ? 'cell-partial' : 'cell-none';
+        const isToday = date === today ? ' today' : '';
+        html += `<div class="grid-cell${isToday}" data-day="${i}"><span class="cell-content ${cls}">${count}/3</span></div>`;
+      });
+
+      // Sport row
+      html += '<div class="grid-label">Sport</div>';
+      week.days.forEach((day, i) => {
+        const date = formatDate(addDays(monday, i));
+        const label = day.sport === 'none' ? '−' : day.sport === 'cardio' ? 'C' : 'W+C';
+        const cls = day.sport !== 'none' ? 'cell-done' : 'cell-none';
+        const isToday = date === today ? ' today' : '';
+        html += `<div class="grid-cell${isToday}" data-day="${i}"><span class="cell-content ${cls}">${label}</span></div>`;
+      });
+
+      // Work row
+      html += '<div class="grid-label">Work</div>';
+      week.days.forEach((day, i) => {
+        const date = formatDate(addDays(monday, i));
+        const blocks = day.work.deepBlocks;
+        const cls = blocks > 0 ? 'cell-done' : 'cell-none';
+        const isToday = date === today ? ' today' : '';
+        html += `<div class="grid-cell${isToday}" data-day="${i}"><span class="cell-content ${cls}">${blocks}</span></div>`;
+      });
+
+      // Guitar row
+      html += '<div class="grid-label">Guitar</div>';
+      week.days.forEach((day, i) => {
+        const date = formatDate(addDays(monday, i));
+        const rating = day.guitar.rating;
+        const cls = rating > 0 ? 'cell-done' : 'cell-none';
+        const isToday = date === today ? ' today' : '';
+        html += `<div class="grid-cell${isToday}" data-day="${i}"><span class="cell-content ${cls}">${rating > 0 ? rating : '−'}</span></div>`;
+      });
+
+      document.getElementById('weekGrid').innerHTML = html;
+      document.getElementById('weekLabel').textContent = `${week.startDate} to ${week.endDate}`;
+
+      // Add click handlers
+      document.querySelectorAll('.grid-cell').forEach(cell => {
+        cell.addEventListener('click', () => {
+          const dayIndex = parseInt(cell.dataset.day);
+          openDayDrawer(dayIndex);
+        });
+      });
+    }
+
+    function renderWeekSummary() {
+      const week = state.weeks[state.currentWeekId];
+      if (!week) {
+        document.getElementById('weekSummary').innerHTML = '<p style="color:var(--text-muted)">No week selected</p>';
+        return;
+      }
+
+      const voice = calcVoiceStats(week);
+      const sport = calcSportStats(week);
+      const work = calcWorkStats(week);
+      const guitar = calcGuitarStats(week);
+      const overall = calcOverallPct(week);
+
+      const html = `
+        <div class="summary-title">Week Summary</div>
+        <div class="overall-percent ${getPctClass(overall)}">${formatPct(overall)} Overall</div>
+
+        <div class="summary-section">
+          <div class="summary-section-title">Voice (${formatPct(voice.categoryPct)})</div>
+          <div class="summary-row">
+            <span class="summary-label">Mini Activation</span>
+            <span class="summary-value ${getPctClass(voice.miniPct)}">${voice.mini}/${week.targets.mini} (${formatPct(voice.miniPct)})</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Articulation</span>
+            <span class="summary-value ${getPctClass(voice.artPct)}">${voice.articulation}/${week.targets.articulation} (${formatPct(voice.artPct)})</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Vocal Session</span>
+            <span class="summary-value ${getPctClass(voice.vocalPct)}">${voice.vocal}/${week.targets.vocal} (${formatPct(voice.vocalPct)})</span>
+          </div>
+        </div>
+
+        <div class="summary-section">
+          <div class="summary-section-title">Sport (${formatPct(sport.sportPct)})</div>
+          <div class="summary-row">
+            <span class="summary-label">Days completed</span>
+            <span class="summary-value ${getPctClass(sport.sportPct)}">${sport.sportDays}/${week.targets.sport} (${formatPct(sport.sportPct)})</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Cardio days</span>
+            <span class="summary-value">${sport.cardioDays}</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Weights + Cardio days</span>
+            <span class="summary-value">${sport.weightsCardioDays}</span>
+          </div>
+        </div>
+
+        <div class="summary-section">
+          <div class="summary-section-title">Work (${formatPct(work.workPct)})</div>
+          <div class="summary-row">
+            <span class="summary-label">Deep blocks</span>
+            <span class="summary-value ${getPctClass(work.workPct)}">${work.totalBlocks}/${week.targets.work} (${formatPct(work.workPct)})</span>
+          </div>
+        </div>
+
+        <div class="summary-section">
+          <div class="summary-section-title">Guitar</div>
+          <div class="summary-row">
+            <span class="summary-label">Avg rating</span>
+            <span class="summary-value">${guitar.avg > 0 ? guitar.avg.toFixed(1) : '−'}</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Practice days</span>
+            <span class="summary-value">${guitar.practicedDays}</span>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('weekSummary').innerHTML = html;
+    }
+
+    function renderHistory() {
+      const weekIds = Object.keys(state.weeks).sort().reverse();
+
+      if (weekIds.length === 0) {
+        document.getElementById('historyList').innerHTML = '<p style="color:var(--text-muted)">No weeks tracked yet</p>';
+        return;
+      }
+
+      let html = `
+        <div class="history-item" style="cursor:default;background:var(--bg-tertiary)">
+          <div style="font-weight:600">Week</div>
+          <div class="history-stat"><div class="history-stat-label">Voice</div></div>
+          <div class="history-stat"><div class="history-stat-label">Sport</div></div>
+          <div class="history-stat"><div class="history-stat-label">Work</div></div>
+          <div class="history-stat"><div class="history-stat-label">Overall</div></div>
+          <div class="history-stat"><div class="history-stat-label">Guitar</div></div>
+        </div>
+      `;
+
+      weekIds.forEach(weekId => {
+        const week = state.weeks[weekId];
+        const voice = calcVoiceStats(week);
+        const sport = calcSportStats(week);
+        const work = calcWorkStats(week);
+        const guitar = calcGuitarStats(week);
+        const overall = calcOverallPct(week);
+
+        html += `
+          <div class="history-item" data-week="${weekId}">
+            <div class="history-date">${week.startDate} → ${week.endDate}</div>
+            <div class="history-stat"><span class="${getPctClass(voice.categoryPct)}">${formatPct(voice.categoryPct)}</span></div>
+            <div class="history-stat"><span class="${getPctClass(sport.sportPct)}">${formatPct(sport.sportPct)}</span></div>
+            <div class="history-stat"><span class="${getPctClass(work.workPct)}">${formatPct(work.workPct)}</span></div>
+            <div class="history-stat"><span class="${getPctClass(overall)}">${formatPct(overall)}</span></div>
+            <div class="history-stat"><span>${guitar.avg > 0 ? guitar.avg.toFixed(1) : '−'}</span></div>
+          </div>
+        `;
+      });
+
+      document.getElementById('historyList').innerHTML = html;
+
+      document.querySelectorAll('.history-item[data-week]').forEach(item => {
+        item.addEventListener('click', () => {
+          state.currentWeekId = item.dataset.week;
+          showView('week');
+        });
+      });
+    }
+
+    function renderOverall() {
+      const useWeekTargets = document.getElementById('useWeekTargets').checked;
+      const stats = calcAllTimeStats(useWeekTargets);
+
+      if (!stats) {
+        document.getElementById('overallGrid').innerHTML = '<p style="color:var(--text-muted)">No data yet</p>';
+        return;
+      }
+
+      const html = `
+        <div class="overall-card">
+          <div class="overall-card-title">Overall</div>
+          <div class="overall-percent ${getPctClass(stats.overallPct)}">${formatPct(stats.overallPct)}</div>
+          <div class="summary-row">
+            <span class="summary-label">Weeks tracked</span>
+            <span class="summary-value">${stats.weeksCount}</span>
+          </div>
+        </div>
+
+        <div class="overall-card">
+          <div class="overall-card-title">Voice (${formatPct(stats.voiceCategoryPct)})</div>
+          <div class="summary-row">
+            <span class="summary-label">Mini Activation</span>
+            <span class="summary-value ${getPctClass(stats.miniPct)}">${stats.totalMini} (${formatPct(stats.miniPct)})</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Articulation</span>
+            <span class="summary-value ${getPctClass(stats.artPct)}">${stats.totalArticulation} (${formatPct(stats.artPct)})</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Vocal Session</span>
+            <span class="summary-value ${getPctClass(stats.vocalPct)}">${stats.totalVocal} (${formatPct(stats.vocalPct)})</span>
+          </div>
+        </div>
+
+        <div class="overall-card">
+          <div class="overall-card-title">Sport (${formatPct(stats.sportPct)})</div>
+          <div class="summary-row">
+            <span class="summary-label">Total sport days</span>
+            <span class="summary-value">${stats.totalSportDays}</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Cardio days</span>
+            <span class="summary-value">${stats.totalCardioDays}</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Weights + Cardio days</span>
+            <span class="summary-value">${stats.totalWeightsCardioDays}</span>
+          </div>
+        </div>
+
+        <div class="overall-card">
+          <div class="overall-card-title">Work (${formatPct(stats.workPct)})</div>
+          <div class="summary-row">
+            <span class="summary-label">Total deep blocks</span>
+            <span class="summary-value">${stats.totalDeepBlocks}</span>
+          </div>
+        </div>
+
+        <div class="overall-card">
+          <div class="overall-card-title">Guitar</div>
+          <div class="summary-row">
+            <span class="summary-label">All-time avg rating</span>
+            <span class="summary-value">${stats.guitarAvg > 0 ? stats.guitarAvg.toFixed(2) : '−'}</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Total practice days</span>
+            <span class="summary-value">${stats.totalGuitarPracticedDays}</span>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('overallGrid').innerHTML = html;
+    }
+
+    function renderGuitarButtons() {
+      let html = '';
+      for (let i = 0; i <= 5; i++) {
+        html += `<button class="rating-btn" data-rating="${i}">${i}</button>`;
+      }
+      document.getElementById('guitarRating').innerHTML = html;
+
+      document.querySelectorAll('.rating-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const rating = parseInt(btn.dataset.rating);
+          updateDayData('guitar', rating);
+        });
+      });
+    }
+
+    // ============ VIEW MANAGEMENT ============
+    function showView(view) {
+      currentView = view;
+      document.getElementById('weekView').style.display = view === 'week' ? 'block' : 'none';
+      document.getElementById('historyView').style.display = view === 'history' ? 'block' : 'none';
+      document.getElementById('overallView').style.display = view === 'overall' ? 'block' : 'none';
+      closeDayDrawer();
+
+      if (view === 'week') {
+        renderWeekGrid();
+        renderWeekSummary();
+      } else if (view === 'history') {
+        renderHistory();
+      } else if (view === 'overall') {
+        renderOverall();
+      }
+    }
+
+    // ============ DAY DRAWER ============
+    function openDayDrawer(dayIndex) {
+      const week = state.weeks[state.currentWeekId];
+      if (!week) return;
+
+      selectedDay = dayIndex;
+      const day = week.days[dayIndex];
+      const monday = getWeekMonday(week.weekId);
+      const date = formatDate(addDays(monday, dayIndex));
+
+      document.getElementById('drawerTitle').textContent = `${DAY_FULL_NAMES[dayIndex]} (${date})`;
+      document.getElementById('voiceMini').checked = day.voice.miniActivation;
+      document.getElementById('voiceArticulation').checked = day.voice.articulation;
+      document.getElementById('voiceVocal').checked = day.voice.vocalSession;
+
+      document.querySelectorAll('input[name="sport"]').forEach(radio => {
+        radio.checked = radio.value === day.sport;
+      });
+
+      document.getElementById('workValue').textContent = day.work.deepBlocks;
+
+      document.querySelectorAll('.rating-btn').forEach(btn => {
+        btn.classList.toggle('active', parseInt(btn.dataset.rating) === day.guitar.rating);
+      });
+
+      document.getElementById('dayDrawer').classList.add('open');
+    }
+
+    function closeDayDrawer() {
+      selectedDay = null;
+      document.getElementById('dayDrawer').classList.remove('open');
+    }
+
+    function updateDayData(field, value) {
+      if (selectedDay === null) return;
+      const week = state.weeks[state.currentWeekId];
+      if (!week) return;
+
+      const day = week.days[selectedDay];
+
+      switch (field) {
+        case 'voiceMini':
+          day.voice.miniActivation = value;
+          break;
+        case 'voiceArticulation':
+          day.voice.articulation = value;
+          break;
+        case 'voiceVocal':
+          day.voice.vocalSession = value;
+          break;
+        case 'sport':
+          day.sport = value;
+          break;
+        case 'work':
+          day.work.deepBlocks = Math.max(0, Math.min(settings.blocksMaxPerDay, value));
+          document.getElementById('workValue').textContent = day.work.deepBlocks;
+          break;
+        case 'guitar':
+          day.guitar.rating = Math.max(0, Math.min(5, value));
+          document.querySelectorAll('.rating-btn').forEach(btn => {
+            btn.classList.toggle('active', parseInt(btn.dataset.rating) === day.guitar.rating);
+          });
+          break;
+      }
+
+      saveState();
+      renderWeekGrid();
+      renderWeekSummary();
+    }
+
+    // ============ WEEK NAVIGATION ============
+    function navigateWeek(direction) {
+      const weekIds = Object.keys(state.weeks).sort();
+      if (weekIds.length === 0) return;
+
+      const currentIndex = weekIds.indexOf(state.currentWeekId);
+      const newIndex = currentIndex + direction;
+
+      if (newIndex >= 0 && newIndex < weekIds.length) {
+        state.currentWeekId = weekIds[newIndex];
+        showView('week');
+      }
+    }
+
+    function createNewWeek() {
+      const currentWeekId = getISOWeekId(new Date());
+
+      if (!state.weeks[currentWeekId]) {
+        state.weeks[currentWeekId] = createWeek(currentWeekId);
+        state.currentWeekId = currentWeekId;
+      } else {
+        // Find next week
+        const weekIds = Object.keys(state.weeks).sort();
+        const lastWeekId = weekIds[weekIds.length - 1];
+        const lastMonday = getWeekMonday(lastWeekId);
+        const nextMonday = addDays(lastMonday, 7);
+        const nextWeekId = getISOWeekId(nextMonday);
+
+        if (!state.weeks[nextWeekId]) {
+          state.weeks[nextWeekId] = createWeek(nextWeekId);
+        }
+        state.currentWeekId = nextWeekId;
+      }
+
+      saveState();
+      showView('week');
+    }
+
+    // ============ MODALS ============
+    function openTargetsModal() {
+      const week = state.weeks[state.currentWeekId];
+      if (!week) return;
+
+      document.getElementById('targetMini').value = week.targets.mini;
+      document.getElementById('targetArticulation').value = week.targets.articulation;
+      document.getElementById('targetVocal').value = week.targets.vocal;
+      document.getElementById('targetSport').value = week.targets.sport;
+      document.getElementById('targetWork').value = week.targets.work;
+      document.getElementById('targetsModal').classList.add('open');
+    }
+
+    function closeTargetsModal() {
+      document.getElementById('targetsModal').classList.remove('open');
+    }
+
+    function saveTargets() {
+      const week = state.weeks[state.currentWeekId];
+      if (!week) return;
+
+      week.targets.mini = Math.max(0, parseInt(document.getElementById('targetMini').value) || 0);
+      week.targets.articulation = Math.max(0, parseInt(document.getElementById('targetArticulation').value) || 0);
+      week.targets.vocal = Math.max(0, parseInt(document.getElementById('targetVocal').value) || 0);
+      week.targets.sport = Math.max(0, parseInt(document.getElementById('targetSport').value) || 0);
+      week.targets.work = Math.max(0, parseInt(document.getElementById('targetWork').value) || 0);
+
+      saveState();
+      closeTargetsModal();
+      renderWeekSummary();
+    }
+
+    function useDefaultTargets() {
+      const week = state.weeks[state.currentWeekId];
+      if (!week) return;
+
+      week.targets = { ...settings.targets };
+      saveState();
+      closeTargetsModal();
+      renderWeekSummary();
+    }
+
+    function openSettingsModal() {
+      document.getElementById('defaultMini').value = settings.targets.mini;
+      document.getElementById('defaultArticulation').value = settings.targets.articulation;
+      document.getElementById('defaultVocal').value = settings.targets.vocal;
+      document.getElementById('defaultSport').value = settings.targets.sport;
+      document.getElementById('defaultWork').value = settings.targets.work;
+      document.getElementById('defaultBlocksMax').value = settings.blocksMaxPerDay;
+      document.getElementById('settingsModal').classList.add('open');
+    }
+
+    function closeSettingsModal() {
+      document.getElementById('settingsModal').classList.remove('open');
+    }
+
+    function saveSettingsData() {
+      settings.targets.mini = Math.max(0, parseInt(document.getElementById('defaultMini').value) || 0);
+      settings.targets.articulation = Math.max(0, parseInt(document.getElementById('defaultArticulation').value) || 0);
+      settings.targets.vocal = Math.max(0, parseInt(document.getElementById('defaultVocal').value) || 0);
+      settings.targets.sport = Math.max(0, parseInt(document.getElementById('defaultSport').value) || 0);
+      settings.targets.work = Math.max(0, parseInt(document.getElementById('defaultWork').value) || 0);
+      settings.blocksMaxPerDay = Math.max(1, parseInt(document.getElementById('defaultBlocksMax').value) || 5);
+
+      saveSettings();
+      closeSettingsModal();
+    }
+
+    // ============ EXPORT/IMPORT ============
+    function exportData() {
+      const data = {
+        state,
+        settings,
+        exportedAt: new Date().toISOString()
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `weekly-tracker-${formatDate(new Date())}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importData() {
+      document.getElementById('importFile').click();
+    }
+
+    function handleImport(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (data.state && data.state.weeks) {
+            state = data.state;
+            if (data.settings) {
+              settings = { ...DEFAULT_SETTINGS, ...data.settings };
+              saveSettings();
+            }
+            saveState();
+
+            // Set current week
+            const weekIds = Object.keys(state.weeks).sort();
+            if (weekIds.length > 0) {
+              const currentWeekId = getISOWeekId(new Date());
+              state.currentWeekId = weekIds.includes(currentWeekId) ? currentWeekId : weekIds[weekIds.length - 1];
+            }
+
+            showView('week');
+            alert('Data imported successfully!');
+          } else {
+            alert('Invalid data format');
+          }
+        } catch (err) {
+          alert('Failed to parse JSON file');
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = '';
+    }
+
+    // ============ INITIALIZATION ============
+    function init() {
+      loadSettings();
+      loadState();
+
+      // Ensure current week exists
+      const currentWeekId = getISOWeekId(new Date());
+      if (!state.weeks[currentWeekId]) {
+        state.weeks[currentWeekId] = createWeek(currentWeekId);
+      }
+      state.currentWeekId = currentWeekId;
+      saveState();
+
+      renderGuitarButtons();
+
+      // Event listeners - Navigation
+      document.getElementById('prevWeekBtn').addEventListener('click', () => navigateWeek(-1));
+      document.getElementById('nextWeekBtn').addEventListener('click', () => navigateWeek(1));
+      document.getElementById('newWeekBtn').addEventListener('click', createNewWeek);
+      document.getElementById('targetsBtn').addEventListener('click', openTargetsModal);
+      document.getElementById('historyBtn').addEventListener('click', () => showView('history'));
+      document.getElementById('overallBtn').addEventListener('click', () => showView('overall'));
+      document.getElementById('settingsBtn').addEventListener('click', openSettingsModal);
+
+      // Event listeners - Drawer
+      document.getElementById('drawerClose').addEventListener('click', closeDayDrawer);
+      document.getElementById('voiceMini').addEventListener('change', (e) => updateDayData('voiceMini', e.target.checked));
+      document.getElementById('voiceArticulation').addEventListener('change', (e) => updateDayData('voiceArticulation', e.target.checked));
+      document.getElementById('voiceVocal').addEventListener('change', (e) => updateDayData('voiceVocal', e.target.checked));
+      document.querySelectorAll('input[name="sport"]').forEach(radio => {
+        radio.addEventListener('change', (e) => updateDayData('sport', e.target.value));
+      });
+      document.getElementById('workMinus').addEventListener('click', () => {
+        const week = state.weeks[state.currentWeekId];
+        if (week && selectedDay !== null) {
+          updateDayData('work', week.days[selectedDay].work.deepBlocks - 1);
+        }
+      });
+      document.getElementById('workPlus').addEventListener('click', () => {
+        const week = state.weeks[state.currentWeekId];
+        if (week && selectedDay !== null) {
+          updateDayData('work', week.days[selectedDay].work.deepBlocks + 1);
+        }
+      });
+
+      // Event listeners - Targets Modal
+      document.getElementById('targetsClose').addEventListener('click', closeTargetsModal);
+      document.getElementById('targetsSave').addEventListener('click', saveTargets);
+      document.getElementById('targetsUseDefaults').addEventListener('click', useDefaultTargets);
+
+      // Event listeners - Settings Modal
+      document.getElementById('settingsClose').addEventListener('click', closeSettingsModal);
+      document.getElementById('settingsSave').addEventListener('click', saveSettingsData);
+
+      // Event listeners - Export/Import
+      document.getElementById('exportBtn').addEventListener('click', exportData);
+      document.getElementById('importBtn').addEventListener('click', importData);
+      document.getElementById('importFile').addEventListener('change', handleImport);
+
+      // Event listener - Overall toggle
+      document.getElementById('useWeekTargets').addEventListener('change', renderOverall);
+
+      // Close modals on overlay click
+      document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', (e) => {
+          if (e.target === overlay) {
+            overlay.classList.remove('open');
+          }
+        });
+      });
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeDayDrawer();
+          closeTargetsModal();
+          closeSettingsModal();
+        }
+      });
+
+      showView('week');
+    }
+
+    init();
+  </script>
+</body>
+</html>
