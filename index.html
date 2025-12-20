@@ -1061,6 +1061,231 @@
       margin-bottom: 0;
     }
 
+    /* Voice Page Styles */
+    .voice-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--gap-lg);
+      margin-bottom: var(--gap-xl);
+    }
+    .voice-summary-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--gap-lg);
+    }
+    .voice-summary-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: var(--gap-sm);
+      color: var(--text);
+    }
+    .voice-summary-stat {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--completed);
+    }
+    .voice-summary-stat.partial { color: var(--progress); }
+    .voice-summary-stat.low { color: var(--low); }
+    .voice-summary-label {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .voice-day-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap-sm);
+    }
+    .voice-day-item {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-md);
+      padding: var(--gap-md);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .voice-day-item:hover {
+      background: var(--panel-2);
+      border-color: var(--border-highlight);
+    }
+    .voice-day-date {
+      font-weight: 500;
+      min-width: 120px;
+    }
+    .voice-day-badges {
+      display: flex;
+      gap: var(--gap-xs);
+      flex-wrap: wrap;
+    }
+    .voice-day-badge {
+      padding: 2px 8px;
+      font-size: 10px;
+      border-radius: 10px;
+      background: var(--panel-3);
+      color: var(--text-secondary);
+    }
+    .voice-day-badge.done {
+      background: var(--completed-bg);
+      color: var(--completed);
+    }
+    .voice-day-badge.has-notes {
+      background: var(--accent-subtle);
+      color: var(--accent);
+    }
+
+    /* Voice compact drawer section */
+    .voice-compact-item {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-sm);
+      padding: var(--gap-sm);
+      border-radius: var(--radius-md);
+      transition: background var(--transition-fast);
+    }
+    .voice-compact-item:hover {
+      background: var(--panel-2);
+    }
+    .voice-compact-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    .voice-compact-label {
+      flex: 1;
+      cursor: pointer;
+    }
+    .voice-compact-details-btn {
+      padding: 4px 8px;
+      font-size: 10px;
+      color: var(--text-secondary);
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .voice-compact-details-btn:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--accent-subtle);
+    }
+    .voice-compact-details-btn.has-data {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* Voice modal checklist */
+    .voice-modal-checklist {
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap-xs);
+      margin-bottom: var(--gap-md);
+    }
+    .voice-modal-check-item {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-sm);
+      padding: var(--gap-sm);
+      background: var(--panel-2);
+      border-radius: var(--radius-sm);
+    }
+    .voice-modal-check-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--completed);
+    }
+    .voice-modal-check-item span {
+      flex: 1;
+      font-size: 13px;
+    }
+    .voice-modal-check-item.done span {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+    .voice-modal-notes {
+      width: 100%;
+      min-height: 80px;
+      padding: var(--gap-sm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel-2);
+      color: var(--text);
+      font-size: 13px;
+      font-family: inherit;
+      resize: vertical;
+    }
+    .voice-modal-notes:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .voice-modal-section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: var(--gap-sm);
+      font-weight: 600;
+    }
+    .voice-modal-empty {
+      padding: var(--gap-md);
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      background: var(--panel-2);
+      border-radius: var(--radius-sm);
+    }
+    .voice-template-btn {
+      padding: 4px 8px;
+      font-size: 10px;
+      color: var(--muted);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      margin-top: var(--gap-sm);
+    }
+    .voice-template-btn:hover {
+      color: var(--text-secondary);
+      border-color: var(--border-highlight);
+    }
+
+    /* Template editor */
+    .template-item-row {
+      display: flex;
+      gap: var(--gap-sm);
+      margin-bottom: var(--gap-sm);
+    }
+    .template-item-row input {
+      flex: 1;
+      padding: var(--gap-sm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel-2);
+      color: var(--text);
+      font-size: 13px;
+    }
+    .template-item-row input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .template-item-remove {
+      padding: 4px 8px;
+      font-size: 12px;
+      color: var(--low);
+      background: transparent;
+      border: 1px solid var(--low);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+    .template-item-remove:hover {
+      background: var(--low-bg);
+    }
+
     @media (max-width: 768px) {
       .navbar { padding: 10px; gap: var(--gap-sm); }
       .navbar-center { display: none; }
@@ -1098,6 +1323,7 @@
       <div class="navbar-center" id="weekLabel">Week</div>
       <div class="navbar-right">
         <button class="btn" id="boardBtn">Board</button>
+        <button class="btn" id="voiceBtn">Voice</button>
         <button class="btn" id="habitsBtn">Habits</button>
         <button class="btn" id="targetsBtn">Targets</button>
         <button class="btn" id="historyBtn">History</button>
@@ -1130,6 +1356,14 @@
           <p class="view-subtitle">All-time aggregated data</p>
         </div>
         <div class="overall-grid" id="overallGrid"></div>
+      </div>
+
+      <div class="view-container" id="voiceView" style="display:none;">
+        <div class="view-header">
+          <h1 class="view-title">Voice</h1>
+          <p class="view-subtitle" id="voiceWeekLabel">Weekly progress</p>
+        </div>
+        <div id="voiceContent"></div>
       </div>
 
       <div class="drawer" id="dayDrawer">
@@ -1228,6 +1462,38 @@
       <div class="modal-footer">
         <button class="btn" id="deleteHabitCancel">Cancel</button>
         <button class="btn btn-danger" id="deleteHabitConfirm">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Voice Sub-Item Details Modal -->
+  <div class="modal-overlay" id="voiceItemModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="voiceItemModalTitle">Voice Details</h2>
+        <button class="modal-close" id="voiceItemModalClose">&times;</button>
+      </div>
+      <div id="voiceItemModalContent"></div>
+      <div class="modal-footer">
+        <button class="btn" id="voiceItemModalDone">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Voice Template Editor Modal -->
+  <div class="modal-overlay" id="voiceTemplateModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="voiceTemplateModalTitle">Edit Template</h2>
+        <button class="modal-close" id="voiceTemplateModalClose">&times;</button>
+      </div>
+      <p style="font-size: 12px; color: var(--muted); margin-bottom: var(--gap-md);">
+        Define the checklist items for this voice exercise. Changes won't affect past days.
+      </p>
+      <div id="voiceTemplateModalContent"></div>
+      <div class="modal-footer">
+        <button class="btn" id="voiceTemplateModalCancel">Cancel</button>
+        <button class="btn btn-primary" id="voiceTemplateModalSave">Save Template</button>
       </div>
     </div>
   </div>
@@ -2062,6 +2328,12 @@
 
       let html = '';
       for (const habit of activeHabits) {
+        // Special compact rendering for Voice
+        if (habit.id === 'voice' && habit.type === 'checklist') {
+          html += renderVoiceCompactSection(habit, day);
+          continue;
+        }
+
         const hasDetails = shouldShowDetails(habit, day.habits[habit.id]);
         const detailsPanelId = `details-${habit.id}`;
         const isOpen = openDetailsPanels[detailsPanelId];
@@ -2088,6 +2360,64 @@
       document.getElementById('drawerContent').innerHTML = html;
       attachDayInputListeners();
       attachDetailsListeners();
+      attachVoiceCompactListeners();
+    }
+
+    function renderVoiceCompactSection(habit, day) {
+      const voiceData = day.habits?.voice || {};
+      const voiceDetails = day.details?.voice || {};
+
+      let html = `<div class="drawer-section">
+        <div class="drawer-section-header">
+          <div class="drawer-section-title">${habit.label}</div>
+        </div>
+        <div class="checkbox-group">`;
+
+      for (const item of habit.items) {
+        const isChecked = voiceData[item.id];
+        const itemDetails = voiceDetails[item.id];
+        const hasData = itemDetails && (
+          (itemDetails.checklist?.some(c => c.done)) ||
+          itemDetails.notes?.trim()
+        );
+
+        html += `
+          <div class="voice-compact-item">
+            <input type="checkbox" class="voice-compact-checkbox"
+              data-habit="voice" data-item="${item.id}" ${isChecked ? 'checked' : ''}>
+            <label class="voice-compact-label" data-habit="voice" data-item="${item.id}">${item.label}</label>
+            <button class="voice-compact-details-btn ${hasData ? 'has-data' : ''}"
+              data-voice-item-modal="${item.id}">Details</button>
+          </div>
+        `;
+      }
+
+      html += `</div></div>`;
+      return html;
+    }
+
+    function attachVoiceCompactListeners() {
+      // Voice compact details buttons
+      document.querySelectorAll('[data-voice-item-modal]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          openVoiceItemModal(btn.dataset.voiceItemModal);
+        });
+      });
+
+      // Voice compact labels (for clicking on label to toggle checkbox)
+      document.querySelectorAll('.voice-compact-label').forEach(label => {
+        label.addEventListener('click', () => {
+          const habitId = label.dataset.habit;
+          const itemId = label.dataset.item;
+          const checkbox = document.querySelector(
+            `.voice-compact-checkbox[data-habit="${habitId}"][data-item="${itemId}"]`
+          );
+          if (checkbox) {
+            checkbox.checked = !checkbox.checked;
+            updateDayHabit(habitId, itemId, checkbox.checked);
+          }
+        });
+      });
     }
 
     function shouldShowDetails(habit, value) {
@@ -3455,6 +3785,7 @@
       document.getElementById('weekView').style.display = view === 'week' ? 'block' : 'none';
       document.getElementById('historyView').style.display = view === 'history' ? 'block' : 'none';
       document.getElementById('overallView').style.display = view === 'overall' ? 'block' : 'none';
+      document.getElementById('voiceView').style.display = view === 'voice' ? 'block' : 'none';
       closeDayDrawer();
 
       if (view === 'week') {
@@ -3465,6 +3796,8 @@
         renderHistory();
       } else if (view === 'overall') {
         renderOverall();
+      } else if (view === 'voice') {
+        renderVoiceView();
       }
     }
 
@@ -3519,6 +3852,331 @@
       ensureWeekExists(currentWeekId);
       saveDB();
       showView('week');
+    }
+
+    // ============ VOICE VIEW ============
+    function renderVoiceView() {
+      const week = getCurrentWeek();
+      if (!week) {
+        document.getElementById('voiceContent').innerHTML = '<p style="color: var(--muted)">No week data available.</p>';
+        return;
+      }
+
+      const voiceHabit = db.habitsConfig.find(h => h.id === 'voice');
+      if (!voiceHabit || voiceHabit.isArchived) {
+        document.getElementById('voiceContent').innerHTML = '<p style="color: var(--muted)">Voice habit not found or archived.</p>';
+        return;
+      }
+
+      const monday = getWeekMonday(week.weekId);
+      document.getElementById('voiceWeekLabel').textContent = `Week of ${formatDate(monday)}`;
+
+      // Calculate stats per sub-item
+      const stats = {};
+      for (const item of voiceHabit.items) {
+        stats[item.id] = { done: 0, total: 7, hasActivity: [] };
+      }
+
+      week.days.forEach((day, dayIndex) => {
+        const voiceData = day.habits?.voice || {};
+        const voiceDetails = day.details?.voice || {};
+
+        for (const item of voiceHabit.items) {
+          if (voiceData[item.id]) {
+            stats[item.id].done++;
+          }
+          // Check for activity (checklist items checked or notes)
+          const itemDetails = voiceDetails[item.id];
+          if (itemDetails) {
+            const hasChecked = itemDetails.checklist?.some(c => c.done);
+            const hasNotes = itemDetails.notes?.trim();
+            if (hasChecked || hasNotes) {
+              stats[item.id].hasActivity.push(dayIndex);
+            }
+          }
+        }
+      });
+
+      // Build summary cards
+      let summaryHtml = '<div class="voice-summary-grid">';
+      for (const item of voiceHabit.items) {
+        const s = stats[item.id];
+        const pct = Math.round((s.done / s.total) * 100);
+        const statClass = pct >= 80 ? '' : pct >= 50 ? 'partial' : 'low';
+        summaryHtml += `
+          <div class="voice-summary-card">
+            <div class="voice-summary-card-title">${item.label}</div>
+            <div class="voice-summary-stat ${statClass}">${s.done}/${s.total}</div>
+            <div class="voice-summary-label">${pct}% complete</div>
+          </div>
+        `;
+      }
+      summaryHtml += '</div>';
+
+      // Build day list (days with activity)
+      const daysWithActivity = [];
+      week.days.forEach((day, dayIndex) => {
+        const voiceData = day.habits?.voice || {};
+        const voiceDetails = day.details?.voice || {};
+
+        const badges = [];
+        for (const item of voiceHabit.items) {
+          if (voiceData[item.id]) {
+            badges.push({ label: item.label, done: true });
+          }
+          const itemDetails = voiceDetails[item.id];
+          if (itemDetails?.notes?.trim()) {
+            badges.push({ label: `${item.label} notes`, hasNotes: true });
+          }
+        }
+
+        if (badges.length > 0) {
+          const date = addDays(monday, dayIndex);
+          daysWithActivity.push({ dayIndex, date, dayName: DAY_FULL_NAMES[dayIndex], badges });
+        }
+      });
+
+      let dayListHtml = '<h3 style="font-size: 14px; margin-bottom: var(--gap-md); color: var(--text-secondary);">Activity</h3>';
+      if (daysWithActivity.length === 0) {
+        dayListHtml += '<p style="color: var(--muted); font-size: 13px;">No voice activity recorded this week.</p>';
+      } else {
+        dayListHtml += '<div class="voice-day-list">';
+        for (const d of daysWithActivity) {
+          dayListHtml += `
+            <div class="voice-day-item" data-voice-day="${d.dayIndex}">
+              <span class="voice-day-date">${d.dayName}, ${formatDate(d.date)}</span>
+              <div class="voice-day-badges">
+                ${d.badges.map(b => `<span class="voice-day-badge ${b.done ? 'done' : ''} ${b.hasNotes ? 'has-notes' : ''}">${b.label}</span>`).join('')}
+              </div>
+            </div>
+          `;
+        }
+        dayListHtml += '</div>';
+      }
+
+      document.getElementById('voiceContent').innerHTML = summaryHtml + dayListHtml;
+
+      // Attach click listeners for day items
+      document.querySelectorAll('.voice-day-item').forEach(el => {
+        el.addEventListener('click', () => {
+          const dayIndex = parseInt(el.dataset.voiceDay);
+          showView('week');
+          setTimeout(() => openDayDrawer(dayIndex), 100);
+        });
+      });
+    }
+
+    // ============ VOICE ITEM MODAL ============
+    let currentVoiceModalItem = null;
+
+    function openVoiceItemModal(itemId) {
+      const week = getCurrentWeek();
+      if (!week || selectedDay === null) return;
+
+      const voiceHabit = db.habitsConfig.find(h => h.id === 'voice');
+      const item = voiceHabit?.items.find(i => i.id === itemId);
+      if (!item) return;
+
+      currentVoiceModalItem = itemId;
+      document.getElementById('voiceItemModalTitle').textContent = item.label;
+      renderVoiceItemModalContent();
+      openModal('voiceItemModal');
+    }
+
+    function renderVoiceItemModalContent() {
+      const week = getCurrentWeek();
+      if (!week || selectedDay === null || !currentVoiceModalItem) return;
+
+      const day = week.days[selectedDay];
+      const itemId = currentVoiceModalItem;
+      const template = db.voiceTemplates?.[itemId]?.checklist || [];
+      const itemDetails = day.details?.voice?.[itemId] || { checklist: [], notes: '' };
+
+      // Get or initialize checklist from template
+      let checklist = itemDetails.checklist || [];
+      if (checklist.length === 0 && template.length > 0) {
+        checklist = template.map(t => ({ text: t.text, done: false }));
+      }
+
+      let html = '';
+
+      if (template.length === 0 && checklist.length === 0) {
+        html += `
+          <div class="voice-modal-empty">
+            No template defined yet.
+            <button class="voice-template-btn" style="display: block; margin: var(--gap-sm) auto 0;" id="voiceModalEditTemplate">Edit Template</button>
+          </div>
+        `;
+      } else {
+        html += '<div class="voice-modal-section-title">Checklist</div>';
+        html += '<div class="voice-modal-checklist">';
+        checklist.forEach((c, i) => {
+          html += `
+            <div class="voice-modal-check-item ${c.done ? 'done' : ''}">
+              <input type="checkbox" ${c.done ? 'checked' : ''} data-voice-modal-check="${i}">
+              <span>${escapeHtml(c.text)}</span>
+            </div>
+          `;
+        });
+        html += '</div>';
+        html += `<button class="voice-template-btn" id="voiceModalEditTemplate">Edit Template</button>`;
+      }
+
+      html += '<div style="margin-top: var(--gap-lg);"><div class="voice-modal-section-title">Notes (optional)</div>';
+      html += `<textarea class="voice-modal-notes" id="voiceModalNotes" placeholder="Add notes...">${escapeHtml(itemDetails.notes || '')}</textarea></div>`;
+
+      document.getElementById('voiceItemModalContent').innerHTML = html;
+      attachVoiceModalListeners();
+    }
+
+    function attachVoiceModalListeners() {
+      // Checklist checkboxes
+      document.querySelectorAll('[data-voice-modal-check]').forEach(cb => {
+        cb.addEventListener('change', () => {
+          const index = parseInt(cb.dataset.voiceModalCheck);
+          updateVoiceModalChecklistItem(index, cb.checked);
+        });
+      });
+
+      // Notes
+      const notesEl = document.getElementById('voiceModalNotes');
+      if (notesEl) {
+        notesEl.addEventListener('input', debounce(() => {
+          updateVoiceModalNotes(notesEl.value);
+        }, 300));
+      }
+
+      // Edit template button
+      const editBtn = document.getElementById('voiceModalEditTemplate');
+      if (editBtn) {
+        editBtn.addEventListener('click', () => {
+          closeModal('voiceItemModal');
+          openVoiceTemplateModal(currentVoiceModalItem);
+        });
+      }
+    }
+
+    function updateVoiceModalChecklistItem(index, done) {
+      const day = ensureVoiceDetails();
+      if (!day || !currentVoiceModalItem) return;
+
+      const itemId = currentVoiceModalItem;
+      if (!day.details.voice[itemId]) {
+        day.details.voice[itemId] = { checklist: [], notes: '' };
+      }
+
+      // Initialize from template if needed
+      const template = db.voiceTemplates?.[itemId]?.checklist || [];
+      if (day.details.voice[itemId].checklist.length === 0 && template.length > 0) {
+        day.details.voice[itemId].checklist = template.map(t => ({ text: t.text, done: false }));
+      }
+
+      if (day.details.voice[itemId].checklist[index]) {
+        day.details.voice[itemId].checklist[index].done = done;
+        day.updatedAt = new Date().toISOString();
+        saveDB();
+        renderVoiceItemModalContent();
+        renderDayDrawer();
+      }
+    }
+
+    function updateVoiceModalNotes(value) {
+      const day = ensureVoiceDetails();
+      if (!day || !currentVoiceModalItem) return;
+
+      const itemId = currentVoiceModalItem;
+      if (!day.details.voice[itemId]) {
+        day.details.voice[itemId] = { checklist: [], notes: '' };
+      }
+      day.details.voice[itemId].notes = value;
+      day.updatedAt = new Date().toISOString();
+      saveDB();
+    }
+
+    // ============ VOICE TEMPLATE MODAL ============
+    let currentTemplateItem = null;
+    let tempTemplateItems = [];
+
+    function openVoiceTemplateModal(itemId) {
+      const voiceHabit = db.habitsConfig.find(h => h.id === 'voice');
+      const item = voiceHabit?.items.find(i => i.id === itemId);
+      if (!item) return;
+
+      currentTemplateItem = itemId;
+      tempTemplateItems = (db.voiceTemplates?.[itemId]?.checklist || []).map(t => t.text);
+
+      document.getElementById('voiceTemplateModalTitle').textContent = `${item.label} Template`;
+      renderVoiceTemplateModalContent();
+      openModal('voiceTemplateModal');
+    }
+
+    function renderVoiceTemplateModalContent() {
+      let html = '<div id="templateItemsList">';
+      tempTemplateItems.forEach((text, i) => {
+        html += `
+          <div class="template-item-row">
+            <input type="text" value="${escapeHtml(text)}" placeholder="Checklist item..." data-template-item="${i}">
+            <button class="template-item-remove" data-template-remove="${i}">×</button>
+          </div>
+        `;
+      });
+      html += '</div>';
+      html += '<button class="add-bullet-btn" id="addTemplateItem">+ Add Item</button>';
+
+      document.getElementById('voiceTemplateModalContent').innerHTML = html;
+      attachTemplateModalListeners();
+    }
+
+    function attachTemplateModalListeners() {
+      // Item text changes
+      document.querySelectorAll('[data-template-item]').forEach(input => {
+        input.addEventListener('input', () => {
+          const index = parseInt(input.dataset.templateItem);
+          tempTemplateItems[index] = input.value;
+        });
+      });
+
+      // Remove item
+      document.querySelectorAll('[data-template-remove]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const index = parseInt(btn.dataset.templateRemove);
+          tempTemplateItems.splice(index, 1);
+          renderVoiceTemplateModalContent();
+        });
+      });
+
+      // Add item
+      const addBtn = document.getElementById('addTemplateItem');
+      if (addBtn) {
+        addBtn.addEventListener('click', () => {
+          tempTemplateItems.push('');
+          renderVoiceTemplateModalContent();
+          // Focus on the new input
+          const inputs = document.querySelectorAll('[data-template-item]');
+          if (inputs.length > 0) {
+            inputs[inputs.length - 1].focus();
+          }
+        });
+      }
+    }
+
+    function saveVoiceTemplateFromModal() {
+      if (!currentTemplateItem) return;
+
+      // Filter out empty items
+      const filteredItems = tempTemplateItems.filter(t => t.trim());
+
+      if (!db.voiceTemplates) db.voiceTemplates = {};
+      db.voiceTemplates[currentTemplateItem] = {
+        checklist: filteredItems.map(text => ({ text }))
+      };
+      saveDB();
+      closeModal('voiceTemplateModal');
+
+      // Reopen the item modal if we came from there
+      if (selectedDay !== null) {
+        openVoiceItemModal(currentTemplateItem);
+      }
     }
 
     // ============ EXPORT / IMPORT / BACKUP ============
@@ -3729,6 +4387,7 @@ console.log('Database loaded. Initializing application...');
       document.getElementById('newWeekBtn').addEventListener('click', createNewWeek);
       document.getElementById('weekLabel').addEventListener('click', () => showView('week'));
       document.getElementById('boardBtn').addEventListener('click', () => showView('week'));
+      document.getElementById('voiceBtn').addEventListener('click', () => showView('voice'));
 
       // Event listeners - Navbar buttons
       document.getElementById('habitsBtn').addEventListener('click', () => {
@@ -3766,6 +4425,13 @@ console.log('Database loaded. Initializing application...');
       document.getElementById('deleteHabitClose').addEventListener('click', closeDeleteHabitModal);
       document.getElementById('deleteHabitCancel').addEventListener('click', closeDeleteHabitModal);
       document.getElementById('deleteHabitConfirm').addEventListener('click', confirmDeleteHabit);
+
+      // Voice modals
+      document.getElementById('voiceItemModalClose').addEventListener('click', () => closeModal('voiceItemModal'));
+      document.getElementById('voiceItemModalDone').addEventListener('click', () => closeModal('voiceItemModal'));
+      document.getElementById('voiceTemplateModalClose').addEventListener('click', () => closeModal('voiceTemplateModal'));
+      document.getElementById('voiceTemplateModalCancel').addEventListener('click', () => closeModal('voiceTemplateModal'));
+      document.getElementById('voiceTemplateModalSave').addEventListener('click', saveVoiceTemplateFromModal);
 
       document.getElementById('importResultClose').addEventListener('click', () => closeModal('importResultModal'));
       document.getElementById('importResultOk').addEventListener('click', () => closeModal('importResultModal'));
