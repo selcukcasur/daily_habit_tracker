@@ -20,7 +20,7 @@ python3 -m http.server 8000
 - **Location**: Browser LocalStorage under key `weeklyTracker.data`
 - **Persistence**: Data persists across browser sessions
 - **Scope**: Data is specific to the browser/domain you use
-- **Schema Version**: v2 (automatic migration from older formats)
+- **Schema Version**: v3 (automatic migration from older formats)
 
 ### Auto Backup
 
@@ -94,6 +94,37 @@ The summary cards show:
 - Color-coded performance (green=100%+, cyan=70-99%, yellow=40-69%, red=<40%)
 - Overall percentage (habits with `includeInOverall: true`)
 
+## Phase 2: Detailed Logging
+
+Each habit now supports optional detailed logging per day. Click the "Details" button next to any habit in the day drawer to expand the details panel.
+
+### Voice Details
+For each voice exercise (Mini Activation, Articulation, Vocal Session):
+- **Checklist**: Add custom checklist items that can be marked done
+- **Notes**: Free-form notes for the exercise
+- **Templates**: Save your checklist as a template and load it on other days
+
+### Sport Details (when marked Done)
+- **Workout Type**: Choose between "Cardio Only" or "Weights + Cardio"
+- **Cardio**: Track type (running, cycling, etc.) and duration in minutes
+- **Weight Training**: Add exercises with sets (weight in kg, reps)
+
+### Work Details
+- **Work Notes**: Describe what you worked on
+- **Quick Log**: Bullet points for tasks or achievements
+
+### Guitar Details
+- **Practice Notes**: What you practiced
+- **What I Practiced**: Bullet points for songs, techniques, etc.
+
+### Generic Notes
+For any single-choice habit, a notes field is available for additional context.
+
+All details are:
+- Stored locally in your browser
+- Included in JSON exports
+- Preserved when importing backups
+
 ## Metrics
 
 **Percentage Calculations:**
@@ -106,22 +137,39 @@ The summary cards show:
 
 - `Escape`: Close any open drawer or modal
 
-## Data Schema (v2)
+## Data Schema (v3)
 
 ```javascript
 {
-  schemaVersion: 2,
-  habitsConfig: [...],  // Array of habit definitions
+  schemaVersion: 3,
+  habitsConfig: [...],  // Array of habit definitions with detailsType
   targets: {...},       // Key-value pairs for targets
   weeks: {              // Weekly data keyed by ISO week (YYYY-Www)
     "2025-W51": {
-      days: {
-        "2025-12-15": {
+      days: [
+        {
           habits: {...},
+          details: {          // NEW in v3: Per-habit detailed logging
+            voice: {
+              miniActivation: { checklist: [{text, done}], notes: "" },
+              articulation: { checklist: [...], notes: "" },
+              vocalSession: { checklist: [...], notes: "" }
+            },
+            sport: { mode: "cardio"|"weights_cardio", cardioType, durationMin, exercises: [...] },
+            work: { notes: "", bullets: [...] },
+            guitar: { notes: "", bullets: [...] },
+            // Generic singleChoice habits: { notes: "" }
+          },
           updatedAt: "2025-12-15T10:30:00.000Z"
-        }
-      }
+        },
+        // ... 7 days total
+      ]
     }
+  },
+  voiceTemplates: {     // NEW in v3: Reusable checklist templates
+    miniActivation: { checklist: [{text: "..."}] },
+    articulation: { checklist: [...] },
+    vocalSession: { checklist: [...] }
   },
   meta: {
     lastSeenWeekKey: "2025-W51",

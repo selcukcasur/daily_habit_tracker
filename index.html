@@ -199,14 +199,22 @@
       background: var(--panel-2);
       font-size: 13px;
       color: var(--text-secondary);
+      height: 44px;
+      min-height: 44px;
+      max-height: 44px;
+      display: flex;
+      align-items: center;
     }
 
     .grid-cell {
       cursor: pointer;
+      height: 44px;
       min-height: 44px;
+      max-height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
     }
     .grid-cell:hover { background: var(--panel-2); }
 
@@ -217,11 +225,25 @@
       border-radius: 20px;
       letter-spacing: 0.02em;
       transition: all var(--transition-fast);
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
     .cell-done { color: var(--completed); background: var(--completed-bg); }
     .cell-partial { color: var(--progress); background: var(--progress-bg); }
     .cell-none { color: var(--muted); background: transparent; }
-    .cell-check { color: var(--completed); font-size: 16px; }
+    .cell-check {
+      color: var(--completed);
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      font-size: 14px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
 
     .drawer {
       background: var(--panel);
@@ -696,6 +718,349 @@
     .tab:hover { color: var(--text); }
     .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
+    /* Details Panel Styles */
+    .details-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      font-size: 11px;
+      color: var(--text-secondary);
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      margin-left: auto;
+    }
+    .details-toggle:hover {
+      background: var(--panel-3);
+      color: var(--text);
+      border-color: var(--border-highlight);
+    }
+    .details-toggle.active {
+      background: var(--accent-subtle);
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .details-toggle svg {
+      width: 12px;
+      height: 12px;
+      transition: transform var(--transition-fast);
+    }
+    .details-toggle.active svg {
+      transform: rotate(180deg);
+    }
+
+    .details-panel {
+      margin-top: var(--gap-md);
+      padding: var(--gap-md);
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      display: none;
+    }
+    .details-panel.open {
+      display: block;
+    }
+
+    .details-section {
+      margin-bottom: var(--gap-md);
+    }
+    .details-section:last-child {
+      margin-bottom: 0;
+    }
+    .details-section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: var(--gap-sm);
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .details-notes {
+      width: 100%;
+      min-height: 60px;
+      padding: var(--gap-sm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel);
+      color: var(--text);
+      font-size: 13px;
+      font-family: inherit;
+      resize: vertical;
+      transition: border-color var(--transition-fast);
+    }
+    .details-notes:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .details-notes::placeholder {
+      color: var(--muted);
+    }
+
+    .details-input {
+      width: 100%;
+      padding: var(--gap-sm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel);
+      color: var(--text);
+      font-size: 13px;
+      transition: border-color var(--transition-fast);
+    }
+    .details-input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .details-input-row {
+      display: flex;
+      gap: var(--gap-sm);
+      margin-bottom: var(--gap-sm);
+    }
+    .details-input-row .details-input {
+      flex: 1;
+    }
+    .details-input-row .details-input.small {
+      flex: 0 0 80px;
+    }
+
+    .bullets-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap-xs);
+    }
+    .bullet-item {
+      display: flex;
+      gap: var(--gap-sm);
+      align-items: center;
+    }
+    .bullet-item .details-input {
+      flex: 1;
+    }
+    .bullet-remove {
+      padding: 4px 8px;
+      font-size: 12px;
+      color: var(--low);
+      background: var(--low-bg);
+      border: 1px solid var(--low);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .bullet-remove:hover {
+      background: rgba(248, 113, 113, 0.2);
+    }
+
+    .add-bullet-btn {
+      padding: 6px 10px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      background: var(--panel);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      margin-top: var(--gap-sm);
+    }
+    .add-bullet-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-subtle);
+    }
+
+    /* Checklist details for Voice */
+    .voice-item-details {
+      margin-top: var(--gap-sm);
+      margin-left: 28px;
+    }
+    .voice-checklist-item {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-sm);
+      padding: 4px 0;
+    }
+    .voice-checklist-item input[type="checkbox"] {
+      width: 14px;
+      height: 14px;
+      accent-color: var(--accent);
+    }
+    .voice-checklist-item input[type="text"] {
+      flex: 1;
+      padding: 4px 8px;
+      font-size: 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel);
+      color: var(--text);
+    }
+    .voice-checklist-item input[type="text"]:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .voice-checklist-remove {
+      padding: 2px 6px;
+      font-size: 11px;
+      color: var(--low);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      opacity: 0.6;
+    }
+    .voice-checklist-remove:hover {
+      opacity: 1;
+    }
+
+    .template-actions {
+      display: flex;
+      gap: var(--gap-sm);
+      margin-top: var(--gap-sm);
+      padding-top: var(--gap-sm);
+      border-top: 1px solid var(--border-subtle);
+    }
+    .template-btn {
+      padding: 4px 8px;
+      font-size: 10px;
+      color: var(--muted);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .template-btn:hover {
+      color: var(--text-secondary);
+      border-color: var(--border-highlight);
+    }
+
+    /* Sport workout table */
+    .workout-exercises {
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap-md);
+    }
+    .exercise-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--gap-md);
+    }
+    .exercise-header {
+      display: flex;
+      gap: var(--gap-sm);
+      align-items: center;
+      margin-bottom: var(--gap-sm);
+    }
+    .exercise-header input {
+      flex: 1;
+      padding: 6px 10px;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel-2);
+      color: var(--text);
+    }
+    .exercise-header input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .exercise-remove {
+      padding: 4px 8px;
+      font-size: 11px;
+      color: var(--low);
+      background: var(--low-bg);
+      border: 1px solid var(--low);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+    .exercise-remove:hover {
+      background: rgba(248, 113, 113, 0.2);
+    }
+
+    .sets-table {
+      width: 100%;
+      font-size: 12px;
+    }
+    .sets-table th {
+      text-align: left;
+      padding: 4px 8px;
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+    .sets-table td {
+      padding: 2px 4px;
+    }
+    .sets-table input {
+      width: 100%;
+      padding: 4px 6px;
+      font-size: 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel-2);
+      color: var(--text);
+      text-align: center;
+    }
+    .sets-table input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .set-remove {
+      padding: 2px 6px;
+      font-size: 10px;
+      color: var(--low);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+    .add-set-btn, .add-exercise-btn {
+      padding: 4px 8px;
+      font-size: 11px;
+      color: var(--text-secondary);
+      background: var(--panel-2);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      margin-top: var(--gap-xs);
+    }
+    .add-set-btn:hover, .add-exercise-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .add-exercise-btn {
+      margin-top: var(--gap-md);
+      width: 100%;
+      padding: 8px;
+    }
+
+    .cardio-fields {
+      display: grid;
+      grid-template-columns: 1fr 100px;
+      gap: var(--gap-sm);
+      margin-bottom: var(--gap-md);
+    }
+    .cardio-fields label {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-bottom: 2px;
+      display: block;
+    }
+
+    .drawer-section-header {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-sm);
+      margin-bottom: 10px;
+    }
+    .drawer-section-header .drawer-section-title {
+      margin-bottom: 0;
+    }
+
     @media (max-width: 768px) {
       .navbar { padding: 10px; gap: var(--gap-sm); }
       .navbar-center { display: none; }
@@ -870,7 +1235,7 @@
   <script>
     // ============ CONSTANTS ============
     const STORAGE_KEY = 'weeklyTracker.data';
-    const CURRENT_SCHEMA_VERSION = 2;
+    const CURRENT_SCHEMA_VERSION = 3;
     const DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     const DAY_FULL_NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -890,7 +1255,8 @@
           includeInOverall: true,
           weight: 1,
           isArchived: false,
-          order: 0
+          order: 0,
+          detailsType: 'voice'
         },
         {
           id: 'sport',
@@ -902,7 +1268,8 @@
           includeInOverall: true,
           weight: 1,
           isArchived: false,
-          order: 1
+          order: 1,
+          detailsType: 'sport'
         },
         {
           id: 'work',
@@ -914,7 +1281,8 @@
           includeInOverall: true,
           weight: 1,
           isArchived: false,
-          order: 2
+          order: 2,
+          detailsType: 'work'
         },
         {
           id: 'guitar',
@@ -926,10 +1294,18 @@
           includeInOverall: false,
           weight: 1,
           isArchived: false,
-          order: 3
+          order: 3,
+          detailsType: 'guitar'
         }
       ];
     }
+
+    // ============ DEFAULT VOICE TEMPLATES ============
+    let voiceTemplates = {
+      miniActivation: { checklist: [] },
+      articulation: { checklist: [] },
+      vocalSession: { checklist: [] }
+    };
 
     function getDefaultTargets() {
       return {
@@ -952,8 +1328,16 @@
         lastSeenWeekKey: null,
         lastAutoBackupWeekKey: null,
         autoBackupEnabled: true
+      },
+      voiceTemplates: {
+        miniActivation: { checklist: [] },
+        articulation: { checklist: [] },
+        vocalSession: { checklist: [] }
       }
     };
+
+    // Track which detail panels are open
+    let openDetailsPanels = {};
 
     let selectedDay = null;
     let currentWeekId = null;
@@ -1062,6 +1446,8 @@
       } else if (raw.schemaVersion === 1) {
         data = migrateFromV1(raw);
       } else if (raw.schemaVersion === 2) {
+        data = migrateFromV2(raw);
+      } else if (raw.schemaVersion === 3) {
         data = raw;
       } else {
         data = {
@@ -1070,6 +1456,7 @@
           targets: getDefaultTargets(),
           weeks: {},
           meta: { lastSeenWeekKey: null, lastAutoBackupWeekKey: null, autoBackupEnabled: true },
+          voiceTemplates: { miniActivation: { checklist: [] }, articulation: { checklist: [] }, vocalSession: { checklist: [] } },
           legacy: raw
         };
       }
@@ -1138,11 +1525,55 @@
     }
 
     function migrateFromV1(raw) {
-      // V1 to V2 migration (placeholder - structure similar)
-      return {
+      // V1 to V2 migration then continue to V3
+      const v2Data = {
         ...raw,
-        schemaVersion: CURRENT_SCHEMA_VERSION
+        schemaVersion: 2
       };
+      return migrateFromV2(v2Data);
+    }
+
+    function migrateFromV2(raw) {
+      // V2 to V3 migration - add details field to each day and voiceTemplates
+      const data = {
+        ...raw,
+        schemaVersion: CURRENT_SCHEMA_VERSION,
+        voiceTemplates: raw.voiceTemplates || {
+          miniActivation: { checklist: [] },
+          articulation: { checklist: [] },
+          vocalSession: { checklist: [] }
+        }
+      };
+
+      // Add detailsType to default habits if missing
+      if (data.habitsConfig) {
+        const defaultHabits = getDefaultHabits();
+        for (const habit of data.habitsConfig) {
+          if (!habit.detailsType) {
+            const defaultHabit = defaultHabits.find(h => h.id === habit.id);
+            if (defaultHabit) {
+              habit.detailsType = defaultHabit.detailsType;
+            } else if (habit.type === 'singleChoice') {
+              habit.detailsType = 'notes';
+            }
+          }
+        }
+      }
+
+      // Add details to each day entry
+      if (data.weeks) {
+        for (const week of Object.values(data.weeks)) {
+          if (week.days) {
+            for (const day of week.days) {
+              if (!day.details) {
+                day.details = {};
+              }
+            }
+          }
+        }
+      }
+
+      return data;
     }
 
     function mapOldSportValue(val) {
@@ -1203,6 +1634,11 @@
             if (!db.targets) db.targets = getDefaultTargets();
             if (!db.weeks) db.weeks = {};
             if (!db.meta) db.meta = { lastSeenWeekKey: null, lastAutoBackupWeekKey: null, autoBackupEnabled: true };
+            if (!db.voiceTemplates) db.voiceTemplates = {
+              miniActivation: { checklist: [] },
+              articulation: { checklist: [] },
+              vocalSession: { checklist: [] }
+            };
             db.schemaVersion = CURRENT_SCHEMA_VERSION;
           }
         } catch (e) {
@@ -1253,7 +1689,7 @@
           habits[habit.id] = habit.min || 0;
         }
       }
-      return { updatedAt: new Date().toISOString(), habits };
+      return { updatedAt: new Date().toISOString(), habits, details: {} };
     }
 
     function ensureWeekExists(weekId) {
@@ -1271,6 +1707,7 @@
       const week = db.weeks[weekId];
       for (const day of week.days) {
         if (!day.habits) day.habits = {};
+        if (!day.details) day.details = {};
         for (const habit of db.habitsConfig) {
           if (!(habit.id in day.habits)) {
             if (habit.type === 'checklist') {
@@ -1625,14 +2062,261 @@
 
       let html = '';
       for (const habit of activeHabits) {
+        const hasDetails = shouldShowDetails(habit, day.habits[habit.id]);
+        const detailsPanelId = `details-${habit.id}`;
+        const isOpen = openDetailsPanels[detailsPanelId];
+
         html += `<div class="drawer-section">
-          <div class="drawer-section-title">${habit.label}</div>
+          <div class="drawer-section-header">
+            <div class="drawer-section-title">${habit.label}</div>
+            ${hasDetails ? `
+              <button class="details-toggle ${isOpen ? 'active' : ''}" data-panel="${detailsPanelId}">
+                Details
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M4.427 6.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 6H4.604a.25.25 0 00-.177.427z"/></svg>
+              </button>
+            ` : ''}
+          </div>
           ${renderHabitInput(habit, day.habits[habit.id])}
+          ${hasDetails ? `
+            <div class="details-panel ${isOpen ? 'open' : ''}" id="${detailsPanelId}">
+              ${renderDetailsEditor(habit, day)}
+            </div>
+          ` : ''}
         </div>`;
       }
 
       document.getElementById('drawerContent').innerHTML = html;
       attachDayInputListeners();
+      attachDetailsListeners();
+    }
+
+    function shouldShowDetails(habit, value) {
+      // All habits can have details in v3
+      if (habit.detailsType) return true;
+      // Default: singleChoice habits get notes
+      if (habit.type === 'singleChoice') return true;
+      return false;
+    }
+
+    function renderDetailsEditor(habit, day) {
+      const detailsType = habit.detailsType || (habit.type === 'singleChoice' ? 'notes' : null);
+      const details = day.details || {};
+
+      switch (detailsType) {
+        case 'voice':
+          return renderVoiceDetails(habit, day);
+        case 'sport':
+          return renderSportDetails(habit, day);
+        case 'work':
+          return renderWorkDetails(habit, day);
+        case 'guitar':
+          return renderGuitarDetails(habit, day);
+        case 'notes':
+        default:
+          return renderNotesDetails(habit, day);
+      }
+    }
+
+    // ============ VOICE DETAILS EDITOR ============
+    function renderVoiceDetails(habit, day) {
+      const details = day.details?.voice || {};
+      let html = '';
+
+      for (const item of habit.items) {
+        const itemDetails = details[item.id] || { checklist: [], notes: '' };
+        const template = db.voiceTemplates?.[item.id]?.checklist || [];
+
+        // Initialize checklist from template if empty
+        let checklist = itemDetails.checklist || [];
+        if (checklist.length === 0 && template.length > 0) {
+          checklist = template.map(t => ({ text: t.text, done: false }));
+        }
+
+        html += `
+          <div class="details-section" data-voice-item="${item.id}">
+            <div class="details-section-title">${item.label}</div>
+            <div class="voice-checklist" data-item="${item.id}">
+              ${checklist.map((c, i) => `
+                <div class="voice-checklist-item">
+                  <input type="checkbox" ${c.done ? 'checked' : ''} data-voice-check="${item.id}" data-index="${i}">
+                  <input type="text" value="${escapeHtml(c.text)}" placeholder="Checklist item..." data-voice-text="${item.id}" data-index="${i}">
+                  <button class="voice-checklist-remove" data-voice-remove="${item.id}" data-index="${i}">×</button>
+                </div>
+              `).join('')}
+            </div>
+            <button class="add-bullet-btn" data-voice-add="${item.id}">+ Add Item</button>
+            <textarea class="details-notes" placeholder="Notes for ${item.label}..."
+              data-voice-notes="${item.id}">${escapeHtml(itemDetails.notes || '')}</textarea>
+            <div class="template-actions">
+              <button class="template-btn" data-voice-save-template="${item.id}">Save as Template</button>
+              <button class="template-btn" data-voice-load-template="${item.id}">Load Template</button>
+            </div>
+          </div>
+        `;
+      }
+
+      return html;
+    }
+
+    // ============ SPORT DETAILS EDITOR ============
+    function renderSportDetails(habit, day) {
+      const isDone = normalizeSingleChoiceValue(day.habits[habit.id]);
+      if (!isDone) {
+        return '<p style="color: var(--muted); font-size: 12px;">Mark Sport as Done to add workout details.</p>';
+      }
+
+      const details = day.details?.sport || { mode: 'cardio', cardioType: '', durationMin: null, exercises: [] };
+
+      return `
+        <div class="details-section">
+          <div class="details-section-title">Workout Type</div>
+          <div class="radio-group" style="flex-direction: row; gap: var(--gap-md);">
+            <label class="radio-item" style="padding: 4px 8px;">
+              <input type="radio" name="sportMode" value="cardio" ${details.mode !== 'weights_cardio' ? 'checked' : ''} data-sport-mode>
+              <span>Cardio Only</span>
+            </label>
+            <label class="radio-item" style="padding: 4px 8px;">
+              <input type="radio" name="sportMode" value="weights_cardio" ${details.mode === 'weights_cardio' ? 'checked' : ''} data-sport-mode>
+              <span>Weights + Cardio</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="details-section">
+          <div class="details-section-title">Cardio</div>
+          <div class="cardio-fields">
+            <div>
+              <label>Type</label>
+              <input class="details-input" type="text" value="${escapeHtml(details.cardioType || '')}"
+                placeholder="Running, Cycling..." data-sport-cardio-type>
+            </div>
+            <div>
+              <label>Duration (min)</label>
+              <input class="details-input" type="number" value="${details.durationMin || ''}"
+                placeholder="30" data-sport-duration>
+            </div>
+          </div>
+        </div>
+
+        <div class="details-section sport-weights-section" style="${details.mode !== 'weights_cardio' ? 'display:none;' : ''}">
+          <div class="details-section-title">Weight Training</div>
+          <div class="workout-exercises" id="sportExercises">
+            ${(details.exercises || []).map((ex, ei) => renderExerciseCard(ex, ei)).join('')}
+          </div>
+          <button class="add-exercise-btn" data-sport-add-exercise>+ Add Exercise</button>
+        </div>
+      `;
+    }
+
+    function renderExerciseCard(exercise, exerciseIndex) {
+      return `
+        <div class="exercise-card" data-exercise="${exerciseIndex}">
+          <div class="exercise-header">
+            <input type="text" value="${escapeHtml(exercise.name || '')}" placeholder="Exercise name..."
+              data-exercise-name="${exerciseIndex}">
+            <button class="exercise-remove" data-remove-exercise="${exerciseIndex}">Remove</button>
+          </div>
+          <table class="sets-table">
+            <thead>
+              <tr>
+                <th>Set</th>
+                <th>Weight (kg)</th>
+                <th>Reps</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              ${(exercise.sets || []).map((set, si) => `
+                <tr data-set="${si}">
+                  <td>${si + 1}</td>
+                  <td><input type="number" value="${set.weightKg || ''}" placeholder="0"
+                    data-set-weight="${exerciseIndex}-${si}"></td>
+                  <td><input type="number" value="${set.reps || ''}" placeholder="0"
+                    data-set-reps="${exerciseIndex}-${si}"></td>
+                  <td><button class="set-remove" data-remove-set="${exerciseIndex}-${si}">×</button></td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+          <button class="add-set-btn" data-add-set="${exerciseIndex}">+ Add Set</button>
+        </div>
+      `;
+    }
+
+    // ============ WORK DETAILS EDITOR ============
+    function renderWorkDetails(habit, day) {
+      const details = day.details?.work || { notes: '', bullets: [] };
+
+      return `
+        <div class="details-section">
+          <div class="details-section-title">Work Notes</div>
+          <textarea class="details-notes" placeholder="What did you work on today..."
+            data-work-notes>${escapeHtml(details.notes || '')}</textarea>
+        </div>
+
+        <div class="details-section">
+          <div class="details-section-title">Quick Log</div>
+          <div class="bullets-list" id="workBullets">
+            ${(details.bullets || []).map((b, i) => `
+              <div class="bullet-item">
+                <input class="details-input" type="text" value="${escapeHtml(b)}"
+                  placeholder="Task or achievement..." data-work-bullet="${i}">
+                <button class="bullet-remove" data-work-remove-bullet="${i}">×</button>
+              </div>
+            `).join('')}
+          </div>
+          <button class="add-bullet-btn" data-work-add-bullet>+ Add Item</button>
+        </div>
+      `;
+    }
+
+    // ============ GUITAR DETAILS EDITOR ============
+    function renderGuitarDetails(habit, day) {
+      const details = day.details?.guitar || { notes: '', bullets: [] };
+
+      return `
+        <div class="details-section">
+          <div class="details-section-title">Practice Notes</div>
+          <textarea class="details-notes" placeholder="What did you practice..."
+            data-guitar-notes>${escapeHtml(details.notes || '')}</textarea>
+        </div>
+
+        <div class="details-section">
+          <div class="details-section-title">What I Practiced</div>
+          <div class="bullets-list" id="guitarBullets">
+            ${(details.bullets || []).map((b, i) => `
+              <div class="bullet-item">
+                <input class="details-input" type="text" value="${escapeHtml(b)}"
+                  placeholder="Song, technique..." data-guitar-bullet="${i}">
+                <button class="bullet-remove" data-guitar-remove-bullet="${i}">×</button>
+              </div>
+            `).join('')}
+          </div>
+          <button class="add-bullet-btn" data-guitar-add-bullet>+ Add Item</button>
+        </div>
+      `;
+    }
+
+    // ============ GENERIC NOTES DETAILS EDITOR ============
+    function renderNotesDetails(habit, day) {
+      const details = day.details?.[habit.id] || { notes: '' };
+
+      return `
+        <div class="details-section">
+          <div class="details-section-title">Notes</div>
+          <textarea class="details-notes" placeholder="Add notes..."
+            data-generic-notes="${habit.id}">${escapeHtml(details.notes || '')}</textarea>
+        </div>
+      `;
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/&/g, '&amp;')
+               .replace(/</g, '&lt;')
+               .replace(/>/g, '&gt;')
+               .replace(/"/g, '&quot;')
+               .replace(/'/g, '&#039;');
     }
 
     function renderHabitInput(habit, value) {
@@ -1671,13 +2355,13 @@
     }
 
     function attachDayInputListeners() {
-      document.querySelectorAll('#drawerContent input[type="checkbox"]').forEach(cb => {
+      document.querySelectorAll('#drawerContent input[type="checkbox"][data-habit]').forEach(cb => {
         cb.addEventListener('change', () => {
           updateDayHabit(cb.dataset.habit, cb.dataset.item, cb.checked);
         });
       });
 
-      document.querySelectorAll('#drawerContent input[type="radio"]').forEach(radio => {
+      document.querySelectorAll('#drawerContent input[type="radio"][data-habit]').forEach(radio => {
         radio.addEventListener('change', () => {
           updateDayHabit(radio.dataset.habit, null, radio.value);
         });
@@ -1693,6 +2377,549 @@
           });
         });
       });
+    }
+
+    // ============ DETAILS EVENT LISTENERS ============
+    function attachDetailsListeners() {
+      // Toggle details panels
+      document.querySelectorAll('.details-toggle').forEach(toggle => {
+        toggle.addEventListener('click', () => {
+          const panelId = toggle.dataset.panel;
+          const panel = document.getElementById(panelId);
+          if (panel) {
+            const isOpen = panel.classList.toggle('open');
+            toggle.classList.toggle('active', isOpen);
+            openDetailsPanels[panelId] = isOpen;
+          }
+        });
+      });
+
+      // Voice details listeners
+      attachVoiceDetailsListeners();
+
+      // Sport details listeners
+      attachSportDetailsListeners();
+
+      // Work details listeners
+      attachWorkDetailsListeners();
+
+      // Guitar details listeners
+      attachGuitarDetailsListeners();
+
+      // Generic notes listeners
+      attachGenericNotesListeners();
+    }
+
+    function attachVoiceDetailsListeners() {
+      // Voice checklist checkbox changes
+      document.querySelectorAll('[data-voice-check]').forEach(cb => {
+        cb.addEventListener('change', () => {
+          const itemId = cb.dataset.voiceCheck;
+          const index = parseInt(cb.dataset.index);
+          updateVoiceChecklistItem(itemId, index, 'done', cb.checked);
+        });
+      });
+
+      // Voice checklist text changes
+      document.querySelectorAll('[data-voice-text]').forEach(input => {
+        input.addEventListener('input', debounce(() => {
+          const itemId = input.dataset.voiceText;
+          const index = parseInt(input.dataset.index);
+          updateVoiceChecklistItem(itemId, index, 'text', input.value);
+        }, 300));
+      });
+
+      // Voice checklist remove
+      document.querySelectorAll('[data-voice-remove]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const itemId = btn.dataset.voiceRemove;
+          const index = parseInt(btn.dataset.index);
+          removeVoiceChecklistItem(itemId, index);
+        });
+      });
+
+      // Voice add item
+      document.querySelectorAll('[data-voice-add]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          addVoiceChecklistItem(btn.dataset.voiceAdd);
+        });
+      });
+
+      // Voice notes
+      document.querySelectorAll('[data-voice-notes]').forEach(textarea => {
+        textarea.addEventListener('input', debounce(() => {
+          updateVoiceNotes(textarea.dataset.voiceNotes, textarea.value);
+        }, 300));
+      });
+
+      // Voice save template
+      document.querySelectorAll('[data-voice-save-template]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          saveVoiceTemplate(btn.dataset.voiceSaveTemplate);
+        });
+      });
+
+      // Voice load template
+      document.querySelectorAll('[data-voice-load-template]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          loadVoiceTemplate(btn.dataset.voiceLoadTemplate);
+        });
+      });
+    }
+
+    function attachSportDetailsListeners() {
+      // Sport mode change
+      document.querySelectorAll('[data-sport-mode]').forEach(radio => {
+        radio.addEventListener('change', () => {
+          updateSportMode(radio.value);
+          const weightsSection = document.querySelector('.sport-weights-section');
+          if (weightsSection) {
+            weightsSection.style.display = radio.value === 'weights_cardio' ? 'block' : 'none';
+          }
+        });
+      });
+
+      // Sport cardio type
+      const cardioType = document.querySelector('[data-sport-cardio-type]');
+      if (cardioType) {
+        cardioType.addEventListener('input', debounce(() => {
+          updateSportField('cardioType', cardioType.value);
+        }, 300));
+      }
+
+      // Sport duration
+      const duration = document.querySelector('[data-sport-duration]');
+      if (duration) {
+        duration.addEventListener('input', debounce(() => {
+          updateSportField('durationMin', duration.value ? parseInt(duration.value) : null);
+        }, 300));
+      }
+
+      // Add exercise
+      document.querySelectorAll('[data-sport-add-exercise]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          addSportExercise();
+        });
+      });
+
+      // Remove exercise
+      document.querySelectorAll('[data-remove-exercise]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          removeSportExercise(parseInt(btn.dataset.removeExercise));
+        });
+      });
+
+      // Exercise name
+      document.querySelectorAll('[data-exercise-name]').forEach(input => {
+        input.addEventListener('input', debounce(() => {
+          updateExerciseName(parseInt(input.dataset.exerciseName), input.value);
+        }, 300));
+      });
+
+      // Add set
+      document.querySelectorAll('[data-add-set]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          addExerciseSet(parseInt(btn.dataset.addSet));
+        });
+      });
+
+      // Remove set
+      document.querySelectorAll('[data-remove-set]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const [exerciseIdx, setIdx] = btn.dataset.removeSet.split('-').map(Number);
+          removeExerciseSet(exerciseIdx, setIdx);
+        });
+      });
+
+      // Set weight
+      document.querySelectorAll('[data-set-weight]').forEach(input => {
+        input.addEventListener('input', debounce(() => {
+          const [exerciseIdx, setIdx] = input.dataset.setWeight.split('-').map(Number);
+          updateExerciseSet(exerciseIdx, setIdx, 'weightKg', input.value ? parseFloat(input.value) : null);
+        }, 300));
+      });
+
+      // Set reps
+      document.querySelectorAll('[data-set-reps]').forEach(input => {
+        input.addEventListener('input', debounce(() => {
+          const [exerciseIdx, setIdx] = input.dataset.setReps.split('-').map(Number);
+          updateExerciseSet(exerciseIdx, setIdx, 'reps', input.value ? parseInt(input.value) : null);
+        }, 300));
+      });
+    }
+
+    function attachWorkDetailsListeners() {
+      // Work notes
+      const workNotes = document.querySelector('[data-work-notes]');
+      if (workNotes) {
+        workNotes.addEventListener('input', debounce(() => {
+          updateWorkField('notes', workNotes.value);
+        }, 300));
+      }
+
+      // Work bullets
+      document.querySelectorAll('[data-work-bullet]').forEach(input => {
+        input.addEventListener('input', debounce(() => {
+          updateWorkBullet(parseInt(input.dataset.workBullet), input.value);
+        }, 300));
+      });
+
+      // Add work bullet
+      document.querySelectorAll('[data-work-add-bullet]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          addWorkBullet();
+        });
+      });
+
+      // Remove work bullet
+      document.querySelectorAll('[data-work-remove-bullet]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          removeWorkBullet(parseInt(btn.dataset.workRemoveBullet));
+        });
+      });
+    }
+
+    function attachGuitarDetailsListeners() {
+      // Guitar notes
+      const guitarNotes = document.querySelector('[data-guitar-notes]');
+      if (guitarNotes) {
+        guitarNotes.addEventListener('input', debounce(() => {
+          updateGuitarField('notes', guitarNotes.value);
+        }, 300));
+      }
+
+      // Guitar bullets
+      document.querySelectorAll('[data-guitar-bullet]').forEach(input => {
+        input.addEventListener('input', debounce(() => {
+          updateGuitarBullet(parseInt(input.dataset.guitarBullet), input.value);
+        }, 300));
+      });
+
+      // Add guitar bullet
+      document.querySelectorAll('[data-guitar-add-bullet]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          addGuitarBullet();
+        });
+      });
+
+      // Remove guitar bullet
+      document.querySelectorAll('[data-guitar-remove-bullet]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          removeGuitarBullet(parseInt(btn.dataset.guitarRemoveBullet));
+        });
+      });
+    }
+
+    function attachGenericNotesListeners() {
+      document.querySelectorAll('[data-generic-notes]').forEach(textarea => {
+        textarea.addEventListener('input', debounce(() => {
+          updateGenericNotes(textarea.dataset.genericNotes, textarea.value);
+        }, 300));
+      });
+    }
+
+    // Debounce helper
+    function debounce(fn, delay) {
+      let timeout;
+      return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fn.apply(this, args), delay);
+      };
+    }
+
+    // ============ VOICE DETAILS UPDATE FUNCTIONS ============
+    function ensureVoiceDetails() {
+      const week = getCurrentWeek();
+      if (!week || selectedDay === null) return null;
+      const day = week.days[selectedDay];
+      if (!day.details) day.details = {};
+      if (!day.details.voice) day.details.voice = {};
+      return day;
+    }
+
+    function updateVoiceChecklistItem(itemId, index, field, value) {
+      const day = ensureVoiceDetails();
+      if (!day) return;
+
+      if (!day.details.voice[itemId]) {
+        day.details.voice[itemId] = { checklist: [], notes: '' };
+      }
+      if (!day.details.voice[itemId].checklist[index]) {
+        day.details.voice[itemId].checklist[index] = { text: '', done: false };
+      }
+      day.details.voice[itemId].checklist[index][field] = value;
+      day.updatedAt = new Date().toISOString();
+      saveDB();
+    }
+
+    function removeVoiceChecklistItem(itemId, index) {
+      const day = ensureVoiceDetails();
+      if (!day) return;
+      if (day.details.voice[itemId]?.checklist) {
+        day.details.voice[itemId].checklist.splice(index, 1);
+        day.updatedAt = new Date().toISOString();
+        saveDB();
+        renderDayDrawer();
+      }
+    }
+
+    function addVoiceChecklistItem(itemId) {
+      const day = ensureVoiceDetails();
+      if (!day) return;
+      if (!day.details.voice[itemId]) {
+        day.details.voice[itemId] = { checklist: [], notes: '' };
+      }
+      day.details.voice[itemId].checklist.push({ text: '', done: false });
+      day.updatedAt = new Date().toISOString();
+      saveDB();
+      renderDayDrawer();
+    }
+
+    function updateVoiceNotes(itemId, value) {
+      const day = ensureVoiceDetails();
+      if (!day) return;
+      if (!day.details.voice[itemId]) {
+        day.details.voice[itemId] = { checklist: [], notes: '' };
+      }
+      day.details.voice[itemId].notes = value;
+      day.updatedAt = new Date().toISOString();
+      saveDB();
+    }
+
+    function saveVoiceTemplate(itemId) {
+      const day = ensureVoiceDetails();
+      if (!day) return;
+      const checklist = day.details.voice[itemId]?.checklist || [];
+      db.voiceTemplates[itemId] = {
+        checklist: checklist.map(c => ({ text: c.text }))
+      };
+      saveDB();
+      alert('Template saved!');
+    }
+
+    function loadVoiceTemplate(itemId) {
+      const day = ensureVoiceDetails();
+      if (!day) return;
+      const template = db.voiceTemplates[itemId]?.checklist || [];
+      if (template.length === 0) {
+        alert('No template saved for this item.');
+        return;
+      }
+      if (!day.details.voice[itemId]) {
+        day.details.voice[itemId] = { checklist: [], notes: '' };
+      }
+      day.details.voice[itemId].checklist = template.map(t => ({ text: t.text, done: false }));
+      day.updatedAt = new Date().toISOString();
+      saveDB();
+      renderDayDrawer();
+    }
+
+    // ============ SPORT DETAILS UPDATE FUNCTIONS ============
+    function ensureSportDetails() {
+      const week = getCurrentWeek();
+      if (!week || selectedDay === null) return null;
+      const day = week.days[selectedDay];
+      if (!day.details) day.details = {};
+      if (!day.details.sport) {
+        day.details.sport = { mode: 'cardio', cardioType: '', durationMin: null, exercises: [] };
+      }
+      return day;
+    }
+
+    function updateSportMode(mode) {
+      const day = ensureSportDetails();
+      if (!day) return;
+      day.details.sport.mode = mode;
+      day.updatedAt = new Date().toISOString();
+      saveDB();
+    }
+
+    function updateSportField(field, value) {
+      const day = ensureSportDetails();
+      if (!day) return;
+      day.details.sport[field] = value;
+      day.updatedAt = new Date().toISOString();
+      saveDB();
+    }
+
+    function addSportExercise() {
+      const day = ensureSportDetails();
+      if (!day) return;
+      if (!day.details.sport.exercises) day.details.sport.exercises = [];
+      day.details.sport.exercises.push({ name: '', sets: [{ weightKg: null, reps: null }] });
+      day.updatedAt = new Date().toISOString();
+      saveDB();
+      renderDayDrawer();
+    }
+
+    function removeSportExercise(index) {
+      const day = ensureSportDetails();
+      if (!day) return;
+      if (day.details.sport.exercises) {
+        day.details.sport.exercises.splice(index, 1);
+        day.updatedAt = new Date().toISOString();
+        saveDB();
+        renderDayDrawer();
+      }
+    }
+
+    function updateExerciseName(index, name) {
+      const day = ensureSportDetails();
+      if (!day) return;
+      if (day.details.sport.exercises?.[index]) {
+        day.details.sport.exercises[index].name = name;
+        day.updatedAt = new Date().toISOString();
+        saveDB();
+      }
+    }
+
+    function addExerciseSet(exerciseIndex) {
+      const day = ensureSportDetails();
+      if (!day) return;
+      if (day.details.sport.exercises?.[exerciseIndex]) {
+        if (!day.details.sport.exercises[exerciseIndex].sets) {
+          day.details.sport.exercises[exerciseIndex].sets = [];
+        }
+        day.details.sport.exercises[exerciseIndex].sets.push({ weightKg: null, reps: null });
+        day.updatedAt = new Date().toISOString();
+        saveDB();
+        renderDayDrawer();
+      }
+    }
+
+    function removeExerciseSet(exerciseIndex, setIndex) {
+      const day = ensureSportDetails();
+      if (!day) return;
+      if (day.details.sport.exercises?.[exerciseIndex]?.sets) {
+        day.details.sport.exercises[exerciseIndex].sets.splice(setIndex, 1);
+        day.updatedAt = new Date().toISOString();
+        saveDB();
+        renderDayDrawer();
+      }
+    }
+
+    function updateExerciseSet(exerciseIndex, setIndex, field, value) {
+      const day = ensureSportDetails();
+      if (!day) return;
+      if (day.details.sport.exercises?.[exerciseIndex]?.sets?.[setIndex]) {
+        day.details.sport.exercises[exerciseIndex].sets[setIndex][field] = value;
+        day.updatedAt = new Date().toISOString();
+        saveDB();
+      }
+    }
+
+    // ============ WORK DETAILS UPDATE FUNCTIONS ============
+    function ensureWorkDetails() {
+      const week = getCurrentWeek();
+      if (!week || selectedDay === null) return null;
+      const day = week.days[selectedDay];
+      if (!day.details) day.details = {};
+      if (!day.details.work) {
+        day.details.work = { notes: '', bullets: [] };
+      }
+      return day;
+    }
+
+    function updateWorkField(field, value) {
+      const day = ensureWorkDetails();
+      if (!day) return;
+      day.details.work[field] = value;
+      day.updatedAt = new Date().toISOString();
+      saveDB();
+    }
+
+    function updateWorkBullet(index, value) {
+      const day = ensureWorkDetails();
+      if (!day) return;
+      if (!day.details.work.bullets) day.details.work.bullets = [];
+      day.details.work.bullets[index] = value;
+      day.updatedAt = new Date().toISOString();
+      saveDB();
+    }
+
+    function addWorkBullet() {
+      const day = ensureWorkDetails();
+      if (!day) return;
+      if (!day.details.work.bullets) day.details.work.bullets = [];
+      day.details.work.bullets.push('');
+      day.updatedAt = new Date().toISOString();
+      saveDB();
+      renderDayDrawer();
+    }
+
+    function removeWorkBullet(index) {
+      const day = ensureWorkDetails();
+      if (!day) return;
+      if (day.details.work.bullets) {
+        day.details.work.bullets.splice(index, 1);
+        day.updatedAt = new Date().toISOString();
+        saveDB();
+        renderDayDrawer();
+      }
+    }
+
+    // ============ GUITAR DETAILS UPDATE FUNCTIONS ============
+    function ensureGuitarDetails() {
+      const week = getCurrentWeek();
+      if (!week || selectedDay === null) return null;
+      const day = week.days[selectedDay];
+      if (!day.details) day.details = {};
+      if (!day.details.guitar) {
+        day.details.guitar = { notes: '', bullets: [] };
+      }
+      return day;
+    }
+
+    function updateGuitarField(field, value) {
+      const day = ensureGuitarDetails();
+      if (!day) return;
+      day.details.guitar[field] = value;
+      day.updatedAt = new Date().toISOString();
+      saveDB();
+    }
+
+    function updateGuitarBullet(index, value) {
+      const day = ensureGuitarDetails();
+      if (!day) return;
+      if (!day.details.guitar.bullets) day.details.guitar.bullets = [];
+      day.details.guitar.bullets[index] = value;
+      day.updatedAt = new Date().toISOString();
+      saveDB();
+    }
+
+    function addGuitarBullet() {
+      const day = ensureGuitarDetails();
+      if (!day) return;
+      if (!day.details.guitar.bullets) day.details.guitar.bullets = [];
+      day.details.guitar.bullets.push('');
+      day.updatedAt = new Date().toISOString();
+      saveDB();
+      renderDayDrawer();
+    }
+
+    function removeGuitarBullet(index) {
+      const day = ensureGuitarDetails();
+      if (!day) return;
+      if (day.details.guitar.bullets) {
+        day.details.guitar.bullets.splice(index, 1);
+        day.updatedAt = new Date().toISOString();
+        saveDB();
+        renderDayDrawer();
+      }
+    }
+
+    // ============ GENERIC NOTES UPDATE FUNCTION ============
+    function updateGenericNotes(habitId, value) {
+      const week = getCurrentWeek();
+      if (!week || selectedDay === null) return;
+      const day = week.days[selectedDay];
+      if (!day.details) day.details = {};
+      if (!day.details[habitId]) {
+        day.details[habitId] = { notes: '' };
+      }
+      day.details[habitId].notes = value;
+      day.updatedAt = new Date().toISOString();
+      saveDB();
     }
 
     function updateDayHabit(habitId, itemId, value) {
@@ -2301,6 +3528,7 @@
         habitsConfig: db.habitsConfig,
         targets: db.targets,
         weeks: db.weeks,
+        voiceTemplates: db.voiceTemplates,
         exportedAt: new Date().toISOString()
       };
 
@@ -2387,13 +3615,22 @@
             const importedTime = new Date(importedDay.updatedAt || 0).getTime();
 
             if (importedTime > localTime) {
-              // Use imported day data
+              // Use imported day data (includes details)
               localWeek.days[d] = importedDay;
             } else if (!localDay.updatedAt && importedDay.habits) {
               // Local has no timestamp, merge habits
               for (const [hid, val] of Object.entries(importedDay.habits)) {
                 if (!localDay.habits[hid]) {
                   localDay.habits[hid] = val;
+                }
+              }
+              // Also merge details if present
+              if (importedDay.details) {
+                if (!localDay.details) localDay.details = {};
+                for (const [key, val] of Object.entries(importedDay.details)) {
+                  if (!localDay.details[key]) {
+                    localDay.details[key] = val;
+                  }
                 }
               }
             }
@@ -2416,6 +3653,20 @@
       for (const [key, val] of Object.entries(imported.targets || {})) {
         if (!(key in merged.targets)) {
           merged.targets[key] = val;
+        }
+      }
+
+      // Merge voice templates (prefer imported if local is empty)
+      if (imported.voiceTemplates) {
+        if (!merged.voiceTemplates) {
+          merged.voiceTemplates = imported.voiceTemplates;
+        } else {
+          for (const [key, val] of Object.entries(imported.voiceTemplates)) {
+            if (!merged.voiceTemplates[key] ||
+                (merged.voiceTemplates[key].checklist?.length === 0 && val.checklist?.length > 0)) {
+              merged.voiceTemplates[key] = val;
+            }
+          }
         }
       }
 
