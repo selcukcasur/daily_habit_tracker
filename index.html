@@ -1286,6 +1286,347 @@
       background: var(--low-bg);
     }
 
+    /* Sport Page Styles */
+    .sport-page-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--gap-xl);
+    }
+    @media (max-width: 900px) {
+      .sport-page-grid { grid-template-columns: 1fr; }
+    }
+    .sport-section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--gap-lg);
+    }
+    .sport-section-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: var(--gap-md);
+      color: var(--text);
+    }
+    .sport-stats-row {
+      display: flex;
+      gap: var(--gap-xl);
+      margin-bottom: var(--gap-xl);
+    }
+    .sport-stat-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: var(--gap-lg);
+      text-align: center;
+      flex: 1;
+    }
+    .sport-stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--completed);
+    }
+    .sport-stat-value.partial { color: var(--progress); }
+    .sport-stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .exercise-library-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap-sm);
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .exercise-library-item {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-sm);
+      padding: var(--gap-sm);
+      background: var(--panel-2);
+      border-radius: var(--radius-sm);
+    }
+    .exercise-library-item-name {
+      flex: 1;
+      font-size: 13px;
+    }
+    .exercise-library-item-area {
+      font-size: 10px;
+      color: var(--muted);
+      padding: 2px 6px;
+      background: var(--panel-3);
+      border-radius: 8px;
+    }
+    .exercise-library-item-btn {
+      padding: 2px 6px;
+      font-size: 10px;
+      color: var(--text-secondary);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+    .exercise-library-item-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .exercise-library-item-btn.delete {
+      color: var(--low);
+      border-color: var(--low);
+    }
+    .add-exercise-row {
+      display: flex;
+      gap: var(--gap-sm);
+      margin-top: var(--gap-md);
+    }
+    .add-exercise-row input {
+      flex: 1;
+      padding: var(--gap-sm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel-2);
+      color: var(--text);
+      font-size: 13px;
+    }
+    .add-exercise-row input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .add-exercise-row select {
+      padding: var(--gap-sm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel-2);
+      color: var(--text);
+      font-size: 13px;
+    }
+    .sport-day-selector {
+      display: flex;
+      gap: var(--gap-xs);
+      margin-bottom: var(--gap-md);
+      flex-wrap: wrap;
+    }
+    .sport-day-btn {
+      padding: var(--gap-sm) var(--gap-md);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel-2);
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 12px;
+      transition: all var(--transition-fast);
+    }
+    .sport-day-btn:hover {
+      background: var(--panel-3);
+    }
+    .sport-day-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+    }
+    .sport-day-btn.has-data {
+      border-color: var(--completed);
+      color: var(--completed);
+    }
+    .sport-day-btn.has-data.active {
+      background: var(--completed);
+      color: #000;
+    }
+    .sport-daily-log {
+      margin-top: var(--gap-md);
+    }
+    .sport-workout-type {
+      display: flex;
+      gap: var(--gap-md);
+      margin-bottom: var(--gap-md);
+    }
+    .sport-workout-type label {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-xs);
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .sport-cardio-fields {
+      display: grid;
+      grid-template-columns: 1fr 100px;
+      gap: var(--gap-sm);
+      margin-bottom: var(--gap-md);
+    }
+    .sport-cardio-fields input {
+      padding: var(--gap-sm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel-2);
+      color: var(--text);
+      font-size: 13px;
+    }
+    .sport-cardio-fields input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .sport-exercises-section {
+      margin-top: var(--gap-lg);
+    }
+    .sport-exercise-entry {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--gap-md);
+      margin-bottom: var(--gap-sm);
+    }
+    .sport-exercise-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--gap-sm);
+    }
+    .sport-exercise-name {
+      font-weight: 500;
+      font-size: 13px;
+    }
+    .sport-exercise-area {
+      font-size: 10px;
+      color: var(--muted);
+    }
+    .sport-sets-table {
+      width: 100%;
+      font-size: 12px;
+    }
+    .sport-sets-table th {
+      text-align: left;
+      padding: 4px;
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 10px;
+    }
+    .sport-sets-table td {
+      padding: 2px 4px;
+    }
+    .sport-sets-table input {
+      width: 100%;
+      padding: 4px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel);
+      color: var(--text);
+      font-size: 12px;
+    }
+    .sport-sets-table input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .sport-add-exercise-btn {
+      width: 100%;
+      padding: var(--gap-sm);
+      font-size: 12px;
+      color: var(--text-secondary);
+      background: var(--panel);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      margin-top: var(--gap-sm);
+    }
+    .sport-add-exercise-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .sport-activity-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap-sm);
+      margin-top: var(--gap-lg);
+    }
+    .sport-activity-item {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-md);
+      padding: var(--gap-sm) var(--gap-md);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .sport-activity-item:hover {
+      background: var(--panel-2);
+      border-color: var(--border-highlight);
+    }
+    .sport-activity-date {
+      font-weight: 500;
+      min-width: 100px;
+    }
+    .sport-activity-info {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    /* Sport compact drawer */
+    .sport-compact-section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap-sm);
+    }
+    .sport-compact-row {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-sm);
+    }
+    .sport-compact-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+    }
+    .sport-type-select {
+      flex: 1;
+      padding: var(--gap-sm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel-2);
+      color: var(--text);
+      font-size: 13px;
+    }
+    .sport-type-select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .sport-compact-details-btn {
+      padding: 4px 8px;
+      font-size: 10px;
+      color: var(--text-secondary);
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .sport-compact-details-btn:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .sport-compact-details-btn.has-data {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .sport-cardio-inline {
+      display: grid;
+      grid-template-columns: 1fr 80px;
+      gap: var(--gap-sm);
+      margin-top: var(--gap-sm);
+    }
+    .sport-cardio-inline input {
+      padding: var(--gap-sm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel-2);
+      color: var(--text);
+      font-size: 12px;
+    }
+    .sport-cardio-inline input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
     @media (max-width: 768px) {
       .navbar { padding: 10px; gap: var(--gap-sm); }
       .navbar-center { display: none; }
@@ -1324,6 +1665,7 @@
       <div class="navbar-right">
         <button class="btn" id="boardBtn">Board</button>
         <button class="btn" id="voiceBtn">Voice</button>
+        <button class="btn" id="sportBtn">Sport</button>
         <button class="btn" id="habitsBtn">Habits</button>
         <button class="btn" id="targetsBtn">Targets</button>
         <button class="btn" id="historyBtn">History</button>
@@ -1364,6 +1706,14 @@
           <p class="view-subtitle" id="voiceWeekLabel">Weekly progress</p>
         </div>
         <div id="voiceContent"></div>
+      </div>
+
+      <div class="view-container" id="sportView" style="display:none;">
+        <div class="view-header">
+          <h1 class="view-title">Sport</h1>
+          <p class="view-subtitle" id="sportWeekLabel">Workout tracking</p>
+        </div>
+        <div id="sportContent"></div>
       </div>
 
       <div class="drawer" id="dayDrawer">
@@ -2334,6 +2684,12 @@
           continue;
         }
 
+        // Special compact rendering for Sport
+        if (habit.id === 'sport') {
+          html += renderSportCompactSection(habit, day);
+          continue;
+        }
+
         const hasDetails = shouldShowDetails(habit, day.habits[habit.id]);
         const detailsPanelId = `details-${habit.id}`;
         const isOpen = openDetailsPanels[detailsPanelId];
@@ -2361,6 +2717,7 @@
       attachDayInputListeners();
       attachDetailsListeners();
       attachVoiceCompactListeners();
+      attachSportCompactListeners();
     }
 
     function renderVoiceCompactSection(habit, day) {
@@ -2418,6 +2775,89 @@
           }
         });
       });
+    }
+
+    function renderSportCompactSection(habit, day) {
+      const isDone = normalizeSingleChoiceValue(day.habits?.sport);
+      const details = day.details?.sport || { mode: 'cardio', cardioType: '', durationMin: null, exercises: [] };
+      const hasExercises = details.exercises?.length > 0;
+      const hasCardio = details.cardioType || details.durationMin;
+      const hasData = hasExercises || hasCardio;
+
+      let html = `<div class="drawer-section">
+        <div class="drawer-section-header">
+          <div class="drawer-section-title">${habit.label}</div>
+        </div>
+        <div class="sport-compact-section">
+          <div class="sport-compact-row">
+            <input type="checkbox" class="sport-compact-checkbox" id="sportDoneCheck" ${isDone ? 'checked' : ''}>
+            <label for="sportDoneCheck" style="cursor:pointer;">Done</label>
+            <select class="sport-type-select" id="sportTypeSelect">
+              <option value="cardio" ${details.mode !== 'weights_cardio' ? 'selected' : ''}>Cardio Only</option>
+              <option value="weights_cardio" ${details.mode === 'weights_cardio' ? 'selected' : ''}>Weights + Cardio</option>
+            </select>
+          </div>`;
+
+      // Show cardio fields inline for cardio-only mode
+      if (details.mode !== 'weights_cardio') {
+        html += `
+          <div class="sport-cardio-inline">
+            <input type="text" placeholder="Cardio type (Running, Cycling...)"
+              id="sportCardioType" value="${escapeHtml(details.cardioType || '')}">
+            <input type="number" placeholder="Min"
+              id="sportDuration" value="${details.durationMin || ''}">
+          </div>`;
+      } else {
+        // For weights + cardio, show button to go to Sport page
+        html += `
+          <div style="margin-top: var(--gap-sm);">
+            <button class="sport-compact-details-btn ${hasData ? 'has-data' : ''}" id="sportGoToPage">
+              ${hasData ? `${details.exercises?.length || 0} exercises logged` : 'Log workout on Sport page'}
+            </button>
+          </div>`;
+      }
+
+      html += `</div></div>`;
+      return html;
+    }
+
+    function attachSportCompactListeners() {
+      const doneCheck = document.getElementById('sportDoneCheck');
+      if (doneCheck) {
+        doneCheck.addEventListener('change', () => {
+          updateDayHabit('sport', null, doneCheck.checked);
+        });
+      }
+
+      const typeSelect = document.getElementById('sportTypeSelect');
+      if (typeSelect) {
+        typeSelect.addEventListener('change', () => {
+          updateSportMode(typeSelect.value);
+          renderDayDrawer();
+        });
+      }
+
+      const cardioType = document.getElementById('sportCardioType');
+      if (cardioType) {
+        cardioType.addEventListener('input', debounce(() => {
+          updateSportField('cardioType', cardioType.value);
+        }, 300));
+      }
+
+      const duration = document.getElementById('sportDuration');
+      if (duration) {
+        duration.addEventListener('input', debounce(() => {
+          updateSportField('durationMin', duration.value ? parseInt(duration.value) : null);
+        }, 300));
+      }
+
+      const goToPage = document.getElementById('sportGoToPage');
+      if (goToPage) {
+        goToPage.addEventListener('click', () => {
+          sportSelectedDay = selectedDay;
+          showView('sport');
+        });
+      }
     }
 
     function shouldShowDetails(habit, value) {
@@ -3786,6 +4226,7 @@
       document.getElementById('historyView').style.display = view === 'history' ? 'block' : 'none';
       document.getElementById('overallView').style.display = view === 'overall' ? 'block' : 'none';
       document.getElementById('voiceView').style.display = view === 'voice' ? 'block' : 'none';
+      document.getElementById('sportView').style.display = view === 'sport' ? 'block' : 'none';
       closeDayDrawer();
 
       if (view === 'week') {
@@ -3798,6 +4239,8 @@
         renderOverall();
       } else if (view === 'voice') {
         renderVoiceView();
+      } else if (view === 'sport') {
+        renderSportView();
       }
     }
 
@@ -4179,6 +4622,489 @@
       }
     }
 
+    // ============ SPORT VIEW ============
+    let sportSelectedDay = 0;
+
+    function renderSportView() {
+      const week = getCurrentWeek();
+      if (!week) {
+        document.getElementById('sportContent').innerHTML = '<p style="color: var(--muted)">No week data available.</p>';
+        return;
+      }
+
+      const monday = getWeekMonday(week.weekId);
+      document.getElementById('sportWeekLabel').textContent = `Week of ${formatDate(monday)}`;
+
+      // Calculate 30-day stats
+      const stats = calculateSportStats();
+
+      let html = `
+        <div class="sport-stats-row">
+          <div class="sport-stat-card">
+            <div class="sport-stat-value">${stats.activeDays}</div>
+            <div class="sport-stat-label">Active Days (30d)</div>
+          </div>
+          <div class="sport-stat-card">
+            <div class="sport-stat-value">${stats.cardioSessions}</div>
+            <div class="sport-stat-label">Cardio Sessions</div>
+          </div>
+          <div class="sport-stat-card">
+            <div class="sport-stat-value">${stats.weightSessions}</div>
+            <div class="sport-stat-label">Weight Sessions</div>
+          </div>
+        </div>
+
+        <div class="sport-page-grid">
+          <div class="sport-section">
+            <div class="sport-section-title">Exercise Library</div>
+            <div class="exercise-library-list" id="exerciseLibraryList"></div>
+            <div class="add-exercise-row">
+              <input type="text" id="newExerciseName" placeholder="Exercise name...">
+              <select id="newExerciseArea">
+                <option value="">Body area</option>
+                <option value="chest">Chest</option>
+                <option value="back">Back</option>
+                <option value="shoulders">Shoulders</option>
+                <option value="arms">Arms</option>
+                <option value="legs">Legs</option>
+                <option value="core">Core</option>
+                <option value="full">Full Body</option>
+              </select>
+              <button class="btn btn-sm btn-primary" id="addExerciseBtn">Add</button>
+            </div>
+          </div>
+
+          <div class="sport-section">
+            <div class="sport-section-title">Daily Log</div>
+            <div class="sport-day-selector" id="sportDaySelector"></div>
+            <div id="sportDailyLogContent"></div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--gap-xl);">
+          <h3 style="font-size: 14px; margin-bottom: var(--gap-md); color: var(--text-secondary);">Recent Activity</h3>
+          <div class="sport-activity-list" id="sportActivityList"></div>
+        </div>
+      `;
+
+      document.getElementById('sportContent').innerHTML = html;
+      renderExerciseLibrary();
+      renderSportDaySelector();
+      renderSportDailyLog();
+      renderSportActivityList();
+      attachSportViewListeners();
+    }
+
+    function calculateSportStats() {
+      const today = new Date();
+      const thirtyDaysAgo = new Date(today);
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+      let activeDays = 0;
+      let cardioSessions = 0;
+      let weightSessions = 0;
+
+      for (const [weekId, week] of Object.entries(db.weeks)) {
+        const monday = getWeekMonday(weekId);
+        for (let i = 0; i < 7; i++) {
+          const dayDate = addDays(monday, i);
+          if (dayDate >= thirtyDaysAgo && dayDate <= today) {
+            const day = week.days[i];
+            if (normalizeSingleChoiceValue(day?.habits?.sport)) {
+              activeDays++;
+              const details = day.details?.sport;
+              if (details) {
+                if (details.mode === 'weights_cardio') {
+                  weightSessions++;
+                } else {
+                  cardioSessions++;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      return { activeDays, cardioSessions, weightSessions };
+    }
+
+    function renderExerciseLibrary() {
+      const exercises = db.exerciseLibrary || [];
+      const container = document.getElementById('exerciseLibraryList');
+
+      if (exercises.length === 0) {
+        container.innerHTML = '<p style="color: var(--muted); font-size: 12px; padding: var(--gap-sm);">No exercises yet. Add one below.</p>';
+        return;
+      }
+
+      container.innerHTML = exercises.map((ex, i) => `
+        <div class="exercise-library-item">
+          <span class="exercise-library-item-name">${escapeHtml(ex.name)}</span>
+          ${ex.area ? `<span class="exercise-library-item-area">${ex.area}</span>` : ''}
+          <button class="exercise-library-item-btn delete" data-delete-exercise="${i}">×</button>
+        </div>
+      `).join('');
+    }
+
+    function renderSportDaySelector() {
+      const week = getCurrentWeek();
+      if (!week) return;
+
+      const monday = getWeekMonday(week.weekId);
+      const container = document.getElementById('sportDaySelector');
+
+      container.innerHTML = DAY_NAMES.map((name, i) => {
+        const day = week.days[i];
+        const hasData = normalizeSingleChoiceValue(day?.habits?.sport);
+        const isActive = sportSelectedDay === i;
+        return `<button class="sport-day-btn ${isActive ? 'active' : ''} ${hasData ? 'has-data' : ''}"
+          data-sport-day="${i}">${name}</button>`;
+      }).join('');
+    }
+
+    function renderSportDailyLog() {
+      const week = getCurrentWeek();
+      if (!week) return;
+
+      const day = week.days[sportSelectedDay];
+      const details = day?.details?.sport || { mode: 'cardio', cardioType: '', durationMin: null, exercises: [] };
+      const isDone = normalizeSingleChoiceValue(day?.habits?.sport);
+      const monday = getWeekMonday(week.weekId);
+      const date = formatDate(addDays(monday, sportSelectedDay));
+
+      let html = `<p style="font-size: 12px; color: var(--muted); margin-bottom: var(--gap-md);">${DAY_FULL_NAMES[sportSelectedDay]}, ${date}</p>`;
+
+      html += `
+        <div class="sport-workout-type">
+          <label>
+            <input type="radio" name="sportPageMode" value="cardio" ${details.mode !== 'weights_cardio' ? 'checked' : ''}>
+            Cardio Only
+          </label>
+          <label>
+            <input type="radio" name="sportPageMode" value="weights_cardio" ${details.mode === 'weights_cardio' ? 'checked' : ''}>
+            Weights + Cardio
+          </label>
+        </div>
+
+        <div class="sport-cardio-fields">
+          <input type="text" placeholder="Cardio type (Running, Cycling...)"
+            id="sportPageCardioType" value="${escapeHtml(details.cardioType || '')}">
+          <input type="number" placeholder="Min"
+            id="sportPageDuration" value="${details.durationMin || ''}">
+        </div>
+      `;
+
+      if (details.mode === 'weights_cardio') {
+        html += `<div class="sport-exercises-section">
+          <div class="sport-section-title">Exercises</div>
+          <div id="sportExercisesList">`;
+
+        const exercises = details.exercises || [];
+        exercises.forEach((ex, ei) => {
+          const libEx = (db.exerciseLibrary || []).find(e => e.name === ex.name);
+          html += `
+            <div class="sport-exercise-entry">
+              <div class="sport-exercise-header">
+                <span class="sport-exercise-name">${escapeHtml(ex.name)}</span>
+                ${libEx?.area ? `<span class="sport-exercise-area">${libEx.area}</span>` : ''}
+                <button class="exercise-library-item-btn delete" data-remove-day-exercise="${ei}">×</button>
+              </div>
+              <table class="sport-sets-table">
+                <thead><tr><th>Set</th><th>Weight (kg)</th><th>Reps</th><th></th></tr></thead>
+                <tbody>
+                  ${(ex.sets || []).map((set, si) => `
+                    <tr>
+                      <td>${si + 1}</td>
+                      <td><input type="number" value="${set.weightKg || ''}" data-sport-set-weight="${ei}-${si}"></td>
+                      <td><input type="number" value="${set.reps || ''}" data-sport-set-reps="${ei}-${si}"></td>
+                      <td><button class="exercise-library-item-btn delete" data-remove-sport-set="${ei}-${si}">×</button></td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+              <button class="sport-add-exercise-btn" data-add-sport-set="${ei}">+ Add Set</button>
+            </div>
+          `;
+        });
+
+        html += `</div>
+          <div style="margin-top: var(--gap-md);">
+            <select id="addExerciseFromLibrary" style="width: 100%; padding: var(--gap-sm); background: var(--panel-2); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text);">
+              <option value="">+ Add exercise from library...</option>
+              ${(db.exerciseLibrary || []).map(ex => `<option value="${escapeHtml(ex.name)}">${escapeHtml(ex.name)}${ex.area ? ` (${ex.area})` : ''}</option>`).join('')}
+            </select>
+          </div>
+        </div>`;
+      }
+
+      document.getElementById('sportDailyLogContent').innerHTML = html;
+      attachSportDailyLogListeners();
+    }
+
+    function renderSportActivityList() {
+      const activities = [];
+      const today = new Date();
+      const thirtyDaysAgo = new Date(today);
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+      for (const [weekId, week] of Object.entries(db.weeks)) {
+        const monday = getWeekMonday(weekId);
+        for (let i = 0; i < 7; i++) {
+          const dayDate = addDays(monday, i);
+          if (dayDate >= thirtyDaysAgo && dayDate <= today) {
+            const day = week.days[i];
+            if (normalizeSingleChoiceValue(day?.habits?.sport)) {
+              const details = day.details?.sport;
+              let info = details?.mode === 'weights_cardio' ? 'Weights + Cardio' : 'Cardio';
+              if (details?.exercises?.length) {
+                info += ` · ${details.exercises.length} exercises`;
+              }
+              if (details?.cardioType) {
+                info += ` · ${details.cardioType}`;
+              }
+              if (details?.durationMin) {
+                info += ` (${details.durationMin} min)`;
+              }
+              activities.push({ weekId, dayIndex: i, date: dayDate, info });
+            }
+          }
+        }
+      }
+
+      activities.sort((a, b) => b.date - a.date);
+
+      const container = document.getElementById('sportActivityList');
+      if (activities.length === 0) {
+        container.innerHTML = '<p style="color: var(--muted); font-size: 12px;">No sport activity in the last 30 days.</p>';
+        return;
+      }
+
+      container.innerHTML = activities.slice(0, 10).map(a => `
+        <div class="sport-activity-item" data-sport-activity-week="${a.weekId}" data-sport-activity-day="${a.dayIndex}">
+          <span class="sport-activity-date">${formatDate(a.date)}</span>
+          <span class="sport-activity-info">${a.info}</span>
+        </div>
+      `).join('');
+    }
+
+    function attachSportViewListeners() {
+      // Add exercise to library
+      document.getElementById('addExerciseBtn')?.addEventListener('click', () => {
+        const name = document.getElementById('newExerciseName').value.trim();
+        const area = document.getElementById('newExerciseArea').value;
+        if (!name) return;
+
+        if (!db.exerciseLibrary) db.exerciseLibrary = [];
+        db.exerciseLibrary.push({ name, area });
+        saveDB();
+        document.getElementById('newExerciseName').value = '';
+        document.getElementById('newExerciseArea').value = '';
+        renderExerciseLibrary();
+        renderSportDailyLog();
+      });
+
+      // Delete exercise from library
+      document.querySelectorAll('[data-delete-exercise]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const index = parseInt(btn.dataset.deleteExercise);
+          if (db.exerciseLibrary) {
+            db.exerciseLibrary.splice(index, 1);
+            saveDB();
+            renderExerciseLibrary();
+            renderSportDailyLog();
+          }
+        });
+      });
+
+      // Day selector
+      document.querySelectorAll('[data-sport-day]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          sportSelectedDay = parseInt(btn.dataset.sportDay);
+          renderSportDaySelector();
+          renderSportDailyLog();
+        });
+      });
+
+      // Activity list click
+      document.querySelectorAll('.sport-activity-item').forEach(el => {
+        el.addEventListener('click', () => {
+          const weekId = el.dataset.sportActivityWeek;
+          const dayIndex = parseInt(el.dataset.sportActivityDay);
+          currentWeekId = weekId;
+          showView('week');
+          setTimeout(() => openDayDrawer(dayIndex), 100);
+        });
+      });
+    }
+
+    function attachSportDailyLogListeners() {
+      // Workout mode change
+      document.querySelectorAll('input[name="sportPageMode"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+          const day = ensureSportDetailsForDay(sportSelectedDay);
+          if (day) {
+            day.details.sport.mode = radio.value;
+            day.updatedAt = new Date().toISOString();
+            saveDB();
+            renderSportDailyLog();
+            // Auto-mark as done if we have any sport data
+            autoMarkSportDone(sportSelectedDay);
+          }
+        });
+      });
+
+      // Cardio type
+      const cardioType = document.getElementById('sportPageCardioType');
+      if (cardioType) {
+        cardioType.addEventListener('input', debounce(() => {
+          const day = ensureSportDetailsForDay(sportSelectedDay);
+          if (day) {
+            day.details.sport.cardioType = cardioType.value;
+            day.updatedAt = new Date().toISOString();
+            saveDB();
+            autoMarkSportDone(sportSelectedDay);
+          }
+        }, 300));
+      }
+
+      // Duration
+      const duration = document.getElementById('sportPageDuration');
+      if (duration) {
+        duration.addEventListener('input', debounce(() => {
+          const day = ensureSportDetailsForDay(sportSelectedDay);
+          if (day) {
+            day.details.sport.durationMin = duration.value ? parseInt(duration.value) : null;
+            day.updatedAt = new Date().toISOString();
+            saveDB();
+            autoMarkSportDone(sportSelectedDay);
+          }
+        }, 300));
+      }
+
+      // Add exercise from library
+      const addFromLib = document.getElementById('addExerciseFromLibrary');
+      if (addFromLib) {
+        addFromLib.addEventListener('change', () => {
+          const name = addFromLib.value;
+          if (!name) return;
+
+          const day = ensureSportDetailsForDay(sportSelectedDay);
+          if (day) {
+            if (!day.details.sport.exercises) day.details.sport.exercises = [];
+            day.details.sport.exercises.push({ name, sets: [{ weightKg: null, reps: null }] });
+            day.updatedAt = new Date().toISOString();
+            saveDB();
+            renderSportDailyLog();
+            renderSportDaySelector();
+            autoMarkSportDone(sportSelectedDay);
+          }
+        });
+      }
+
+      // Remove exercise
+      document.querySelectorAll('[data-remove-day-exercise]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const index = parseInt(btn.dataset.removeDayExercise);
+          const day = ensureSportDetailsForDay(sportSelectedDay);
+          if (day && day.details.sport.exercises) {
+            day.details.sport.exercises.splice(index, 1);
+            day.updatedAt = new Date().toISOString();
+            saveDB();
+            renderSportDailyLog();
+          }
+        });
+      });
+
+      // Add set
+      document.querySelectorAll('[data-add-sport-set]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const exerciseIdx = parseInt(btn.dataset.addSportSet);
+          const day = ensureSportDetailsForDay(sportSelectedDay);
+          if (day && day.details.sport.exercises?.[exerciseIdx]) {
+            if (!day.details.sport.exercises[exerciseIdx].sets) {
+              day.details.sport.exercises[exerciseIdx].sets = [];
+            }
+            day.details.sport.exercises[exerciseIdx].sets.push({ weightKg: null, reps: null });
+            day.updatedAt = new Date().toISOString();
+            saveDB();
+            renderSportDailyLog();
+          }
+        });
+      });
+
+      // Remove set
+      document.querySelectorAll('[data-remove-sport-set]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const [ei, si] = btn.dataset.removeSportSet.split('-').map(Number);
+          const day = ensureSportDetailsForDay(sportSelectedDay);
+          if (day && day.details.sport.exercises?.[ei]?.sets) {
+            day.details.sport.exercises[ei].sets.splice(si, 1);
+            day.updatedAt = new Date().toISOString();
+            saveDB();
+            renderSportDailyLog();
+          }
+        });
+      });
+
+      // Set weight/reps
+      document.querySelectorAll('[data-sport-set-weight]').forEach(input => {
+        input.addEventListener('input', debounce(() => {
+          const [ei, si] = input.dataset.sportSetWeight.split('-').map(Number);
+          const day = ensureSportDetailsForDay(sportSelectedDay);
+          if (day && day.details.sport.exercises?.[ei]?.sets?.[si]) {
+            day.details.sport.exercises[ei].sets[si].weightKg = input.value ? parseFloat(input.value) : null;
+            day.updatedAt = new Date().toISOString();
+            saveDB();
+          }
+        }, 300));
+      });
+
+      document.querySelectorAll('[data-sport-set-reps]').forEach(input => {
+        input.addEventListener('input', debounce(() => {
+          const [ei, si] = input.dataset.sportSetReps.split('-').map(Number);
+          const day = ensureSportDetailsForDay(sportSelectedDay);
+          if (day && day.details.sport.exercises?.[ei]?.sets?.[si]) {
+            day.details.sport.exercises[ei].sets[si].reps = input.value ? parseInt(input.value) : null;
+            day.updatedAt = new Date().toISOString();
+            saveDB();
+          }
+        }, 300));
+      });
+    }
+
+    function ensureSportDetailsForDay(dayIndex) {
+      const week = getCurrentWeek();
+      if (!week) return null;
+      const day = week.days[dayIndex];
+      if (!day.details) day.details = {};
+      if (!day.details.sport) {
+        day.details.sport = { mode: 'cardio', cardioType: '', durationMin: null, exercises: [] };
+      }
+      return day;
+    }
+
+    function autoMarkSportDone(dayIndex) {
+      const week = getCurrentWeek();
+      if (!week) return;
+      const day = week.days[dayIndex];
+      const details = day.details?.sport;
+
+      // Check if there's any sport data
+      const hasData = details && (
+        details.cardioType ||
+        details.durationMin ||
+        (details.exercises?.length > 0)
+      );
+
+      if (hasData && !normalizeSingleChoiceValue(day.habits?.sport)) {
+        if (!day.habits) day.habits = {};
+        day.habits.sport = true;
+        day.updatedAt = new Date().toISOString();
+        saveDB();
+        renderSportDaySelector();
+      }
+    }
+
     // ============ EXPORT / IMPORT / BACKUP ============
     function exportData(filename) {
       const exportObj = {
@@ -4187,6 +5113,7 @@
         targets: db.targets,
         weeks: db.weeks,
         voiceTemplates: db.voiceTemplates,
+        exerciseLibrary: db.exerciseLibrary || [],
         exportedAt: new Date().toISOString()
       };
 
@@ -4328,6 +5255,19 @@
         }
       }
 
+      // Merge exercise library (add new exercises)
+      if (imported.exerciseLibrary) {
+        if (!merged.exerciseLibrary) {
+          merged.exerciseLibrary = imported.exerciseLibrary;
+        } else {
+          for (const ex of imported.exerciseLibrary) {
+            if (!merged.exerciseLibrary.find(e => e.name === ex.name)) {
+              merged.exerciseLibrary.push(ex);
+            }
+          }
+        }
+      }
+
       return { merged, stats };
     }
 
@@ -4388,6 +5328,7 @@ console.log('Database loaded. Initializing application...');
       document.getElementById('weekLabel').addEventListener('click', () => showView('week'));
       document.getElementById('boardBtn').addEventListener('click', () => showView('week'));
       document.getElementById('voiceBtn').addEventListener('click', () => showView('voice'));
+      document.getElementById('sportBtn').addEventListener('click', () => showView('sport'));
 
       // Event listeners - Navbar buttons
       document.getElementById('habitsBtn').addEventListener('click', () => {
