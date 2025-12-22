@@ -2239,33 +2239,61 @@
     .trend-down { color: var(--low); }
     .trend-same { color: var(--muted); }
 
-    /* Sport 2-Column Layout */
+    /* Sport 2-Column Layout with Equal Height */
     .sport-main-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1.2fr;
       gap: var(--gap-xl);
+      align-items: stretch;
     }
     @media (max-width: 900px) {
       .sport-main-grid { grid-template-columns: 1fr; }
     }
     .sport-left-col, .sport-right-col {
       min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .sport-left-col .sport-section,
+    .sport-right-col .overload-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    #sportDailyLogContent, #overloadContent {
+      flex: 1;
     }
 
-    /* Progress Tracker Grid */
+    /* Progress Tracker Grid - 2 columns x 3 rows */
     .overload-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: var(--gap-md);
-    }
-    @media (max-width: 1100px) {
-      .overload-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 700px) {
       .overload-grid { grid-template-columns: 1fr; }
     }
     .overload-grid .session-card {
       margin-bottom: 0;
+    }
+    .session-exercise-name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      max-width: 100%;
+    }
+    .session-exercise-summary {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .session-exercise-variant {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      padding-left: 8px;
     }
 
     /* Exercise Library Modal */
@@ -5524,7 +5552,7 @@
             </div>
           </div>
 
-          <!-- Right Column: Progress Tracker + Recent Activity -->
+          <!-- Right Column: Progress Tracker -->
           <div class="sport-right-col">
             <div class="overload-panel" style="margin-top: 0;">
               <div class="overload-header">
@@ -5541,12 +5569,13 @@
               </div>
               <div id="overloadContent"></div>
             </div>
-
-            <div style="margin-top: var(--gap-xl);">
-              <h3 style="font-size: 14px; margin-bottom: var(--gap-md); color: var(--text-secondary);">Recent Activity</h3>
-              <div class="sport-activity-list" id="sportActivityList"></div>
-            </div>
           </div>
+        </div>
+
+        <!-- Recent Activity - Full width below the two columns -->
+        <div style="margin-top: var(--gap-xl);">
+          <h3 style="font-size: 14px; margin-bottom: var(--gap-md); color: var(--text-secondary);">Recent Activity</h3>
+          <div class="sport-activity-list" id="sportActivityList"></div>
         </div>
       `;
 
@@ -5623,6 +5652,16 @@
         return `<button class="sport-day-btn ${isActive ? 'active' : ''} ${hasData ? 'has-data' : ''}"
           data-sport-day="${i}">${name}</button>`;
       }).join('');
+
+      // Attach day selector listeners after each render (fixes switching bug)
+      container.querySelectorAll('[data-sport-day]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const newDay = parseInt(btn.dataset.sportDay);
+          sportSelectedDay = newDay;
+          renderSportDaySelector();
+          renderSportDailyLog();
+        });
+      });
     }
 
     // Convert old sets array to set groups (for migration)
@@ -5851,7 +5890,8 @@
       }
 
       sessions.sort((a, b) => b.date - a.date);
-      const recentSessions = sessions.slice(0, 4);
+      // Get 6 most recent, then reverse for chronological order (oldest to newest, left-to-right)
+      const recentSessions = sessions.slice(0, 6).reverse();
 
       if (recentSessions.length === 0) {
         container.innerHTML = '<p style="color: var(--muted); font-size: 12px;">No weight training sessions found for this filter.</p>';
@@ -5870,18 +5910,18 @@
       });
 
       let html = '<div class="overload-grid">';
+      const lastIdx = recentSessions.length - 1;
       recentSessions.forEach((session, idx) => {
         html += `<div class="session-card">
           <div class="session-date">${formatDayLabel(session.date)} · ${DAY_FULL_NAMES[session.dayIndex]}</div>`;
 
         session.exercises.forEach(ex => {
           const groups = migrateToSetGroups(ex.sets);
-          const summary = formatSetGroupsSummary(groups);
 
-          // Calculate trend
+          // Calculate trend (show on most recent session, which is now last due to chronological order)
           let trendHtml = '';
           const history = exerciseHistory[ex.name] || [];
-          if (history.length >= 2 && idx === 0) {
+          if (history.length >= 2 && idx === lastIdx) {
             const current = history[0].maxWeight;
             const previous = history[1].maxWeight;
             if (current > previous) {
@@ -5893,10 +5933,21 @@
             }
           }
 
+          // Each variant on its own line
+          const variantsHtml = groups.map(g => {
+            const w = g.weightKg !== '' && g.weightKg !== null && g.weightKg !== undefined ? g.weightKg : null;
+            const r = g.reps || null;
+            if (w === null && r === null) return '';
+            const wStr = w !== null ? `${w} kg` : '? kg';
+            const rStr = r !== null ? `${r} reps` : '? reps';
+            const sStr = `${g.count || 1} sets`;
+            return `<span class="session-exercise-variant">${wStr} × ${rStr} × ${sStr}</span>`;
+          }).filter(Boolean).join('');
+
           html += `
             <div class="session-exercise">
               <span class="session-exercise-name">${escapeHtml(ex.name)}${trendHtml}</span>
-              <span class="session-exercise-summary">${summary || 'No sets logged'}</span>
+              ${variantsHtml || '<span class="session-exercise-variant">No sets logged</span>'}
             </div>`;
         });
 
@@ -6031,15 +6082,7 @@
         }
       });
 
-      // Day selector - always allow switching
-      document.querySelectorAll('[data-sport-day]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const newDay = parseInt(btn.dataset.sportDay);
-          sportSelectedDay = newDay;
-          renderSportDaySelector();
-          renderSportDailyLog();
-        });
-      });
+      // Day selector listeners are now attached in renderSportDaySelector()
 
       // Activity list click
       document.querySelectorAll('.sport-activity-item').forEach(el => {
