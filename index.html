@@ -2239,6 +2239,65 @@
     .trend-down { color: var(--low); }
     .trend-same { color: var(--muted); }
 
+    /* Sport 2-Column Layout */
+    .sport-main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--gap-xl);
+    }
+    @media (max-width: 900px) {
+      .sport-main-grid { grid-template-columns: 1fr; }
+    }
+    .sport-left-col, .sport-right-col {
+      min-width: 0;
+    }
+
+    /* Progress Tracker Grid */
+    .overload-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--gap-md);
+    }
+    @media (max-width: 1100px) {
+      .overload-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 700px) {
+      .overload-grid { grid-template-columns: 1fr; }
+    }
+    .overload-grid .session-card {
+      margin-bottom: 0;
+    }
+
+    /* Exercise Library Modal */
+    .exercise-library-modal {
+      max-width: 500px;
+    }
+    .exercise-library-modal .exercise-library-list {
+      max-height: 300px;
+      overflow-y: auto;
+      margin-bottom: var(--gap-md);
+    }
+
+    /* Save Button for Daily Log */
+    .sport-save-row {
+      margin-top: var(--gap-md);
+      padding-top: var(--gap-md);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--gap-sm);
+    }
+    .btn-save {
+      background: var(--completed);
+      border-color: var(--completed);
+      color: #000;
+      font-weight: 600;
+    }
+    .btn-save:hover {
+      background: #4ade80;
+      border-color: #4ade80;
+    }
+
     /* Voice Template Cards */
     .voice-templates-section {
       margin-top: var(--gap-xl);
@@ -2562,6 +2621,20 @@
     </div>
   </div>
 
+  <!-- Exercise Library Modal -->
+  <div class="modal-overlay" id="exerciseLibraryModal">
+    <div class="modal exercise-library-modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Exercise Library</h2>
+        <button class="modal-close" id="exerciseLibraryModalClose">&times;</button>
+      </div>
+      <div id="exerciseLibraryModalContent"></div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="exerciseLibraryModalDone">Done</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // ============ CONSTANTS ============
     const STORAGE_KEY = 'weeklyTracker.data';
@@ -2733,6 +2806,26 @@
       const month = String(d.getMonth() + 1).padStart(2, '0');
       const day = String(d.getDate()).padStart(2, '0');
       return `${year}-${month}-${day}`;
+    }
+
+    // Human-friendly date: "28 December"
+    function formatDayLabel(date) {
+      const d = normalizeToLocalNoon(date);
+      return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' });
+    }
+
+    // Human-friendly week range: "22–28 December" or "28 December – 3 January"
+    function formatWeekRange(startDate, endDate) {
+      const s = normalizeToLocalNoon(startDate);
+      const e = normalizeToLocalNoon(endDate);
+      const sDay = s.getDate();
+      const eDay = e.getDate();
+      const sMonth = s.toLocaleDateString('en-GB', { month: 'long' });
+      const eMonth = e.toLocaleDateString('en-GB', { month: 'long' });
+      if (sMonth === eMonth) {
+        return `${sDay}–${eDay} ${sMonth}`;
+      }
+      return `${sDay} ${sMonth} – ${eDay} ${eMonth}`;
     }
 
     function addDays(date, days) {
@@ -5396,7 +5489,8 @@
       }
 
       const monday = getWeekMonday(week.weekId);
-      document.getElementById('sportWeekLabel').textContent = `Week of ${formatDate(monday)}`;
+      const sunday = addDays(monday, 6);
+      document.getElementById('sportWeekLabel').textContent = formatWeekRange(monday, sunday);
 
       // Calculate 30-day stats
       const stats = calculateSportStats();
@@ -5417,61 +5511,46 @@
           </div>
         </div>
 
-        <!-- Daily Log (Primary Focus) -->
-        <div class="sport-section" style="margin-bottom: var(--gap-lg);">
-          <div class="sport-section-title">Daily Log</div>
-          <div class="sport-day-selector" id="sportDaySelector"></div>
-          <div id="sportDailyLogContent"></div>
-        </div>
-
-        <!-- Exercise Library (Collapsible) -->
-        <div class="exercise-library-toggle ${exerciseLibraryOpen ? 'open' : ''}" id="exerciseLibraryToggle">
-          <span class="toggle-icon">▶</span>
-          <span>Exercise Library</span>
-          <span style="margin-left: auto; font-size: 12px; color: var(--muted);">${(db.exerciseLibrary || []).length} exercises</span>
-        </div>
-        <div class="exercise-library-panel ${exerciseLibraryOpen ? 'open' : ''}" id="exerciseLibraryPanel">
-          <div class="exercise-library-list" id="exerciseLibraryList"></div>
-          <div class="add-exercise-row" style="margin-top: var(--gap-md);">
-            <input type="text" id="newExerciseName" placeholder="Exercise name...">
-            <div class="custom-dropdown" id="bodyAreaDropdown">
-              <button class="custom-dropdown-trigger" type="button">
-                <span id="bodyAreaDropdownLabel">Body area</span>
-                <span class="dropdown-arrow">▼</span>
-              </button>
-              <div class="custom-dropdown-menu">
-                ${BODY_AREAS.slice(1).map(a => `<button class="custom-dropdown-item" data-value="${a.value}">${a.label}</button>`).join('')}
+        <div class="sport-main-grid">
+          <!-- Left Column: Daily Log -->
+          <div class="sport-left-col">
+            <div class="sport-section">
+              <div class="sport-section-title" style="display: flex; align-items: center; justify-content: space-between;">
+                <span>Daily Log</span>
+                <button class="btn btn-sm" id="openExerciseLibraryBtn">Manage Exercise Library</button>
               </div>
-            </div>
-            <button class="btn btn-sm btn-primary" id="addExerciseBtn">Add</button>
-          </div>
-        </div>
-
-        <!-- Progressive Overload Panel -->
-        <div class="overload-panel">
-          <div class="overload-header">
-            <span class="overload-title">Progress Tracker</span>
-            <div class="custom-dropdown" id="overloadAreaDropdown">
-              <button class="custom-dropdown-trigger" type="button">
-                <span id="overloadAreaLabel">${BODY_AREAS.find(a => a.value === overloadFilterArea)?.label || 'All Areas'}</span>
-                <span class="dropdown-arrow">▼</span>
-              </button>
-              <div class="custom-dropdown-menu">
-                ${BODY_AREAS.map(a => `<button class="custom-dropdown-item ${a.value === overloadFilterArea ? 'selected' : ''}" data-value="${a.value}">${a.label}</button>`).join('')}
-              </div>
+              <div class="sport-day-selector" id="sportDaySelector"></div>
+              <div id="sportDailyLogContent"></div>
             </div>
           </div>
-          <div id="overloadContent"></div>
-        </div>
 
-        <div style="margin-top: var(--gap-xl);">
-          <h3 style="font-size: 14px; margin-bottom: var(--gap-md); color: var(--text-secondary);">Recent Activity</h3>
-          <div class="sport-activity-list" id="sportActivityList"></div>
+          <!-- Right Column: Progress Tracker + Recent Activity -->
+          <div class="sport-right-col">
+            <div class="overload-panel" style="margin-top: 0;">
+              <div class="overload-header">
+                <span class="overload-title">Progress Tracker</span>
+                <div class="custom-dropdown" id="overloadAreaDropdown">
+                  <button class="custom-dropdown-trigger" type="button">
+                    <span id="overloadAreaLabel">${BODY_AREAS.find(a => a.value === overloadFilterArea)?.label || 'All Areas'}</span>
+                    <span class="dropdown-arrow">▼</span>
+                  </button>
+                  <div class="custom-dropdown-menu">
+                    ${BODY_AREAS.map(a => `<button class="custom-dropdown-item ${a.value === overloadFilterArea ? 'selected' : ''}" data-value="${a.value}">${a.label}</button>`).join('')}
+                  </div>
+                </div>
+              </div>
+              <div id="overloadContent"></div>
+            </div>
+
+            <div style="margin-top: var(--gap-xl);">
+              <h3 style="font-size: 14px; margin-bottom: var(--gap-md); color: var(--text-secondary);">Recent Activity</h3>
+              <div class="sport-activity-list" id="sportActivityList"></div>
+            </div>
+          </div>
         </div>
       `;
 
       document.getElementById('sportContent').innerHTML = html;
-      renderExerciseLibrary();
       renderSportDaySelector();
       renderSportDailyLog();
       renderOverloadPanel();
@@ -5566,12 +5645,17 @@
       return groups.length > 0 ? groups : [{ weightKg: '', reps: '', count: 1 }];
     }
 
-    // Format set groups for display
+    // Format set groups for display: "1 kg × 20 reps × 5 sets"
     function formatSetGroupsSummary(groups) {
       if (!groups || groups.length === 0) return '';
       return groups.map(g => {
-        if (!g.weightKg && !g.reps) return '';
-        return `${g.weightKg || '?'}kg × ${g.reps || '?'} × ${g.count || 1}`;
+        const w = g.weightKg !== '' && g.weightKg !== null && g.weightKg !== undefined ? g.weightKg : null;
+        const r = g.reps || null;
+        if (w === null && r === null) return '';
+        const wStr = w !== null ? `${w} kg` : '? kg';
+        const rStr = r !== null ? `${r} reps` : '? reps';
+        const sStr = `${g.count || 1} sets`;
+        return `${wStr} × ${rStr} × ${sStr}`;
       }).filter(Boolean).join(', ');
     }
 
@@ -5582,9 +5666,10 @@
       const day = week.days[sportSelectedDay];
       const details = day?.details?.sport || { mode: 'cardio', cardioType: '', durationMin: null, exercises: [] };
       const monday = getWeekMonday(week.weekId);
-      const date = formatDate(addDays(monday, sportSelectedDay));
+      const dayDate = addDays(monday, sportSelectedDay);
+      const dateLabel = formatDayLabel(dayDate);
 
-      let html = `<p style="font-size: 12px; color: var(--muted); margin-bottom: var(--gap-md);">${DAY_FULL_NAMES[sportSelectedDay]}, ${date}</p>`;
+      let html = `<p style="font-size: 12px; color: var(--muted); margin-bottom: var(--gap-md);">${DAY_FULL_NAMES[sportSelectedDay]}, ${dateLabel}</p>`;
 
       html += `
         <div class="sport-workout-type">
@@ -5601,7 +5686,7 @@
         <div class="sport-cardio-fields">
           <input type="text" placeholder="Cardio type (Running, Cycling...)"
             id="sportPageCardioType" value="${escapeHtml(details.cardioType || '')}">
-          <input type="number" placeholder="Min"
+          <input type="number" placeholder="Min" min="0"
             id="sportPageDuration" value="${details.durationMin || ''}">
         </div>
       `;
@@ -5626,9 +5711,9 @@
               <div class="set-groups-container" data-exercise="${ei}">
                 ${groups.map((g, gi) => `
                   <div class="set-group-row">
-                    <input type="number" class="set-group-input" placeholder="kg" value="${g.weightKg || ''}" data-set-group-weight="${ei}-${gi}">
+                    <input type="number" class="set-group-input" placeholder="kg" min="0" value="${g.weightKg !== '' && g.weightKg !== null ? g.weightKg : ''}" data-set-group-weight="${ei}-${gi}">
                     <span class="set-group-label">kg</span>
-                    <input type="number" class="set-group-input" placeholder="reps" value="${g.reps || ''}" data-set-group-reps="${ei}-${gi}">
+                    <input type="number" class="set-group-input" placeholder="reps" min="0" value="${g.reps || ''}" data-set-group-reps="${ei}-${gi}">
                     <span class="set-group-label">reps</span>
                     <div class="set-count-control">
                       <button class="set-count-btn" data-set-count-dec="${ei}-${gi}">−</button>
@@ -5659,6 +5744,13 @@
           </div>
         </div>`;
       }
+
+      // Save button
+      html += `
+        <div class="sport-save-row">
+          <button class="btn btn-save" id="sportSaveBtn">Save / Update</button>
+        </div>
+      `;
 
       document.getElementById('sportDailyLogContent').innerHTML = html;
       attachSportDailyLogListeners();
@@ -5714,7 +5806,7 @@
       container.innerHTML = activities.slice(0, 10).map(a => `
         <div class="sport-activity-item" data-sport-activity-week="${a.weekId}" data-sport-activity-day="${a.dayIndex}">
           <div>
-            <span class="sport-activity-date">${formatDate(a.date)}</span>
+            <span class="sport-activity-date">${formatDayLabel(a.date)}</span>
             <span class="sport-activity-info">${a.info}</span>
           </div>
           ${a.exerciseSummary ? `<div style="font-size: 11px; color: var(--muted); margin-top: 2px;">${a.exerciseSummary}</div>` : ''}
@@ -5777,10 +5869,10 @@
         });
       });
 
-      let html = '';
+      let html = '<div class="overload-grid">';
       recentSessions.forEach((session, idx) => {
         html += `<div class="session-card">
-          <div class="session-date">${formatDate(session.date)} · ${DAY_FULL_NAMES[session.dayIndex]}</div>`;
+          <div class="session-date">${formatDayLabel(session.date)} · ${DAY_FULL_NAMES[session.dayIndex]}</div>`;
 
         session.exercises.forEach(ex => {
           const groups = migrateToSetGroups(ex.sets);
@@ -5810,37 +5902,108 @@
 
         html += '</div>';
       });
+      html += '</div>';
 
       container.innerHTML = html;
     }
 
     let selectedBodyArea = '';
 
-    function attachSportViewListeners() {
-      // Exercise Library toggle
-      document.getElementById('exerciseLibraryToggle')?.addEventListener('click', () => {
-        exerciseLibraryOpen = !exerciseLibraryOpen;
-        document.getElementById('exerciseLibraryToggle')?.classList.toggle('open', exerciseLibraryOpen);
-        document.getElementById('exerciseLibraryPanel')?.classList.toggle('open', exerciseLibraryOpen);
-      });
+    // Exercise Library Modal functions
+    function openExerciseLibraryModal() {
+      renderExerciseLibraryModalContent();
+      openModal('exerciseLibraryModal');
+    }
 
-      // Body area dropdown for adding exercises
-      const bodyAreaDropdown = document.getElementById('bodyAreaDropdown');
-      if (bodyAreaDropdown) {
-        const trigger = bodyAreaDropdown.querySelector('.custom-dropdown-trigger');
+    function renderExerciseLibraryModalContent() {
+      const exercises = db.exerciseLibrary || [];
+      let html = '<div class="exercise-library-list">';
+      if (exercises.length === 0) {
+        html += '<p style="color: var(--muted); font-size: 12px; padding: var(--gap-sm);">No exercises yet. Add one below.</p>';
+      } else {
+        html += exercises.map((ex, i) => `
+          <div class="exercise-library-item">
+            <span class="exercise-library-item-name">${escapeHtml(ex.name)}</span>
+            ${ex.area ? `<span class="exercise-library-item-area">${ex.area}</span>` : ''}
+            <button class="exercise-library-item-btn delete" data-modal-delete-exercise="${i}">×</button>
+          </div>
+        `).join('');
+      }
+      html += '</div>';
+      html += `
+        <div class="add-exercise-row" style="margin-top: var(--gap-md);">
+          <input type="text" id="modalNewExerciseName" placeholder="Exercise name...">
+          <div class="custom-dropdown" id="modalBodyAreaDropdown">
+            <button class="custom-dropdown-trigger" type="button">
+              <span id="modalBodyAreaLabel">Body area</span>
+              <span class="dropdown-arrow">▼</span>
+            </button>
+            <div class="custom-dropdown-menu">
+              ${BODY_AREAS.slice(1).map(a => `<button class="custom-dropdown-item" data-value="${a.value}">${a.label}</button>`).join('')}
+            </div>
+          </div>
+          <button class="btn btn-sm btn-primary" id="modalAddExerciseBtn">Add</button>
+        </div>
+      `;
+      document.getElementById('exerciseLibraryModalContent').innerHTML = html;
+      attachExerciseLibraryModalListeners();
+    }
+
+    function attachExerciseLibraryModalListeners() {
+      // Body area dropdown
+      const dropdown = document.getElementById('modalBodyAreaDropdown');
+      if (dropdown) {
+        const trigger = dropdown.querySelector('.custom-dropdown-trigger');
         trigger?.addEventListener('click', (e) => {
           e.stopPropagation();
-          bodyAreaDropdown.classList.toggle('open');
+          dropdown.classList.toggle('open');
         });
-
-        bodyAreaDropdown.querySelectorAll('.custom-dropdown-item').forEach(item => {
+        dropdown.querySelectorAll('.custom-dropdown-item').forEach(item => {
           item.addEventListener('click', () => {
             selectedBodyArea = item.dataset.value;
-            document.getElementById('bodyAreaDropdownLabel').textContent = item.textContent;
-            bodyAreaDropdown.classList.remove('open');
+            document.getElementById('modalBodyAreaLabel').textContent = item.textContent;
+            dropdown.classList.remove('open');
           });
         });
       }
+
+      // Add exercise
+      document.getElementById('modalAddExerciseBtn')?.addEventListener('click', () => {
+        const name = document.getElementById('modalNewExerciseName').value.trim();
+        if (!name) return;
+        if (!db.exerciseLibrary) db.exerciseLibrary = [];
+        db.exerciseLibrary.push({ name, area: selectedBodyArea });
+        saveDB();
+        selectedBodyArea = '';
+        renderExerciseLibraryModalContent();
+      });
+
+      // Delete exercise
+      document.querySelectorAll('[data-modal-delete-exercise]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const index = parseInt(btn.dataset.modalDeleteExercise);
+          if (db.exerciseLibrary) {
+            db.exerciseLibrary.splice(index, 1);
+            saveDB();
+            renderExerciseLibraryModalContent();
+          }
+        });
+      });
+
+      // Close dropdown on outside click
+      document.addEventListener('click', (e) => {
+        const dropdown = document.getElementById('modalBodyAreaDropdown');
+        if (dropdown && !dropdown.contains(e.target)) {
+          dropdown.classList.remove('open');
+        }
+      });
+    }
+
+    function attachSportViewListeners() {
+      // Open Exercise Library Modal
+      document.getElementById('openExerciseLibraryBtn')?.addEventListener('click', () => {
+        openExerciseLibraryModal();
+      });
 
       // Overload area filter dropdown
       const overloadDropdown = document.getElementById('overloadAreaDropdown');
@@ -5863,40 +6026,9 @@
 
       // Close dropdowns on outside click
       document.addEventListener('click', (e) => {
-        if (bodyAreaDropdown && !bodyAreaDropdown.contains(e.target)) {
-          bodyAreaDropdown.classList.remove('open');
-        }
         if (overloadDropdown && !overloadDropdown.contains(e.target)) {
           overloadDropdown.classList.remove('open');
         }
-      });
-
-      // Add exercise to library
-      document.getElementById('addExerciseBtn')?.addEventListener('click', () => {
-        const name = document.getElementById('newExerciseName').value.trim();
-        const area = selectedBodyArea;
-        if (!name) return;
-
-        if (!db.exerciseLibrary) db.exerciseLibrary = [];
-        db.exerciseLibrary.push({ name, area });
-        saveDB();
-        document.getElementById('newExerciseName').value = '';
-        selectedBodyArea = '';
-        document.getElementById('bodyAreaDropdownLabel').textContent = 'Body area';
-        renderSportView();
-      });
-
-      // Delete exercise from library
-      document.querySelectorAll('[data-delete-exercise]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const index = parseInt(btn.dataset.deleteExercise);
-          if (db.exerciseLibrary) {
-            db.exerciseLibrary.splice(index, 1);
-            saveDB();
-            renderExerciseLibrary();
-            renderSportDailyLog();
-          }
-        });
       });
 
       // Day selector - always allow switching
@@ -6101,6 +6233,30 @@
             }
           }
         });
+      });
+
+      // Save / Update button - refreshes all Sport views
+      document.getElementById('sportSaveBtn')?.addEventListener('click', () => {
+        // Ensure current data is saved
+        const day = ensureSportDetailsForDay(sportSelectedDay);
+        if (day) {
+          day.updatedAt = new Date().toISOString();
+          saveDB();
+          autoMarkSportDone(sportSelectedDay);
+        }
+        // Refresh all Sport UI components
+        renderSportDaySelector();
+        renderOverloadPanel();
+        renderSportActivityList();
+        // Update stats row
+        const stats = calculateSportStats();
+        const statsRow = document.querySelector('.sport-stats-row');
+        if (statsRow) {
+          const cards = statsRow.querySelectorAll('.sport-stat-value');
+          if (cards[0]) cards[0].textContent = stats.activeDays;
+          if (cards[1]) cards[1].textContent = stats.cardioSessions;
+          if (cards[2]) cards[2].textContent = stats.weightSessions;
+        }
       });
     }
 
@@ -7096,6 +7252,16 @@ console.log('Database loaded. Initializing application...');
       // Cardio library modal
       document.getElementById('cardioLibraryClose').addEventListener('click', () => closeModal('cardioLibraryModal'));
       document.getElementById('cardioLibraryDone').addEventListener('click', () => closeModal('cardioLibraryModal'));
+
+      // Exercise library modal
+      document.getElementById('exerciseLibraryModalClose').addEventListener('click', () => {
+        closeModal('exerciseLibraryModal');
+        if (currentView === 'sport') renderSportDailyLog();
+      });
+      document.getElementById('exerciseLibraryModalDone').addEventListener('click', () => {
+        closeModal('exerciseLibraryModal');
+        if (currentView === 'sport') renderSportDailyLog();
+      });
 
       document.getElementById('importResultClose').addEventListener('click', () => closeModal('importResultModal'));
       document.getElementById('importResultOk').addEventListener('click', () => closeModal('importResultModal'));
