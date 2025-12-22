@@ -1532,35 +1532,6 @@
       border-color: var(--accent);
       color: var(--accent);
     }
-    .sport-activity-list {
-      display: flex;
-      flex-direction: column;
-      gap: var(--gap-sm);
-      margin-top: var(--gap-lg);
-    }
-    .sport-activity-item {
-      display: flex;
-      align-items: center;
-      gap: var(--gap-md);
-      padding: var(--gap-sm) var(--gap-md);
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: all var(--transition-fast);
-    }
-    .sport-activity-item:hover {
-      background: var(--panel-2);
-      border-color: var(--border-highlight);
-    }
-    .sport-activity-date {
-      font-weight: 500;
-      min-width: 100px;
-    }
-    .sport-activity-info {
-      font-size: 12px;
-      color: var(--text-secondary);
-    }
     /* Sport compact drawer */
     .sport-compact-section {
       display: flex;
@@ -2280,20 +2251,29 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      display: block;
-      max-width: 100%;
+      display: inline;
+      max-width: 70%;
     }
-    .session-exercise-summary {
-      display: block;
+    .session-exercise-first-variant {
+      display: inline;
       font-size: 11px;
       color: var(--muted);
-      margin-top: 2px;
+      white-space: nowrap;
+      margin-left: 6px;
     }
     .session-exercise-variant {
       display: block;
       font-size: 11px;
       color: var(--muted);
       padding-left: 8px;
+      white-space: nowrap;
+      margin-top: 1px;
+    }
+    .session-exercise-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      margin-bottom: 4px;
     }
 
     /* Exercise Library Modal */
@@ -5571,19 +5551,12 @@
             </div>
           </div>
         </div>
-
-        <!-- Recent Activity - Full width below the two columns -->
-        <div style="margin-top: var(--gap-xl);">
-          <h3 style="font-size: 14px; margin-bottom: var(--gap-md); color: var(--text-secondary);">Recent Activity</h3>
-          <div class="sport-activity-list" id="sportActivityList"></div>
-        </div>
       `;
 
       document.getElementById('sportContent').innerHTML = html;
       renderSportDaySelector();
       renderSportDailyLog();
       renderOverloadPanel();
-      renderSportActivityList();
       attachSportViewListeners();
     }
 
@@ -5795,64 +5768,6 @@
       attachSportDailyLogListeners();
     }
 
-    function renderSportActivityList() {
-      const activities = [];
-      const today = new Date();
-      const thirtyDaysAgo = new Date(today);
-      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-
-      for (const [weekId, week] of Object.entries(db.weeks)) {
-        const monday = getWeekMonday(weekId);
-        for (let i = 0; i < 7; i++) {
-          const dayDate = addDays(monday, i);
-          if (dayDate >= thirtyDaysAgo && dayDate <= today) {
-            const day = week.days[i];
-            if (normalizeSingleChoiceValue(day?.habits?.sport)) {
-              const details = day.details?.sport;
-              let info = details?.mode === 'weights_cardio' ? 'Weights + Cardio' : 'Cardio';
-
-              // Build exercise summary with set groups
-              let exerciseSummary = '';
-              if (details?.exercises?.length) {
-                info += `, ${details.exercises.length} exercises`;
-                exerciseSummary = details.exercises.map(ex => {
-                  const groups = migrateToSetGroups(ex.sets);
-                  const summary = formatSetGroupsSummary(groups);
-                  return `${ex.name}: ${summary || 'no sets'}`;
-                }).join(' | ');
-              }
-
-              if (details?.cardioType) {
-                info += ` · ${details.cardioType}`;
-              }
-              if (details?.durationMin) {
-                info += ` (${details.durationMin} min)`;
-              }
-              activities.push({ weekId, dayIndex: i, date: dayDate, info, exerciseSummary });
-            }
-          }
-        }
-      }
-
-      activities.sort((a, b) => b.date - a.date);
-
-      const container = document.getElementById('sportActivityList');
-      if (activities.length === 0) {
-        container.innerHTML = '<p style="color: var(--muted); font-size: 12px;">No sport activity in the last 30 days.</p>';
-        return;
-      }
-
-      container.innerHTML = activities.slice(0, 10).map(a => `
-        <div class="sport-activity-item" data-sport-activity-week="${a.weekId}" data-sport-activity-day="${a.dayIndex}">
-          <div>
-            <span class="sport-activity-date">${formatDayLabel(a.date)}</span>
-            <span class="sport-activity-info">${a.info}</span>
-          </div>
-          ${a.exerciseSummary ? `<div style="font-size: 11px; color: var(--muted); margin-top: 2px;">${a.exerciseSummary}</div>` : ''}
-        </div>
-      `).join('');
-    }
-
     function renderOverloadPanel() {
       const container = document.getElementById('overloadContent');
       if (!container) return;
@@ -5933,21 +5848,27 @@
             }
           }
 
-          // Each variant on its own line
-          const variantsHtml = groups.map(g => {
+          // Format variants: first inline with name, rest on separate lines
+          const variantStrings = groups.map(g => {
             const w = g.weightKg !== '' && g.weightKg !== null && g.weightKg !== undefined ? g.weightKg : null;
             const r = g.reps || null;
             if (w === null && r === null) return '';
             const wStr = w !== null ? `${w} kg` : '? kg';
             const rStr = r !== null ? `${r} reps` : '? reps';
             const sStr = `${g.count || 1} sets`;
-            return `<span class="session-exercise-variant">${wStr} × ${rStr} × ${sStr}</span>`;
-          }).filter(Boolean).join('');
+            return `${wStr} × ${rStr} × ${sStr}`;
+          }).filter(Boolean);
+
+          const firstVariant = variantStrings[0] || 'No sets logged';
+          const restVariants = variantStrings.slice(1);
 
           html += `
             <div class="session-exercise">
-              <span class="session-exercise-name">${escapeHtml(ex.name)}${trendHtml}</span>
-              ${variantsHtml || '<span class="session-exercise-variant">No sets logged</span>'}
+              <div class="session-exercise-row">
+                <span class="session-exercise-name">${escapeHtml(ex.name)}${trendHtml}</span>
+                <span class="session-exercise-first-variant">${firstVariant}</span>
+              </div>
+              ${restVariants.map(v => `<span class="session-exercise-variant">${v}</span>`).join('')}
             </div>`;
         });
 
@@ -6083,17 +6004,6 @@
       });
 
       // Day selector listeners are now attached in renderSportDaySelector()
-
-      // Activity list click
-      document.querySelectorAll('.sport-activity-item').forEach(el => {
-        el.addEventListener('click', () => {
-          const weekId = el.dataset.sportActivityWeek;
-          const dayIndex = parseInt(el.dataset.sportActivityDay);
-          currentWeekId = weekId;
-          showView('week');
-          setTimeout(() => openDayDrawer(dayIndex), 100);
-        });
-      });
     }
 
     function attachSportDailyLogListeners() {
@@ -6290,7 +6200,6 @@
         // Refresh all Sport UI components
         renderSportDaySelector();
         renderOverloadPanel();
-        renderSportActivityList();
         // Update stats row
         const stats = calculateSportStats();
         const statsRow = document.querySelector('.sport-stats-row');
