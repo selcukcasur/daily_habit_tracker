@@ -1942,6 +1942,337 @@
       background: var(--panel-3);
     }
 
+    /* Custom Dropdown Component */
+    .custom-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .custom-dropdown-trigger {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-xs);
+      padding: var(--gap-sm) var(--gap-md);
+      border: 1px solid var(--border-highlight);
+      border-radius: var(--radius-sm);
+      background: var(--panel-2);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all var(--transition-fast);
+      min-width: 140px;
+    }
+    .custom-dropdown-trigger:hover {
+      background: var(--panel-3);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+    .custom-dropdown-trigger .dropdown-arrow {
+      margin-left: auto;
+      font-size: 10px;
+      transition: transform var(--transition-fast);
+    }
+    .custom-dropdown.open .dropdown-arrow {
+      transform: rotate(180deg);
+    }
+    .custom-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      min-width: 100%;
+      background: var(--panel);
+      border: 1px solid var(--border-highlight);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-2);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: all var(--transition-fast);
+    }
+    .custom-dropdown.open .custom-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .custom-dropdown-item {
+      display: block;
+      width: 100%;
+      padding: var(--gap-sm) var(--gap-md);
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 13px;
+      text-align: left;
+      cursor: pointer;
+      transition: background var(--transition-fast);
+    }
+    .custom-dropdown-item:first-child {
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+    }
+    .custom-dropdown-item:last-child {
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+    }
+    .custom-dropdown-item:hover,
+    .custom-dropdown-item.focused {
+      background: var(--panel-3);
+    }
+    .custom-dropdown-item.selected {
+      color: var(--accent);
+    }
+
+    /* Navbar Other Dropdown */
+    .navbar-dropdown {
+      position: relative;
+    }
+    .navbar-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      min-width: 140px;
+      background: var(--panel);
+      border: 1px solid var(--border-highlight);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-2);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: all var(--transition-fast);
+      overflow: hidden;
+    }
+    .navbar-dropdown.open .navbar-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .navbar-dropdown-item {
+      display: block;
+      width: 100%;
+      padding: var(--gap-sm) var(--gap-md);
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 13px;
+      text-align: left;
+      cursor: pointer;
+      transition: background var(--transition-fast);
+    }
+    .navbar-dropdown-item:hover {
+      background: var(--panel-3);
+    }
+
+    /* Set Groups UI */
+    .set-group-row {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-sm);
+      padding: var(--gap-sm);
+      background: var(--panel-2);
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--gap-xs);
+    }
+    .set-group-input {
+      width: 60px;
+      padding: var(--gap-xs) var(--gap-sm);
+      background: var(--panel-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-size: 13px;
+      text-align: center;
+    }
+    .set-group-label {
+      font-size: 11px;
+      color: var(--muted);
+      min-width: 24px;
+    }
+    .set-count-control {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-xs);
+      background: var(--panel-3);
+      border-radius: var(--radius-sm);
+      padding: 2px;
+    }
+    .set-count-btn {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition-fast);
+    }
+    .set-count-btn:hover {
+      background: var(--panel-2);
+    }
+    .set-count-value {
+      min-width: 20px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .set-group-remove {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm);
+      transition: all var(--transition-fast);
+    }
+    .set-group-remove:hover {
+      color: var(--low);
+      background: var(--low-bg);
+    }
+    .add-set-variant-btn {
+      padding: var(--gap-xs) var(--gap-sm);
+      font-size: 11px;
+      color: var(--accent);
+      background: transparent;
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .add-set-variant-btn:hover {
+      background: var(--accent-subtle);
+      border-color: var(--accent);
+    }
+
+    /* Exercise Library Collapsible */
+    .exercise-library-toggle {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-sm);
+      padding: var(--gap-sm) var(--gap-md);
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      margin-bottom: var(--gap-md);
+      transition: all var(--transition-fast);
+    }
+    .exercise-library-toggle:hover {
+      background: var(--panel-3);
+    }
+    .exercise-library-toggle .toggle-icon {
+      transition: transform var(--transition-fast);
+    }
+    .exercise-library-toggle.open .toggle-icon {
+      transform: rotate(90deg);
+    }
+    .exercise-library-panel {
+      display: none;
+      padding: var(--gap-md);
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--gap-lg);
+    }
+    .exercise-library-panel.open {
+      display: block;
+    }
+
+    /* Progressive Overload Panel */
+    .overload-panel {
+      margin-top: var(--gap-xl);
+      padding: var(--gap-md);
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+    }
+    .overload-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--gap-md);
+    }
+    .overload-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .session-card {
+      padding: var(--gap-md);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--gap-sm);
+    }
+    .session-date {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: var(--gap-sm);
+    }
+    .session-exercise {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--gap-xs) 0;
+      font-size: 13px;
+    }
+    .session-exercise-name {
+      color: var(--text);
+    }
+    .session-exercise-summary {
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
+    .trend-indicator {
+      font-size: 12px;
+      margin-left: var(--gap-sm);
+    }
+    .trend-up { color: var(--completed); }
+    .trend-down { color: var(--low); }
+    .trend-same { color: var(--muted); }
+
+    /* Voice Template Cards */
+    .voice-templates-section {
+      margin-top: var(--gap-xl);
+    }
+    .voice-template-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--gap-md);
+    }
+    .voice-template-card {
+      padding: var(--gap-md);
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      transition: all var(--transition-fast);
+    }
+    .voice-template-card:hover {
+      border-color: var(--border-highlight);
+    }
+    .voice-template-card-title {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: var(--gap-sm);
+    }
+    .voice-template-card-count {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: var(--gap-sm);
+    }
+    .voice-template-card-btn {
+      padding: var(--gap-xs) var(--gap-sm);
+      font-size: 12px;
+    }
+
     @media (max-width: 768px) {
       .navbar { padding: 10px; gap: var(--gap-sm); }
       .navbar-center { display: none; }
@@ -1979,10 +2310,15 @@
       <div class="navbar-center" id="weekLabel">Week</div>
       <div class="navbar-right">
         <button class="btn" id="boardBtn">Board</button>
-        <button class="btn" id="voiceBtn">Voice</button>
         <button class="btn" id="sportBtn">Sport</button>
-        <button class="btn" id="workBtn">Work</button>
-        <button class="btn" id="guitarBtn">Guitar</button>
+        <div class="navbar-dropdown" id="otherDropdown">
+          <button class="btn" id="otherBtn">Other ▾</button>
+          <div class="navbar-dropdown-menu">
+            <button class="navbar-dropdown-item" data-view="voice">Voice</button>
+            <button class="navbar-dropdown-item" data-view="work">Work</button>
+            <button class="navbar-dropdown-item" data-view="guitar">Guitar</button>
+          </div>
+        </div>
         <button class="btn" id="habitsBtn">Habits</button>
         <button class="btn" id="targetsBtn">Targets</button>
         <button class="btn" id="historyBtn">History</button>
@@ -4781,7 +5117,26 @@
         dayListHtml += '</div>';
       }
 
-      document.getElementById('voiceContent').innerHTML = summaryHtml + dayListHtml;
+      // Build template management section
+      let templateHtml = `
+        <div class="voice-templates-section">
+          <h3 style="font-size: 14px; margin-bottom: var(--gap-md); color: var(--text-secondary);">Templates</h3>
+          <div class="voice-template-cards">
+            ${voiceHabit.items.map(item => {
+              const template = db.voiceTemplates?.[item.id]?.checklist || [];
+              return `
+                <div class="voice-template-card">
+                  <div class="voice-template-card-title">${item.label}</div>
+                  <div class="voice-template-card-count">${template.length} item${template.length !== 1 ? 's' : ''}</div>
+                  <button class="btn btn-sm voice-template-card-btn" data-edit-template="${item.id}">Edit Template</button>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+
+      document.getElementById('voiceContent').innerHTML = summaryHtml + dayListHtml + templateHtml;
 
       // Attach click listeners for day items
       document.querySelectorAll('.voice-day-item').forEach(el => {
@@ -4789,6 +5144,13 @@
           const dayIndex = parseInt(el.dataset.voiceDay);
           showView('week');
           setTimeout(() => openDayDrawer(dayIndex), 100);
+        });
+      });
+
+      // Attach click listeners for template edit buttons
+      document.querySelectorAll('[data-edit-template]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          openVoiceTemplateModal(btn.dataset.editTemplate);
         });
       });
     }
@@ -5000,14 +5362,31 @@
       saveDB();
       closeModal('voiceTemplateModal');
 
-      // Reopen the item modal if we came from there
-      if (selectedDay !== null) {
+      // Refresh the view depending on where we came from
+      if (currentView === 'voice') {
+        renderVoiceView();
+      } else if (selectedDay !== null) {
+        // Reopen the item modal if we came from there
         openVoiceItemModal(currentTemplateItem);
       }
     }
 
     // ============ SPORT VIEW ============
     let sportSelectedDay = 0;
+    let exerciseLibraryOpen = false;
+
+    const BODY_AREAS = [
+      { value: '', label: 'All Areas' },
+      { value: 'chest', label: 'Chest' },
+      { value: 'back', label: 'Back' },
+      { value: 'shoulders', label: 'Shoulders' },
+      { value: 'arms', label: 'Arms' },
+      { value: 'legs', label: 'Legs' },
+      { value: 'core', label: 'Core' },
+      { value: 'full', label: 'Full Body' }
+    ];
+
+    let overloadFilterArea = '';
 
     function renderSportView() {
       const week = getCurrentWeek();
@@ -5038,31 +5417,51 @@
           </div>
         </div>
 
-        <div class="sport-page-grid">
-          <div class="sport-section">
-            <div class="sport-section-title">Exercise Library</div>
-            <div class="exercise-library-list" id="exerciseLibraryList"></div>
-            <div class="add-exercise-row">
-              <input type="text" id="newExerciseName" placeholder="Exercise name...">
-              <select id="newExerciseArea">
-                <option value="">Body area</option>
-                <option value="chest">Chest</option>
-                <option value="back">Back</option>
-                <option value="shoulders">Shoulders</option>
-                <option value="arms">Arms</option>
-                <option value="legs">Legs</option>
-                <option value="core">Core</option>
-                <option value="full">Full Body</option>
-              </select>
-              <button class="btn btn-sm btn-primary" id="addExerciseBtn">Add</button>
+        <!-- Daily Log (Primary Focus) -->
+        <div class="sport-section" style="margin-bottom: var(--gap-lg);">
+          <div class="sport-section-title">Daily Log</div>
+          <div class="sport-day-selector" id="sportDaySelector"></div>
+          <div id="sportDailyLogContent"></div>
+        </div>
+
+        <!-- Exercise Library (Collapsible) -->
+        <div class="exercise-library-toggle ${exerciseLibraryOpen ? 'open' : ''}" id="exerciseLibraryToggle">
+          <span class="toggle-icon">▶</span>
+          <span>Exercise Library</span>
+          <span style="margin-left: auto; font-size: 12px; color: var(--muted);">${(db.exerciseLibrary || []).length} exercises</span>
+        </div>
+        <div class="exercise-library-panel ${exerciseLibraryOpen ? 'open' : ''}" id="exerciseLibraryPanel">
+          <div class="exercise-library-list" id="exerciseLibraryList"></div>
+          <div class="add-exercise-row" style="margin-top: var(--gap-md);">
+            <input type="text" id="newExerciseName" placeholder="Exercise name...">
+            <div class="custom-dropdown" id="bodyAreaDropdown">
+              <button class="custom-dropdown-trigger" type="button">
+                <span id="bodyAreaDropdownLabel">Body area</span>
+                <span class="dropdown-arrow">▼</span>
+              </button>
+              <div class="custom-dropdown-menu">
+                ${BODY_AREAS.slice(1).map(a => `<button class="custom-dropdown-item" data-value="${a.value}">${a.label}</button>`).join('')}
+              </div>
+            </div>
+            <button class="btn btn-sm btn-primary" id="addExerciseBtn">Add</button>
+          </div>
+        </div>
+
+        <!-- Progressive Overload Panel -->
+        <div class="overload-panel">
+          <div class="overload-header">
+            <span class="overload-title">Progress Tracker</span>
+            <div class="custom-dropdown" id="overloadAreaDropdown">
+              <button class="custom-dropdown-trigger" type="button">
+                <span id="overloadAreaLabel">${BODY_AREAS.find(a => a.value === overloadFilterArea)?.label || 'All Areas'}</span>
+                <span class="dropdown-arrow">▼</span>
+              </button>
+              <div class="custom-dropdown-menu">
+                ${BODY_AREAS.map(a => `<button class="custom-dropdown-item ${a.value === overloadFilterArea ? 'selected' : ''}" data-value="${a.value}">${a.label}</button>`).join('')}
+              </div>
             </div>
           </div>
-
-          <div class="sport-section">
-            <div class="sport-section-title">Daily Log</div>
-            <div class="sport-day-selector" id="sportDaySelector"></div>
-            <div id="sportDailyLogContent"></div>
-          </div>
+          <div id="overloadContent"></div>
         </div>
 
         <div style="margin-top: var(--gap-xl);">
@@ -5075,6 +5474,7 @@
       renderExerciseLibrary();
       renderSportDaySelector();
       renderSportDailyLog();
+      renderOverloadPanel();
       renderSportActivityList();
       attachSportViewListeners();
     }
@@ -5146,13 +5546,41 @@
       }).join('');
     }
 
+    // Convert old sets array to set groups (for migration)
+    function migrateToSetGroups(sets) {
+      if (!sets || sets.length === 0) return [{ weightKg: '', reps: '', count: 1 }];
+
+      // Check if already migrated (has count property)
+      if (sets[0] && typeof sets[0].count !== 'undefined') return sets;
+
+      // Group identical weight+reps combinations
+      const groups = [];
+      sets.forEach(set => {
+        const existing = groups.find(g => g.weightKg === set.weightKg && g.reps === set.reps);
+        if (existing) {
+          existing.count++;
+        } else {
+          groups.push({ weightKg: set.weightKg || '', reps: set.reps || '', count: 1 });
+        }
+      });
+      return groups.length > 0 ? groups : [{ weightKg: '', reps: '', count: 1 }];
+    }
+
+    // Format set groups for display
+    function formatSetGroupsSummary(groups) {
+      if (!groups || groups.length === 0) return '';
+      return groups.map(g => {
+        if (!g.weightKg && !g.reps) return '';
+        return `${g.weightKg || '?'}kg × ${g.reps || '?'} × ${g.count || 1}`;
+      }).filter(Boolean).join(', ');
+    }
+
     function renderSportDailyLog() {
       const week = getCurrentWeek();
       if (!week) return;
 
       const day = week.days[sportSelectedDay];
       const details = day?.details?.sport || { mode: 'cardio', cardioType: '', durationMin: null, exercises: [] };
-      const isDone = normalizeSingleChoiceValue(day?.habits?.sport);
       const monday = getWeekMonday(week.weekId);
       const date = formatDate(addDays(monday, sportSelectedDay));
 
@@ -5186,6 +5614,8 @@
         const exercises = details.exercises || [];
         exercises.forEach((ex, ei) => {
           const libEx = (db.exerciseLibrary || []).find(e => e.name === ex.name);
+          const groups = migrateToSetGroups(ex.sets);
+
           html += `
             <div class="sport-exercise-entry">
               <div class="sport-exercise-header">
@@ -5193,30 +5623,39 @@
                 ${libEx?.area ? `<span class="sport-exercise-area">${libEx.area}</span>` : ''}
                 <button class="exercise-library-item-btn delete" data-remove-day-exercise="${ei}">×</button>
               </div>
-              <table class="sport-sets-table">
-                <thead><tr><th>Set</th><th>Weight (kg)</th><th>Reps</th><th></th></tr></thead>
-                <tbody>
-                  ${(ex.sets || []).map((set, si) => `
-                    <tr>
-                      <td>${si + 1}</td>
-                      <td><input type="number" value="${set.weightKg || ''}" data-sport-set-weight="${ei}-${si}"></td>
-                      <td><input type="number" value="${set.reps || ''}" data-sport-set-reps="${ei}-${si}"></td>
-                      <td><button class="exercise-library-item-btn delete" data-remove-sport-set="${ei}-${si}">×</button></td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
-              <button class="sport-add-exercise-btn" data-add-sport-set="${ei}">+ Add Set</button>
+              <div class="set-groups-container" data-exercise="${ei}">
+                ${groups.map((g, gi) => `
+                  <div class="set-group-row">
+                    <input type="number" class="set-group-input" placeholder="kg" value="${g.weightKg || ''}" data-set-group-weight="${ei}-${gi}">
+                    <span class="set-group-label">kg</span>
+                    <input type="number" class="set-group-input" placeholder="reps" value="${g.reps || ''}" data-set-group-reps="${ei}-${gi}">
+                    <span class="set-group-label">reps</span>
+                    <div class="set-count-control">
+                      <button class="set-count-btn" data-set-count-dec="${ei}-${gi}">−</button>
+                      <span class="set-count-value">${g.count || 1}</span>
+                      <button class="set-count-btn" data-set-count-inc="${ei}-${gi}">+</button>
+                    </div>
+                    <span class="set-group-label">sets</span>
+                    <button class="set-group-remove" data-remove-set-group="${ei}-${gi}">×</button>
+                  </div>
+                `).join('')}
+              </div>
+              <button class="add-set-variant-btn" data-add-set-variant="${ei}">+ Add Set Variant</button>
             </div>
           `;
         });
 
         html += `</div>
           <div style="margin-top: var(--gap-md);">
-            <select id="addExerciseFromLibrary" style="width: 100%; padding: var(--gap-sm); background: var(--panel-2); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text);">
-              <option value="">+ Add exercise from library...</option>
-              ${(db.exerciseLibrary || []).map(ex => `<option value="${escapeHtml(ex.name)}">${escapeHtml(ex.name)}${ex.area ? ` (${ex.area})` : ''}</option>`).join('')}
-            </select>
+            <div class="custom-dropdown" id="addExerciseDropdown" style="width: 100%;">
+              <button class="custom-dropdown-trigger" type="button" style="width: 100%; justify-content: flex-start;">
+                <span>+ Add exercise from library...</span>
+                <span class="dropdown-arrow">▼</span>
+              </button>
+              <div class="custom-dropdown-menu" style="max-height: 200px; overflow-y: auto;">
+                ${(db.exerciseLibrary || []).map(ex => `<button class="custom-dropdown-item" data-add-exercise="${escapeHtml(ex.name)}">${escapeHtml(ex.name)}${ex.area ? ` (${ex.area})` : ''}</button>`).join('')}
+              </div>
+            </div>
           </div>
         </div>`;
       }
@@ -5240,16 +5679,25 @@
             if (normalizeSingleChoiceValue(day?.habits?.sport)) {
               const details = day.details?.sport;
               let info = details?.mode === 'weights_cardio' ? 'Weights + Cardio' : 'Cardio';
+
+              // Build exercise summary with set groups
+              let exerciseSummary = '';
               if (details?.exercises?.length) {
-                info += ` · ${details.exercises.length} exercises`;
+                info += `, ${details.exercises.length} exercises`;
+                exerciseSummary = details.exercises.map(ex => {
+                  const groups = migrateToSetGroups(ex.sets);
+                  const summary = formatSetGroupsSummary(groups);
+                  return `${ex.name}: ${summary || 'no sets'}`;
+                }).join(' | ');
               }
+
               if (details?.cardioType) {
                 info += ` · ${details.cardioType}`;
               }
               if (details?.durationMin) {
                 info += ` (${details.durationMin} min)`;
               }
-              activities.push({ weekId, dayIndex: i, date: dayDate, info });
+              activities.push({ weekId, dayIndex: i, date: dayDate, info, exerciseSummary });
             }
           }
         }
@@ -5265,26 +5713,177 @@
 
       container.innerHTML = activities.slice(0, 10).map(a => `
         <div class="sport-activity-item" data-sport-activity-week="${a.weekId}" data-sport-activity-day="${a.dayIndex}">
-          <span class="sport-activity-date">${formatDate(a.date)}</span>
-          <span class="sport-activity-info">${a.info}</span>
+          <div>
+            <span class="sport-activity-date">${formatDate(a.date)}</span>
+            <span class="sport-activity-info">${a.info}</span>
+          </div>
+          ${a.exerciseSummary ? `<div style="font-size: 11px; color: var(--muted); margin-top: 2px;">${a.exerciseSummary}</div>` : ''}
         </div>
       `).join('');
     }
 
+    function renderOverloadPanel() {
+      const container = document.getElementById('overloadContent');
+      if (!container) return;
+
+      // Get last 4 sessions with weight training for the selected body area
+      const sessions = [];
+      const today = new Date();
+
+      for (const [weekId, week] of Object.entries(db.weeks)) {
+        const monday = getWeekMonday(weekId);
+        for (let i = 0; i < 7; i++) {
+          const dayDate = addDays(monday, i);
+          if (dayDate > today) continue;
+
+          const day = week.days[i];
+          const details = day?.details?.sport;
+          if (details?.mode === 'weights_cardio' && details.exercises?.length) {
+            // Filter exercises by body area if selected
+            const filteredExercises = details.exercises.filter(ex => {
+              if (!overloadFilterArea) return true;
+              const libEx = (db.exerciseLibrary || []).find(e => e.name === ex.name);
+              return libEx?.area === overloadFilterArea;
+            });
+
+            if (filteredExercises.length > 0) {
+              sessions.push({
+                weekId,
+                dayIndex: i,
+                date: dayDate,
+                exercises: filteredExercises
+              });
+            }
+          }
+        }
+      }
+
+      sessions.sort((a, b) => b.date - a.date);
+      const recentSessions = sessions.slice(0, 4);
+
+      if (recentSessions.length === 0) {
+        container.innerHTML = '<p style="color: var(--muted); font-size: 12px;">No weight training sessions found for this filter.</p>';
+        return;
+      }
+
+      // Build exercise history for trend analysis
+      const exerciseHistory = {};
+      sessions.forEach((session, idx) => {
+        session.exercises.forEach(ex => {
+          if (!exerciseHistory[ex.name]) exerciseHistory[ex.name] = [];
+          const groups = migrateToSetGroups(ex.sets);
+          const maxWeight = Math.max(...groups.map(g => parseFloat(g.weightKg) || 0));
+          exerciseHistory[ex.name].push({ sessionIdx: idx, maxWeight, date: session.date });
+        });
+      });
+
+      let html = '';
+      recentSessions.forEach((session, idx) => {
+        html += `<div class="session-card">
+          <div class="session-date">${formatDate(session.date)} · ${DAY_FULL_NAMES[session.dayIndex]}</div>`;
+
+        session.exercises.forEach(ex => {
+          const groups = migrateToSetGroups(ex.sets);
+          const summary = formatSetGroupsSummary(groups);
+
+          // Calculate trend
+          let trendHtml = '';
+          const history = exerciseHistory[ex.name] || [];
+          if (history.length >= 2 && idx === 0) {
+            const current = history[0].maxWeight;
+            const previous = history[1].maxWeight;
+            if (current > previous) {
+              trendHtml = '<span class="trend-indicator trend-up">↑</span>';
+            } else if (current < previous) {
+              trendHtml = '<span class="trend-indicator trend-down">↓</span>';
+            } else {
+              trendHtml = '<span class="trend-indicator trend-same">→</span>';
+            }
+          }
+
+          html += `
+            <div class="session-exercise">
+              <span class="session-exercise-name">${escapeHtml(ex.name)}${trendHtml}</span>
+              <span class="session-exercise-summary">${summary || 'No sets logged'}</span>
+            </div>`;
+        });
+
+        html += '</div>';
+      });
+
+      container.innerHTML = html;
+    }
+
+    let selectedBodyArea = '';
+
     function attachSportViewListeners() {
+      // Exercise Library toggle
+      document.getElementById('exerciseLibraryToggle')?.addEventListener('click', () => {
+        exerciseLibraryOpen = !exerciseLibraryOpen;
+        document.getElementById('exerciseLibraryToggle')?.classList.toggle('open', exerciseLibraryOpen);
+        document.getElementById('exerciseLibraryPanel')?.classList.toggle('open', exerciseLibraryOpen);
+      });
+
+      // Body area dropdown for adding exercises
+      const bodyAreaDropdown = document.getElementById('bodyAreaDropdown');
+      if (bodyAreaDropdown) {
+        const trigger = bodyAreaDropdown.querySelector('.custom-dropdown-trigger');
+        trigger?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          bodyAreaDropdown.classList.toggle('open');
+        });
+
+        bodyAreaDropdown.querySelectorAll('.custom-dropdown-item').forEach(item => {
+          item.addEventListener('click', () => {
+            selectedBodyArea = item.dataset.value;
+            document.getElementById('bodyAreaDropdownLabel').textContent = item.textContent;
+            bodyAreaDropdown.classList.remove('open');
+          });
+        });
+      }
+
+      // Overload area filter dropdown
+      const overloadDropdown = document.getElementById('overloadAreaDropdown');
+      if (overloadDropdown) {
+        const trigger = overloadDropdown.querySelector('.custom-dropdown-trigger');
+        trigger?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          overloadDropdown.classList.toggle('open');
+        });
+
+        overloadDropdown.querySelectorAll('.custom-dropdown-item').forEach(item => {
+          item.addEventListener('click', () => {
+            overloadFilterArea = item.dataset.value;
+            document.getElementById('overloadAreaLabel').textContent = item.textContent;
+            overloadDropdown.classList.remove('open');
+            renderOverloadPanel();
+          });
+        });
+      }
+
+      // Close dropdowns on outside click
+      document.addEventListener('click', (e) => {
+        if (bodyAreaDropdown && !bodyAreaDropdown.contains(e.target)) {
+          bodyAreaDropdown.classList.remove('open');
+        }
+        if (overloadDropdown && !overloadDropdown.contains(e.target)) {
+          overloadDropdown.classList.remove('open');
+        }
+      });
+
       // Add exercise to library
       document.getElementById('addExerciseBtn')?.addEventListener('click', () => {
         const name = document.getElementById('newExerciseName').value.trim();
-        const area = document.getElementById('newExerciseArea').value;
+        const area = selectedBodyArea;
         if (!name) return;
 
         if (!db.exerciseLibrary) db.exerciseLibrary = [];
         db.exerciseLibrary.push({ name, area });
         saveDB();
         document.getElementById('newExerciseName').value = '';
-        document.getElementById('newExerciseArea').value = '';
-        renderExerciseLibrary();
-        renderSportDailyLog();
+        selectedBodyArea = '';
+        document.getElementById('bodyAreaDropdownLabel').textContent = 'Body area';
+        renderSportView();
       });
 
       // Delete exercise from library
@@ -5300,10 +5899,11 @@
         });
       });
 
-      // Day selector
+      // Day selector - always allow switching
       document.querySelectorAll('[data-sport-day]').forEach(btn => {
         btn.addEventListener('click', () => {
-          sportSelectedDay = parseInt(btn.dataset.sportDay);
+          const newDay = parseInt(btn.dataset.sportDay);
+          sportSelectedDay = newDay;
           renderSportDaySelector();
           renderSportDailyLog();
         });
@@ -5331,7 +5931,6 @@
             day.updatedAt = new Date().toISOString();
             saveDB();
             renderSportDailyLog();
-            // Auto-mark as done if we have any sport data
             autoMarkSportDone(sportSelectedDay);
           }
         });
@@ -5365,22 +5964,36 @@
         }, 300));
       }
 
-      // Add exercise from library
-      const addFromLib = document.getElementById('addExerciseFromLibrary');
-      if (addFromLib) {
-        addFromLib.addEventListener('change', () => {
-          const name = addFromLib.value;
-          if (!name) return;
+      // Add exercise from library (custom dropdown)
+      const addExerciseDropdown = document.getElementById('addExerciseDropdown');
+      if (addExerciseDropdown) {
+        const trigger = addExerciseDropdown.querySelector('.custom-dropdown-trigger');
+        trigger?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          addExerciseDropdown.classList.toggle('open');
+        });
 
-          const day = ensureSportDetailsForDay(sportSelectedDay);
-          if (day) {
-            if (!day.details.sport.exercises) day.details.sport.exercises = [];
-            day.details.sport.exercises.push({ name, sets: [{ weightKg: null, reps: null }] });
-            day.updatedAt = new Date().toISOString();
-            saveDB();
-            renderSportDailyLog();
-            renderSportDaySelector();
-            autoMarkSportDone(sportSelectedDay);
+        addExerciseDropdown.querySelectorAll('[data-add-exercise]').forEach(item => {
+          item.addEventListener('click', () => {
+            const name = item.dataset.addExercise;
+            const day = ensureSportDetailsForDay(sportSelectedDay);
+            if (day) {
+              if (!day.details.sport.exercises) day.details.sport.exercises = [];
+              // Initialize with one empty set group
+              day.details.sport.exercises.push({ name, sets: [{ weightKg: '', reps: '', count: 1 }] });
+              day.updatedAt = new Date().toISOString();
+              saveDB();
+              addExerciseDropdown.classList.remove('open');
+              renderSportDailyLog();
+              renderSportDaySelector();
+              autoMarkSportDone(sportSelectedDay);
+            }
+          });
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!addExerciseDropdown.contains(e.target)) {
+            addExerciseDropdown.classList.remove('open');
           }
         });
       }
@@ -5399,16 +6012,16 @@
         });
       });
 
-      // Add set
-      document.querySelectorAll('[data-add-sport-set]').forEach(btn => {
+      // Add set variant (new set group)
+      document.querySelectorAll('[data-add-set-variant]').forEach(btn => {
         btn.addEventListener('click', () => {
-          const exerciseIdx = parseInt(btn.dataset.addSportSet);
+          const exerciseIdx = parseInt(btn.dataset.addSetVariant);
           const day = ensureSportDetailsForDay(sportSelectedDay);
           if (day && day.details.sport.exercises?.[exerciseIdx]) {
-            if (!day.details.sport.exercises[exerciseIdx].sets) {
-              day.details.sport.exercises[exerciseIdx].sets = [];
-            }
-            day.details.sport.exercises[exerciseIdx].sets.push({ weightKg: null, reps: null });
+            const sets = day.details.sport.exercises[exerciseIdx].sets || [];
+            // Migrate if needed, then add new group
+            day.details.sport.exercises[exerciseIdx].sets = migrateToSetGroups(sets);
+            day.details.sport.exercises[exerciseIdx].sets.push({ weightKg: '', reps: '', count: 1 });
             day.updatedAt = new Date().toISOString();
             saveDB();
             renderSportDailyLog();
@@ -5416,13 +6029,16 @@
         });
       });
 
-      // Remove set
-      document.querySelectorAll('[data-remove-sport-set]').forEach(btn => {
+      // Remove set group
+      document.querySelectorAll('[data-remove-set-group]').forEach(btn => {
         btn.addEventListener('click', () => {
-          const [ei, si] = btn.dataset.removeSportSet.split('-').map(Number);
+          const [ei, gi] = btn.dataset.removeSetGroup.split('-').map(Number);
           const day = ensureSportDetailsForDay(sportSelectedDay);
           if (day && day.details.sport.exercises?.[ei]?.sets) {
-            day.details.sport.exercises[ei].sets.splice(si, 1);
+            day.details.sport.exercises[ei].sets.splice(gi, 1);
+            if (day.details.sport.exercises[ei].sets.length === 0) {
+              day.details.sport.exercises[ei].sets = [{ weightKg: '', reps: '', count: 1 }];
+            }
             day.updatedAt = new Date().toISOString();
             saveDB();
             renderSportDailyLog();
@@ -5430,29 +6046,61 @@
         });
       });
 
-      // Set weight/reps
-      document.querySelectorAll('[data-sport-set-weight]').forEach(input => {
+      // Set group weight
+      document.querySelectorAll('[data-set-group-weight]').forEach(input => {
         input.addEventListener('input', debounce(() => {
-          const [ei, si] = input.dataset.sportSetWeight.split('-').map(Number);
+          const [ei, gi] = input.dataset.setGroupWeight.split('-').map(Number);
           const day = ensureSportDetailsForDay(sportSelectedDay);
-          if (day && day.details.sport.exercises?.[ei]?.sets?.[si]) {
-            day.details.sport.exercises[ei].sets[si].weightKg = input.value ? parseFloat(input.value) : null;
+          if (day && day.details.sport.exercises?.[ei]?.sets?.[gi]) {
+            day.details.sport.exercises[ei].sets[gi].weightKg = input.value;
             day.updatedAt = new Date().toISOString();
             saveDB();
           }
         }, 300));
       });
 
-      document.querySelectorAll('[data-sport-set-reps]').forEach(input => {
+      // Set group reps
+      document.querySelectorAll('[data-set-group-reps]').forEach(input => {
         input.addEventListener('input', debounce(() => {
-          const [ei, si] = input.dataset.sportSetReps.split('-').map(Number);
+          const [ei, gi] = input.dataset.setGroupReps.split('-').map(Number);
           const day = ensureSportDetailsForDay(sportSelectedDay);
-          if (day && day.details.sport.exercises?.[ei]?.sets?.[si]) {
-            day.details.sport.exercises[ei].sets[si].reps = input.value ? parseInt(input.value) : null;
+          if (day && day.details.sport.exercises?.[ei]?.sets?.[gi]) {
+            day.details.sport.exercises[ei].sets[gi].reps = input.value;
             day.updatedAt = new Date().toISOString();
             saveDB();
           }
         }, 300));
+      });
+
+      // Set count increment
+      document.querySelectorAll('[data-set-count-inc]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const [ei, gi] = btn.dataset.setCountInc.split('-').map(Number);
+          const day = ensureSportDetailsForDay(sportSelectedDay);
+          if (day && day.details.sport.exercises?.[ei]?.sets?.[gi]) {
+            day.details.sport.exercises[ei].sets[gi].count = (day.details.sport.exercises[ei].sets[gi].count || 1) + 1;
+            day.updatedAt = new Date().toISOString();
+            saveDB();
+            renderSportDailyLog();
+          }
+        });
+      });
+
+      // Set count decrement
+      document.querySelectorAll('[data-set-count-dec]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const [ei, gi] = btn.dataset.setCountDec.split('-').map(Number);
+          const day = ensureSportDetailsForDay(sportSelectedDay);
+          if (day && day.details.sport.exercises?.[ei]?.sets?.[gi]) {
+            const current = day.details.sport.exercises[ei].sets[gi].count || 1;
+            if (current > 1) {
+              day.details.sport.exercises[ei].sets[gi].count = current - 1;
+              day.updatedAt = new Date().toISOString();
+              saveDB();
+              renderSportDailyLog();
+            }
+          }
+        });
       });
     }
 
@@ -6371,10 +7019,26 @@ console.log('Database loaded. Initializing application...');
       document.getElementById('newWeekBtn').addEventListener('click', createNewWeek);
       document.getElementById('weekLabel').addEventListener('click', () => showView('week'));
       document.getElementById('boardBtn').addEventListener('click', () => showView('week'));
-      document.getElementById('voiceBtn').addEventListener('click', () => showView('voice'));
       document.getElementById('sportBtn').addEventListener('click', () => showView('sport'));
-      document.getElementById('workBtn').addEventListener('click', () => showView('work'));
-      document.getElementById('guitarBtn').addEventListener('click', () => showView('guitar'));
+
+      // Other dropdown
+      const otherDropdown = document.getElementById('otherDropdown');
+      const otherBtn = document.getElementById('otherBtn');
+      otherBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        otherDropdown.classList.toggle('open');
+      });
+      document.querySelectorAll('#otherDropdown .navbar-dropdown-item').forEach(item => {
+        item.addEventListener('click', () => {
+          showView(item.dataset.view);
+          otherDropdown.classList.remove('open');
+        });
+      });
+      document.addEventListener('click', (e) => {
+        if (!otherDropdown.contains(e.target)) {
+          otherDropdown.classList.remove('open');
+        }
+      });
 
       // Event listeners - Navbar buttons
       document.getElementById('habitsBtn').addEventListener('click', () => {
