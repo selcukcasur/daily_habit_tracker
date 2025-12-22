@@ -2235,10 +2235,10 @@
       flex: 1;
     }
 
-    /* Progress Tracker Grid - 2 columns x 3 rows */
+    /* Progress Tracker Grid - 2 columns, equal width */
     .overload-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: var(--gap-md);
     }
     @media (max-width: 700px) {
@@ -2246,34 +2246,31 @@
     }
     .overload-grid .session-card {
       margin-bottom: 0;
+      width: 100%;
+    }
+    .session-exercise {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 8px;
+      margin-bottom: 6px;
+      line-height: 1.2;
     }
     .session-exercise-name {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      display: inline;
-      max-width: 70%;
+      max-width: 140px;
+      font-size: 12px;
     }
-    .session-exercise-first-variant {
-      display: inline;
-      font-size: 11px;
-      color: var(--muted);
-      white-space: nowrap;
-      margin-left: 6px;
+    .session-exercise-variants {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
     .session-exercise-variant {
-      display: block;
       font-size: 11px;
       color: var(--muted);
-      padding-left: 8px;
       white-space: nowrap;
-      margin-top: 1px;
-    }
-    .session-exercise-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      margin-bottom: 4px;
     }
 
     /* Exercise Library Modal */
@@ -5859,16 +5856,14 @@
             return `${wStr} × ${rStr} × ${sStr}`;
           }).filter(Boolean);
 
-          const firstVariant = variantStrings[0] || 'No sets logged';
-          const restVariants = variantStrings.slice(1);
+          const allVariants = variantStrings.length > 0 ? variantStrings : ['No sets logged'];
 
           html += `
             <div class="session-exercise">
-              <div class="session-exercise-row">
-                <span class="session-exercise-name">${escapeHtml(ex.name)}${trendHtml}</span>
-                <span class="session-exercise-first-variant">${firstVariant}</span>
+              <span class="session-exercise-name">${escapeHtml(ex.name)}${trendHtml}</span>
+              <div class="session-exercise-variants">
+                ${allVariants.map(v => `<span class="session-exercise-variant">${v}</span>`).join('')}
               </div>
-              ${restVariants.map(v => `<span class="session-exercise-variant">${v}</span>`).join('')}
             </div>`;
         });
 
