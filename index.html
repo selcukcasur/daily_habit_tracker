@@ -2250,7 +2250,7 @@
     }
     .session-exercise {
       display: grid;
-      grid-template-columns: auto 1fr;
+      grid-template-columns: 18ch 1fr;
       gap: 8px;
       margin-bottom: 6px;
       line-height: 1.2;
@@ -2259,7 +2259,6 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 140px;
       font-size: 12px;
     }
     .session-exercise-variants {
@@ -3067,6 +3066,21 @@
               articulation: { checklist: [] },
               vocalSession: { checklist: [] }
             };
+            // Migrate existing cardio types into cardioLibrary
+            if (!db.cardioLibrary) {
+              const defaultTypes = ['Running', 'Walking', 'Cycling', 'Rowing', 'Swimming'];
+              const existingTypes = new Set(defaultTypes);
+              // Collect unique cardio types from all weeks
+              for (const week of Object.values(db.weeks || {})) {
+                for (const day of (week.days || [])) {
+                  const cardioType = day?.details?.sport?.cardioType;
+                  if (cardioType && cardioType.trim()) {
+                    existingTypes.add(cardioType.trim());
+                  }
+                }
+              }
+              db.cardioLibrary = Array.from(existingTypes);
+            }
             db.schemaVersion = CURRENT_SCHEMA_VERSION;
           }
         } catch (e) {
@@ -5693,8 +5707,18 @@
         </div>
 
         <div class="sport-cardio-fields">
-          <input type="text" placeholder="Cardio type (Running, Cycling...)"
-            id="sportPageCardioType" value="${escapeHtml(details.cardioType || '')}">
+          <div class="custom-dropdown" id="sportPageCardioDropdown" style="flex: 1;">
+            <button class="custom-dropdown-trigger" type="button">
+              <span id="sportPageCardioLabel">${escapeHtml(details.cardioType || 'Select cardio type...')}</span>
+              <span class="dropdown-arrow">▼</span>
+            </button>
+            <div class="custom-dropdown-menu" style="max-height: 200px; overflow-y: auto;">
+              ${(db.cardioLibrary || ['Running', 'Walking', 'Cycling', 'Rowing', 'Swimming']).map(type =>
+                `<button class="custom-dropdown-item ${details.cardioType === type ? 'selected' : ''}" data-cardio-type="${escapeHtml(type)}">${escapeHtml(type)}</button>`
+              ).join('')}
+            </div>
+          </div>
+          <button class="btn btn-sm" id="manageCardioLibraryBtn" title="Manage cardio types">⚙</button>
           <input type="number" placeholder="Min" min="0"
             id="sportPageDuration" value="${details.durationMin || ''}">
         </div>
@@ -6016,19 +6040,45 @@
         });
       });
 
-      // Cardio type
-      const cardioType = document.getElementById('sportPageCardioType');
-      if (cardioType) {
-        cardioType.addEventListener('input', debounce(() => {
-          const day = ensureSportDetailsForDay(sportSelectedDay);
-          if (day) {
-            day.details.sport.cardioType = cardioType.value;
-            day.updatedAt = new Date().toISOString();
-            saveDB();
-            autoMarkSportDone(sportSelectedDay);
+      // Cardio type dropdown
+      const cardioDropdown = document.getElementById('sportPageCardioDropdown');
+      if (cardioDropdown) {
+        const trigger = cardioDropdown.querySelector('.custom-dropdown-trigger');
+        trigger?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          cardioDropdown.classList.toggle('open');
+        });
+
+        cardioDropdown.querySelectorAll('[data-cardio-type]').forEach(item => {
+          item.addEventListener('click', () => {
+            const type = item.dataset.cardioType;
+            const day = ensureSportDetailsForDay(sportSelectedDay);
+            if (day) {
+              day.details.sport.cardioType = type;
+              day.updatedAt = new Date().toISOString();
+              saveDB();
+              autoMarkSportDone(sportSelectedDay);
+            }
+            document.getElementById('sportPageCardioLabel').textContent = type;
+            cardioDropdown.classList.remove('open');
+            // Update selected state
+            cardioDropdown.querySelectorAll('.custom-dropdown-item').forEach(i => i.classList.remove('selected'));
+            item.classList.add('selected');
+          });
+        });
+
+        // Close on outside click
+        document.addEventListener('click', (e) => {
+          if (!cardioDropdown.contains(e.target)) {
+            cardioDropdown.classList.remove('open');
           }
-        }, 300));
+        });
       }
+
+      // Manage cardio library button
+      document.getElementById('manageCardioLibraryBtn')?.addEventListener('click', () => {
+        openCardioLibraryModal();
+      });
 
       // Duration
       const duration = document.getElementById('sportPageDuration');
@@ -6883,6 +6933,7 @@
             db.cardioLibrary.splice(idx, 1);
             saveDB();
             renderCardioLibraryContent();
+            renderSportDailyLog(); // Refresh dropdown
           }
         });
       });
@@ -6892,8 +6943,11 @@
         const value = input?.value?.trim();
         if (value) {
           if (!db.cardioLibrary) db.cardioLibrary = ['Running', 'Walking', 'Cycling', 'Rowing', 'Swimming'];
-          db.cardioLibrary.push(value);
-          saveDB();
+          if (!db.cardioLibrary.includes(value)) {
+            db.cardioLibrary.push(value);
+            saveDB();
+            renderSportDailyLog(); // Refresh dropdown
+          }
           input.value = '';
           renderCardioLibraryContent();
         }
@@ -6909,6 +6963,7 @@
         weeks: db.weeks,
         voiceTemplates: db.voiceTemplates,
         exerciseLibrary: db.exerciseLibrary || [],
+        cardioLibrary: db.cardioLibrary || ['Running', 'Walking', 'Cycling', 'Rowing', 'Swimming'],
         exportedAt: new Date().toISOString()
       };
 
@@ -7058,6 +7113,19 @@
           for (const ex of imported.exerciseLibrary) {
             if (!merged.exerciseLibrary.find(e => e.name === ex.name)) {
               merged.exerciseLibrary.push(ex);
+            }
+          }
+        }
+      }
+
+      // Merge cardio library (add new types)
+      if (imported.cardioLibrary) {
+        if (!merged.cardioLibrary) {
+          merged.cardioLibrary = imported.cardioLibrary;
+        } else {
+          for (const type of imported.cardioLibrary) {
+            if (!merged.cardioLibrary.includes(type)) {
+              merged.cardioLibrary.push(type);
             }
           }
         }
