@@ -2360,6 +2360,94 @@
       .history-item { flex-direction: column; align-items: flex-start; }
       .form-row { grid-template-columns: 1fr; }
     }
+
+    /* Guitar Internal Navigation */
+    .guitar-nav {
+      display: flex;
+      gap: var(--gap-xs);
+      margin-bottom: var(--gap-lg);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: var(--gap-sm);
+    }
+    .guitar-nav-tab {
+      padding: var(--gap-sm) var(--gap-md);
+      border: none;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+    .guitar-nav-tab:hover {
+      color: var(--text);
+      background: var(--panel-2);
+    }
+    .guitar-nav-tab.active {
+      color: var(--accent);
+      background: var(--panel-2);
+    }
+    .guitar-nav-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: calc(-1 * var(--gap-sm) - 1px);
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+    }
+    .guitar-tab-content {
+      min-height: 200px;
+    }
+    .guitar-day-selector {
+      display: flex;
+      gap: var(--gap-xs);
+      margin-bottom: var(--gap-md);
+      flex-wrap: wrap;
+    }
+    .guitar-day-btn {
+      padding: var(--gap-sm) var(--gap-md);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel-2);
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 12px;
+      transition: all var(--transition-fast);
+    }
+    .guitar-day-btn:hover {
+      background: var(--panel-3);
+    }
+    .guitar-day-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+    }
+    .guitar-library-tabs {
+      display: flex;
+      gap: var(--gap-xs);
+      margin-bottom: var(--gap-md);
+    }
+    .guitar-library-tab {
+      padding: var(--gap-xs) var(--gap-sm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel-2);
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 12px;
+      transition: all var(--transition-fast);
+    }
+    .guitar-library-tab:hover {
+      background: var(--panel-3);
+    }
+    .guitar-library-tab.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+    }
   </style>
 </head>
 <body>
@@ -3080,6 +3168,14 @@
                 }
               }
               db.cardioLibrary = Array.from(existingTypes);
+            }
+            // Initialize guitar library structure
+            if (!db.guitarLibrary) {
+              db.guitarLibrary = {
+                patterns: [],
+                songs: [],
+                fingerpickingModels: []
+              };
             }
             db.schemaVersion = CURRENT_SCHEMA_VERSION;
           }
@@ -6329,41 +6425,118 @@
     }
 
     // ============ GUITAR VIEW ============
+    let guitarActiveTab = 'session'; // 'session' | 'week' | 'library' | 'insights'
+    let guitarSelectedDay = 0;
+    let guitarLibrarySubTab = 'patterns'; // 'patterns' | 'songs' | 'fingerpicking'
+
     function renderGuitarView() {
       const monday = getWeekMonday(currentWeekId);
-      document.getElementById('guitarWeekLabel').textContent = `Week of ${formatDate(monday)}`;
-
-      const stats = calculateHabitStats('guitar', 30);
-      const notesWithData = getHabitNotesData('guitar', 30);
+      const sunday = addDays(monday, 6);
+      document.getElementById('guitarWeekLabel').textContent = formatWeekRange(monday, sunday);
 
       let html = `
-        <div class="habit-page-stats">
-          <div class="habit-stat-card">
-            <div class="habit-stat-value ${stats.avg >= 4 ? '' : stats.avg >= 2 ? 'partial' : 'low'}">${stats.avg.toFixed(1)}</div>
-            <div class="habit-stat-label">30-Day Avg</div>
-          </div>
-          <div class="habit-stat-card">
-            <div class="habit-stat-value">${stats.weekAvg.toFixed(1)}</div>
-            <div class="habit-stat-label">This Week</div>
-          </div>
-          <div class="habit-stat-card">
-            <div class="habit-stat-value">${stats.bestStreak}</div>
-            <div class="habit-stat-label">Best Streak</div>
-          </div>
-          <div class="habit-stat-card">
-            <div class="habit-stat-value">${stats.daysWithValue}</div>
-            <div class="habit-stat-label">Active Days</div>
-          </div>
+        <div class="guitar-nav">
+          <button class="guitar-nav-tab ${guitarActiveTab === 'session' ? 'active' : ''}" data-guitar-tab="session">Session</button>
+          <button class="guitar-nav-tab ${guitarActiveTab === 'week' ? 'active' : ''}" data-guitar-tab="week">Week</button>
+          <button class="guitar-nav-tab ${guitarActiveTab === 'library' ? 'active' : ''}" data-guitar-tab="library">Library</button>
+          <button class="guitar-nav-tab ${guitarActiveTab === 'insights' ? 'active' : ''}" data-guitar-tab="insights">Insights</button>
         </div>
-
-        <div class="notes-list-section">
-          <div class="notes-list-title">Notes</div>
-          <div class="notes-list" id="guitarNotesList"></div>
-        </div>
+        <div class="guitar-tab-content" id="guitarTabContent"></div>
       `;
 
       document.getElementById('guitarContent').innerHTML = html;
-      renderHabitNotesList('guitar', notesWithData, 'guitarNotesList');
+      renderGuitarTabContent();
+      attachGuitarNavListeners();
+    }
+
+    function renderGuitarTabContent() {
+      const container = document.getElementById('guitarTabContent');
+      if (!container) return;
+
+      if (guitarActiveTab === 'session') {
+        container.innerHTML = renderGuitarSessionTab();
+        attachGuitarDaySelectorListeners();
+      } else if (guitarActiveTab === 'week') {
+        container.innerHTML = renderGuitarWeekTab();
+      } else if (guitarActiveTab === 'library') {
+        container.innerHTML = renderGuitarLibraryTab();
+        attachGuitarLibraryTabListeners();
+      } else if (guitarActiveTab === 'insights') {
+        container.innerHTML = renderGuitarInsightsTab();
+      }
+    }
+
+    function renderGuitarSessionTab() {
+      const week = getCurrentWeek();
+      const monday = getWeekMonday(currentWeekId);
+      const dayDate = addDays(monday, guitarSelectedDay);
+      const dateLabel = dayDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' });
+
+      let daySelectorHtml = DAY_NAMES.map((name, i) => {
+        const isActive = guitarSelectedDay === i;
+        return `<button class="guitar-day-btn ${isActive ? 'active' : ''}" data-guitar-day="${i}">${name}</button>`;
+      }).join('');
+
+      return `
+        <div class="guitar-day-selector">${daySelectorHtml}</div>
+        <p style="font-size: 12px; color: var(--muted); margin-bottom: var(--gap-md);">${DAY_FULL_NAMES[guitarSelectedDay]}, ${dateLabel}</p>
+        <p style="color: var(--text-secondary);">Session form coming soon</p>
+      `;
+    }
+
+    function renderGuitarWeekTab() {
+      const monday = getWeekMonday(currentWeekId);
+      const sunday = addDays(monday, 6);
+      const weekLabel = formatWeekRange(monday, sunday);
+
+      return `
+        <p style="font-size: 14px; font-weight: 500; margin-bottom: var(--gap-md);">${weekLabel}</p>
+        <p style="color: var(--text-secondary);">Weekly overview coming soon</p>
+      `;
+    }
+
+    function renderGuitarLibraryTab() {
+      return `
+        <div class="guitar-library-tabs">
+          <button class="guitar-library-tab ${guitarLibrarySubTab === 'patterns' ? 'active' : ''}" data-guitar-library-tab="patterns">Patterns</button>
+          <button class="guitar-library-tab ${guitarLibrarySubTab === 'songs' ? 'active' : ''}" data-guitar-library-tab="songs">Songs</button>
+          <button class="guitar-library-tab ${guitarLibrarySubTab === 'fingerpicking' ? 'active' : ''}" data-guitar-library-tab="fingerpicking">Fingerpicking Models</button>
+        </div>
+        <p style="color: var(--text-secondary);">Library management coming soon</p>
+      `;
+    }
+
+    function renderGuitarInsightsTab() {
+      return `
+        <p style="color: var(--text-secondary);">Practice insights coming soon</p>
+      `;
+    }
+
+    function attachGuitarNavListeners() {
+      document.querySelectorAll('[data-guitar-tab]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          guitarActiveTab = btn.dataset.guitarTab;
+          renderGuitarView();
+        });
+      });
+    }
+
+    function attachGuitarDaySelectorListeners() {
+      document.querySelectorAll('[data-guitar-day]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          guitarSelectedDay = parseInt(btn.dataset.guitarDay);
+          renderGuitarTabContent();
+        });
+      });
+    }
+
+    function attachGuitarLibraryTabListeners() {
+      document.querySelectorAll('[data-guitar-library-tab]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          guitarLibrarySubTab = btn.dataset.guitarLibraryTab;
+          renderGuitarTabContent();
+        });
+      });
     }
 
     function calculateHabitStats(habitId, days) {
