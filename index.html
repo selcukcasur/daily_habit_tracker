@@ -2425,6 +2425,14 @@
       border-color: var(--accent);
       color: #000;
     }
+    .guitar-day-btn.has-data {
+      border-color: var(--completed);
+      color: var(--completed);
+    }
+    .guitar-day-btn.has-data.active {
+      background: var(--completed);
+      color: #000;
+    }
     .guitar-library-tabs {
       display: flex;
       gap: var(--gap-xs);
@@ -2447,6 +2455,270 @@
       background: var(--accent);
       border-color: var(--accent);
       color: #000;
+    }
+
+    /* Guitar Session Flow */
+    .guitar-session-cards {
+      display: flex;
+      gap: var(--gap-sm);
+      margin-bottom: var(--gap-lg);
+      overflow-x: auto;
+      padding-bottom: var(--gap-xs);
+    }
+    .guitar-module-card {
+      flex-shrink: 0;
+      padding: var(--gap-sm) var(--gap-md);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--panel-2);
+      cursor: pointer;
+      font-size: 12px;
+      transition: all var(--transition-fast);
+      min-width: 100px;
+    }
+    .guitar-module-card:hover {
+      background: var(--panel-3);
+    }
+    .guitar-module-card.empty {
+      border-color: var(--border);
+      color: var(--text-secondary);
+    }
+    .guitar-module-card.active {
+      border-color: var(--accent);
+      background: var(--panel-3);
+    }
+    .guitar-module-card.completed {
+      background: var(--completed);
+      border-color: var(--completed);
+      color: #000;
+    }
+    .guitar-module-card .card-title {
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+    .guitar-module-card .card-meta {
+      font-size: 11px;
+      opacity: 0.8;
+    }
+    .guitar-active-form {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: var(--gap-lg);
+    }
+    .guitar-form-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: var(--gap-lg);
+      color: var(--text);
+    }
+    .guitar-form-row {
+      margin-bottom: var(--gap-md);
+    }
+    .guitar-form-row label {
+      display: block;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: var(--gap-xs);
+    }
+    .guitar-form-row input[type="text"],
+    .guitar-form-row input[type="number"] {
+      width: 100%;
+      max-width: 200px;
+      padding: var(--gap-sm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel);
+      color: var(--text);
+      font-size: 13px;
+    }
+    .guitar-form-row input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .guitar-radio-group {
+      display: flex;
+      gap: var(--gap-sm);
+      flex-wrap: wrap;
+    }
+    .guitar-radio-btn {
+      padding: var(--gap-sm) var(--gap-md);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel);
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 12px;
+      transition: all var(--transition-fast);
+    }
+    .guitar-radio-btn:hover {
+      background: var(--panel-3);
+    }
+    .guitar-radio-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+    }
+    .guitar-checkbox-group {
+      display: flex;
+      gap: var(--gap-sm);
+      flex-wrap: wrap;
+    }
+    .guitar-checkbox-btn {
+      padding: var(--gap-sm) var(--gap-md);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel);
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 12px;
+      transition: all var(--transition-fast);
+    }
+    .guitar-checkbox-btn:hover {
+      background: var(--panel-3);
+    }
+    .guitar-checkbox-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+    }
+    .guitar-score-buttons {
+      display: flex;
+      gap: var(--gap-sm);
+    }
+    .guitar-score-btn {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all var(--transition-fast);
+    }
+    .guitar-score-btn:hover {
+      background: var(--panel-3);
+    }
+    .guitar-score-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+    }
+    .guitar-flow-buttons {
+      display: flex;
+      gap: var(--gap-md);
+      margin-top: var(--gap-lg);
+      padding-top: var(--gap-lg);
+      border-top: 1px solid var(--border);
+    }
+    .guitar-flow-buttons .btn {
+      padding: var(--gap-sm) var(--gap-lg);
+    }
+    .guitar-flow-buttons .btn-skip {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    .guitar-flow-buttons .btn-skip:hover {
+      background: var(--panel-3);
+    }
+    .guitar-flow-buttons .btn-continue {
+      background: var(--accent);
+      border: 1px solid var(--accent);
+      color: #000;
+    }
+    .guitar-flow-buttons .btn-continue:hover {
+      opacity: 0.9;
+    }
+    .guitar-vocal-checks {
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap-sm);
+    }
+    .guitar-vocal-check {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-sm);
+      font-size: 13px;
+      color: var(--text);
+      cursor: pointer;
+    }
+    .guitar-vocal-check input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+    }
+    .guitar-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .guitar-dropdown-trigger {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-xs);
+      padding: var(--gap-sm) var(--gap-md);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 13px;
+      min-width: 180px;
+      text-align: left;
+    }
+    .guitar-dropdown-trigger:hover {
+      background: var(--panel-3);
+    }
+    .guitar-dropdown-trigger .arrow {
+      margin-left: auto;
+      font-size: 10px;
+    }
+    .guitar-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      min-width: 100%;
+      max-height: 200px;
+      overflow-y: auto;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-2);
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: all var(--transition-fast);
+    }
+    .guitar-dropdown.open .guitar-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .guitar-dropdown-item {
+      display: block;
+      width: 100%;
+      padding: var(--gap-sm) var(--gap-md);
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 13px;
+      text-align: left;
+      cursor: pointer;
+    }
+    .guitar-dropdown-item:hover {
+      background: var(--panel-3);
+    }
+    .guitar-dropdown-item.selected {
+      color: var(--accent);
+    }
+    .guitar-dropdown-empty {
+      padding: var(--gap-sm) var(--gap-md);
+      color: var(--muted);
+      font-size: 12px;
+      font-style: italic;
     }
   </style>
 </head>
@@ -6429,6 +6701,129 @@
     let guitarSelectedDay = 0;
     let guitarLibrarySubTab = 'patterns'; // 'patterns' | 'songs' | 'fingerpicking'
 
+    // Session flow state
+    let guitarSessionStep = 'info'; // 'info'|'rhythm'|'strumming'|'fingerpicking'|'performance'|'summary'
+    let guitarSessionData = null; // temp data before save
+    let guitarPreviousStep = null; // for returning after editing completed module
+
+    const GUITAR_MODULES = ['info', 'rhythm', 'strumming', 'fingerpicking', 'performance', 'summary'];
+    const GUITAR_MODULE_LABELS = {
+      info: 'Info',
+      rhythm: 'Rhythm',
+      strumming: 'Strumming',
+      fingerpicking: 'Fingerpicking',
+      performance: 'Performance',
+      summary: 'Summary'
+    };
+
+    function getEmptyGuitarSession() {
+      return {
+        sessionType: null,
+        durationMin: null,
+        energyLevel: null,
+        rhythm: { completed: false, score: null, bpm: null, pattern: '', focus: '', note: '' },
+        strumming: { completed: false, score: null, patterns: [], technique: [], focus: [], note: '' },
+        fingerpicking: { completed: false, score: null, models: [], goal: '', bpm: null, issueTag: '', note: '' },
+        performance: { completed: false, score: null, songs: [], vocalChecks: { guitarSupports: false, vocalInTempo: false, breathingAligns: false }, note: '' },
+        summary: { whatWorked: [], limitingFactor: '', reflection: '' }
+      };
+    }
+
+    function getGuitarSessionForDay(dayIndex) {
+      const week = getCurrentWeek();
+      if (!week) return null;
+      const day = week.days[dayIndex];
+      return day?.details?.guitarSession || null;
+    }
+
+    function ensureGuitarSessionData(dayIndex) {
+      const existing = getGuitarSessionForDay(dayIndex);
+      if (existing) {
+        guitarSessionData = JSON.parse(JSON.stringify(existing));
+      } else {
+        guitarSessionData = getEmptyGuitarSession();
+      }
+      return guitarSessionData;
+    }
+
+    function isModuleCompleted(module) {
+      if (!guitarSessionData) return false;
+      if (module === 'info') {
+        return guitarSessionData.sessionType !== null && guitarSessionData.durationMin !== null && guitarSessionData.energyLevel !== null;
+      }
+      if (module === 'summary') {
+        return guitarSessionData.summary.limitingFactor !== '' || guitarSessionData.summary.whatWorked.length > 0;
+      }
+      return guitarSessionData[module]?.completed === true;
+    }
+
+    function getFirstIncompleteStep() {
+      for (const m of GUITAR_MODULES) {
+        if (!isModuleCompleted(m)) return m;
+      }
+      return 'summary';
+    }
+
+    function saveGuitarSession() {
+      const week = getCurrentWeek();
+      if (!week || !guitarSessionData) return;
+
+      const day = week.days[guitarSelectedDay];
+      if (!day.details) day.details = {};
+      day.details.guitarSession = JSON.parse(JSON.stringify(guitarSessionData));
+      day.updatedAt = new Date().toISOString();
+      saveDB();
+    }
+
+    function guitarNextStep() {
+      // Save current step data
+      if (guitarSessionStep === 'info') {
+        // Info is saved automatically via inputs
+      } else if (guitarSessionStep !== 'summary') {
+        guitarSessionData[guitarSessionStep].completed = true;
+      }
+
+      saveGuitarSession();
+
+      if (guitarPreviousStep) {
+        // Return to where we were editing from
+        guitarSessionStep = guitarPreviousStep;
+        guitarPreviousStep = null;
+      } else {
+        // Move to next step
+        const idx = GUITAR_MODULES.indexOf(guitarSessionStep);
+        if (idx < GUITAR_MODULES.length - 1) {
+          guitarSessionStep = GUITAR_MODULES[idx + 1];
+        }
+      }
+      renderGuitarTabContent();
+    }
+
+    function guitarSkipStep() {
+      saveGuitarSession();
+
+      if (guitarPreviousStep) {
+        guitarSessionStep = guitarPreviousStep;
+        guitarPreviousStep = null;
+      } else {
+        const idx = GUITAR_MODULES.indexOf(guitarSessionStep);
+        if (idx < GUITAR_MODULES.length - 1) {
+          guitarSessionStep = GUITAR_MODULES[idx + 1];
+        }
+      }
+      renderGuitarTabContent();
+    }
+
+    function guitarGoToStep(step) {
+      if (isModuleCompleted(step) && step !== guitarSessionStep) {
+        guitarPreviousStep = guitarSessionStep;
+      } else {
+        guitarPreviousStep = null;
+      }
+      guitarSessionStep = step;
+      renderGuitarTabContent();
+    }
+
     function renderGuitarView() {
       const monday = getWeekMonday(currentWeekId);
       const sunday = addDays(monday, 6);
@@ -6454,8 +6849,9 @@
       if (!container) return;
 
       if (guitarActiveTab === 'session') {
+        ensureGuitarSessionData(guitarSelectedDay);
         container.innerHTML = renderGuitarSessionTab();
-        attachGuitarDaySelectorListeners();
+        attachGuitarSessionListeners();
       } else if (guitarActiveTab === 'week') {
         container.innerHTML = renderGuitarWeekTab();
       } else if (guitarActiveTab === 'library') {
@@ -6467,21 +6863,653 @@
     }
 
     function renderGuitarSessionTab() {
-      const week = getCurrentWeek();
       const monday = getWeekMonday(currentWeekId);
       const dayDate = addDays(monday, guitarSelectedDay);
       const dateLabel = dayDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' });
 
+      const hasData = (i) => {
+        const week = getCurrentWeek();
+        if (!week) return false;
+        return week.days[i]?.details?.guitarSession != null;
+      };
+
       let daySelectorHtml = DAY_NAMES.map((name, i) => {
         const isActive = guitarSelectedDay === i;
-        return `<button class="guitar-day-btn ${isActive ? 'active' : ''}" data-guitar-day="${i}">${name}</button>`;
+        const hasSession = hasData(i);
+        return `<button class="guitar-day-btn ${isActive ? 'active' : ''} ${hasSession ? 'has-data' : ''}" data-guitar-day="${i}">${name}</button>`;
       }).join('');
 
       return `
         <div class="guitar-day-selector">${daySelectorHtml}</div>
-        <p style="font-size: 12px; color: var(--muted); margin-bottom: var(--gap-md);">${DAY_FULL_NAMES[guitarSelectedDay]}, ${dateLabel}</p>
-        <p style="color: var(--text-secondary);">Session form coming soon</p>
+        <p style="font-size: 12px; color: var(--muted); margin-bottom: var(--gap-lg);">${DAY_FULL_NAMES[guitarSelectedDay]}, ${dateLabel}</p>
+        ${renderGuitarSessionCards()}
+        ${renderGuitarActiveModule()}
       `;
+    }
+
+    function renderGuitarSessionCards() {
+      const completed = GUITAR_MODULES.filter(m => isModuleCompleted(m));
+      const incomplete = GUITAR_MODULES.filter(m => !isModuleCompleted(m));
+      const orderedModules = [...completed, ...incomplete];
+
+      return `
+        <div class="guitar-session-cards">
+          ${orderedModules.map(m => renderGuitarModuleCard(m)).join('')}
+        </div>
+      `;
+    }
+
+    function renderGuitarModuleCard(module) {
+      const isCompleted = isModuleCompleted(module);
+      const isActive = module === guitarSessionStep;
+      let statusClass = isCompleted ? 'completed' : (isActive ? 'active' : 'empty');
+
+      let icon = isCompleted ? '✓' : (isActive ? '→' : '○');
+      let meta = '';
+
+      if (isCompleted && guitarSessionData) {
+        if (module === 'info') {
+          const types = { minimum: 'Min', normal: 'Norm', deep: 'Deep' };
+          meta = `${types[guitarSessionData.sessionType] || ''} ${guitarSessionData.durationMin || ''}m`;
+        } else if (module === 'rhythm') {
+          const score = guitarSessionData.rhythm.score;
+          meta = (score ? '★'.repeat(score) + '☆'.repeat(5-score) : '') + (guitarSessionData.rhythm.bpm ? ` ${guitarSessionData.rhythm.bpm}bpm` : '');
+        } else if (module === 'strumming' || module === 'fingerpicking' || module === 'performance') {
+          const score = guitarSessionData[module].score;
+          meta = score ? '★'.repeat(score) + '☆'.repeat(5-score) : '';
+        } else if (module === 'summary') {
+          meta = guitarSessionData.summary.whatWorked.length > 0 ? `${guitarSessionData.summary.whatWorked.length} wins` : '';
+        }
+      }
+
+      return `
+        <div class="guitar-module-card ${statusClass}" data-guitar-module="${module}">
+          <div class="card-title">${icon} ${GUITAR_MODULE_LABELS[module]}</div>
+          ${meta ? `<div class="card-meta">${meta}</div>` : ''}
+        </div>
+      `;
+    }
+
+    function renderGuitarActiveModule() {
+      return `
+        <div class="guitar-active-form" id="guitarActiveForm">
+          ${renderGuitarModuleForm(guitarSessionStep)}
+        </div>
+      `;
+    }
+
+    function renderGuitarModuleForm(module) {
+      switch(module) {
+        case 'info': return renderGuitarInfoForm();
+        case 'rhythm': return renderGuitarRhythmForm();
+        case 'strumming': return renderGuitarStrummingForm();
+        case 'fingerpicking': return renderGuitarFingerpickingForm();
+        case 'performance': return renderGuitarPerformanceForm();
+        case 'summary': return renderGuitarSummaryForm();
+        default: return '';
+      }
+    }
+
+    function renderGuitarInfoForm() {
+      const d = guitarSessionData;
+      return `
+        <div class="guitar-form-title">Session Info</div>
+
+        <div class="guitar-form-row">
+          <label>Session Type</label>
+          <div class="guitar-radio-group">
+            <button class="guitar-radio-btn ${d.sessionType === 'minimum' ? 'active' : ''}" data-field="sessionType" data-value="minimum">Minimum</button>
+            <button class="guitar-radio-btn ${d.sessionType === 'normal' ? 'active' : ''}" data-field="sessionType" data-value="normal">Normal</button>
+            <button class="guitar-radio-btn ${d.sessionType === 'deep' ? 'active' : ''}" data-field="sessionType" data-value="deep">Deep</button>
+          </div>
+        </div>
+
+        <div class="guitar-form-row">
+          <label>Duration (minutes)</label>
+          <input type="number" id="guitarDuration" value="${d.durationMin || ''}" min="1" max="300" placeholder="e.g. 30">
+        </div>
+
+        <div class="guitar-form-row">
+          <label>Energy Level</label>
+          <div class="guitar-radio-group">
+            <button class="guitar-radio-btn ${d.energyLevel === 1 ? 'active' : ''}" data-field="energyLevel" data-value="1">Low</button>
+            <button class="guitar-radio-btn ${d.energyLevel === 2 ? 'active' : ''}" data-field="energyLevel" data-value="2">Med</button>
+            <button class="guitar-radio-btn ${d.energyLevel === 3 ? 'active' : ''}" data-field="energyLevel" data-value="3">High</button>
+          </div>
+        </div>
+
+        <div class="guitar-flow-buttons">
+          <button class="btn btn-continue" id="guitarContinueBtn">Continue →</button>
+        </div>
+      `;
+    }
+
+    function renderGuitarRhythmForm() {
+      const d = guitarSessionData.rhythm;
+      const patterns = (db.guitarLibrary?.patterns || []).filter(p => p.category === 'rhythm');
+
+      return `
+        <div class="guitar-form-title">Rhythm</div>
+
+        <div class="guitar-form-row">
+          <label>BPM</label>
+          <input type="number" id="guitarRhythmBpm" value="${d.bpm || ''}" min="40" max="240" placeholder="e.g. 80">
+        </div>
+
+        <div class="guitar-form-row">
+          <label>Pattern</label>
+          ${renderGuitarDropdown('rhythmPattern', d.pattern, patterns, 'name', 'id', 'Select pattern...')}
+        </div>
+
+        <div class="guitar-form-row">
+          <label>Focus</label>
+          <div class="guitar-radio-group">
+            <button class="guitar-radio-btn ${d.focus === 'time_stability' ? 'active' : ''}" data-module="rhythm" data-field="focus" data-value="time_stability">Time stability</button>
+            <button class="guitar-radio-btn ${d.focus === 'subdivision_clarity' ? 'active' : ''}" data-module="rhythm" data-field="focus" data-value="subdivision_clarity">Subdivision clarity</button>
+            <button class="guitar-radio-btn ${d.focus === 'accent_awareness' ? 'active' : ''}" data-module="rhythm" data-field="focus" data-value="accent_awareness">Accent awareness</button>
+          </div>
+        </div>
+
+        <div class="guitar-form-row">
+          <label>Score</label>
+          <div class="guitar-score-buttons">
+            ${[1,2,3,4,5].map(i => `<button class="guitar-score-btn ${d.score === i ? 'active' : ''}" data-module="rhythm" data-field="score" data-value="${i}">${i}</button>`).join('')}
+          </div>
+        </div>
+
+        <div class="guitar-form-row">
+          <label>Note</label>
+          <input type="text" id="guitarRhythmNote" value="${d.note || ''}" placeholder="Optional note...">
+        </div>
+
+        <div class="guitar-flow-buttons">
+          <button class="btn btn-skip" id="guitarSkipBtn">Skip</button>
+          <button class="btn btn-continue" id="guitarContinueBtn">Continue →</button>
+        </div>
+      `;
+    }
+
+    function renderGuitarStrummingForm() {
+      const d = guitarSessionData.strumming;
+      const patterns = (db.guitarLibrary?.patterns || []).filter(p => p.category === 'strumming');
+
+      return `
+        <div class="guitar-form-title">Strumming</div>
+
+        <div class="guitar-form-row">
+          <label>Patterns (max 2)</label>
+          <div style="display: flex; gap: var(--gap-sm); flex-wrap: wrap;">
+            ${renderGuitarDropdown('strummingPattern1', d.patterns[0] || '', patterns, 'name', 'id', 'Pattern 1...')}
+            ${renderGuitarDropdown('strummingPattern2', d.patterns[1] || '', patterns, 'name', 'id', 'Pattern 2...')}
+          </div>
+        </div>
+
+        <div class="guitar-form-row">
+          <label>Technique</label>
+          <div class="guitar-checkbox-group">
+            <button class="guitar-checkbox-btn ${d.technique.includes('pick') ? 'active' : ''}" data-module="strumming" data-field="technique" data-value="pick">Pick</button>
+            <button class="guitar-checkbox-btn ${d.technique.includes('nail') ? 'active' : ''}" data-module="strumming" data-field="technique" data-value="nail">Nail</button>
+            <button class="guitar-checkbox-btn ${d.technique.includes('hybrid') ? 'active' : ''}" data-module="strumming" data-field="technique" data-value="hybrid">Hybrid</button>
+          </div>
+        </div>
+
+        <div class="guitar-form-row">
+          <label>Focus (max 2)</label>
+          <div class="guitar-checkbox-group">
+            <button class="guitar-checkbox-btn ${d.focus.includes('groove') ? 'active' : ''}" data-module="strumming" data-field="focus" data-value="groove" data-max="2">Groove</button>
+            <button class="guitar-checkbox-btn ${d.focus.includes('tone_balance') ? 'active' : ''}" data-module="strumming" data-field="focus" data-value="tone_balance" data-max="2">Tone balance</button>
+            <button class="guitar-checkbox-btn ${d.focus.includes('relaxation') ? 'active' : ''}" data-module="strumming" data-field="focus" data-value="relaxation" data-max="2">Relaxation</button>
+            <button class="guitar-checkbox-btn ${d.focus.includes('accent_control') ? 'active' : ''}" data-module="strumming" data-field="focus" data-value="accent_control" data-max="2">Accent control</button>
+          </div>
+        </div>
+
+        <div class="guitar-form-row">
+          <label>Score</label>
+          <div class="guitar-score-buttons">
+            ${[1,2,3,4,5].map(i => `<button class="guitar-score-btn ${d.score === i ? 'active' : ''}" data-module="strumming" data-field="score" data-value="${i}">${i}</button>`).join('')}
+          </div>
+        </div>
+
+        <div class="guitar-form-row">
+          <label>Note</label>
+          <input type="text" id="guitarStrummingNote" value="${d.note || ''}" placeholder="Optional note...">
+        </div>
+
+        <div class="guitar-flow-buttons">
+          <button class="btn btn-skip" id="guitarSkipBtn">Skip</button>
+          <button class="btn btn-continue" id="guitarContinueBtn">Continue →</button>
+        </div>
+      `;
+    }
+
+    function renderGuitarFingerpickingForm() {
+      const d = guitarSessionData.fingerpicking;
+      const models = db.guitarLibrary?.fingerpickingModels || [];
+
+      return `
+        <div class="guitar-form-title">Fingerpicking</div>
+
+        <div class="guitar-form-row">
+          <label>Models (max 2)</label>
+          <div style="display: flex; gap: var(--gap-sm); flex-wrap: wrap;">
+            ${renderGuitarDropdown('fingerpickingModel1', d.models[0] || '', models, 'name', 'id', 'Model 1...')}
+            ${renderGuitarDropdown('fingerpickingModel2', d.models[1] || '', models, 'name', 'id', 'Model 2...')}
+          </div>
+        </div>
+
+        <div class="guitar-form-row">
+          <label>Goal</label>
+          <div class="guitar-radio-group">
+            <button class="guitar-radio-btn ${d.goal === 'bass_treble_balance' ? 'active' : ''}" data-module="fingerpicking" data-field="goal" data-value="bass_treble_balance">Bass-treble balance</button>
+            <button class="guitar-radio-btn ${d.goal === 'tempo_stability' ? 'active' : ''}" data-module="fingerpicking" data-field="goal" data-value="tempo_stability">Tempo stability</button>
+            <button class="guitar-radio-btn ${d.goal === 'chord_change_control' ? 'active' : ''}" data-module="fingerpicking" data-field="goal" data-value="chord_change_control">Chord-change control</button>
+          </div>
+        </div>
+
+        <div class="guitar-form-row">
+          <label>BPM (optional)</label>
+          <input type="number" id="guitarFingerpickingBpm" value="${d.bpm || ''}" min="40" max="200" placeholder="e.g. 60">
+        </div>
+
+        <div class="guitar-form-row">
+          <label>Issue Tag (optional)</label>
+          <div class="guitar-radio-group">
+            <button class="guitar-radio-btn ${d.issueTag === 'bass_overpowering' ? 'active' : ''}" data-module="fingerpicking" data-field="issueTag" data-value="bass_overpowering">Bass overpowering</button>
+            <button class="guitar-radio-btn ${d.issueTag === 'treble_weak' ? 'active' : ''}" data-module="fingerpicking" data-field="issueTag" data-value="treble_weak">Treble weak</button>
+            <button class="guitar-radio-btn ${d.issueTag === 'breaks_on_change' ? 'active' : ''}" data-module="fingerpicking" data-field="issueTag" data-value="breaks_on_change">Breaks on chord change</button>
+          </div>
+        </div>
+
+        <div class="guitar-form-row">
+          <label>Score</label>
+          <div class="guitar-score-buttons">
+            ${[1,2,3,4,5].map(i => `<button class="guitar-score-btn ${d.score === i ? 'active' : ''}" data-module="fingerpicking" data-field="score" data-value="${i}">${i}</button>`).join('')}
+          </div>
+        </div>
+
+        <div class="guitar-form-row">
+          <label>Note</label>
+          <input type="text" id="guitarFingerpickingNote" value="${d.note || ''}" placeholder="Optional note...">
+        </div>
+
+        <div class="guitar-flow-buttons">
+          <button class="btn btn-skip" id="guitarSkipBtn">Skip</button>
+          <button class="btn btn-continue" id="guitarContinueBtn">Continue →</button>
+        </div>
+      `;
+    }
+
+    function renderGuitarPerformanceForm() {
+      const d = guitarSessionData.performance;
+      const songs = db.guitarLibrary?.songs || [];
+
+      return `
+        <div class="guitar-form-title">Performance</div>
+
+        <div class="guitar-form-row">
+          <label>Songs</label>
+          <div style="display: flex; gap: var(--gap-sm); flex-wrap: wrap;">
+            ${renderGuitarDropdown('performanceSong1', d.songs[0] || '', songs, 'name', 'id', 'Song 1...')}
+            ${renderGuitarDropdown('performanceSong2', d.songs[1] || '', songs, 'name', 'id', 'Song 2...')}
+            ${renderGuitarDropdown('performanceSong3', d.songs[2] || '', songs, 'name', 'id', 'Song 3...')}
+          </div>
+        </div>
+
+        <div class="guitar-form-row">
+          <label>Vocal Checks</label>
+          <div class="guitar-vocal-checks">
+            <label class="guitar-vocal-check">
+              <input type="checkbox" id="vocalCheck1" ${d.vocalChecks.guitarSupports ? 'checked' : ''}>
+              Guitar supports vocals well
+            </label>
+            <label class="guitar-vocal-check">
+              <input type="checkbox" id="vocalCheck2" ${d.vocalChecks.vocalInTempo ? 'checked' : ''}>
+              Vocal stays in tempo
+            </label>
+            <label class="guitar-vocal-check">
+              <input type="checkbox" id="vocalCheck3" ${d.vocalChecks.breathingAligns ? 'checked' : ''}>
+              Breathing aligns with phrases
+            </label>
+          </div>
+        </div>
+
+        <div class="guitar-form-row">
+          <label>Score</label>
+          <div class="guitar-score-buttons">
+            ${[1,2,3,4,5].map(i => `<button class="guitar-score-btn ${d.score === i ? 'active' : ''}" data-module="performance" data-field="score" data-value="${i}">${i}</button>`).join('')}
+          </div>
+        </div>
+
+        <div class="guitar-form-row">
+          <label>Note</label>
+          <input type="text" id="guitarPerformanceNote" value="${d.note || ''}" placeholder="Optional note...">
+        </div>
+
+        <div class="guitar-flow-buttons">
+          <button class="btn btn-skip" id="guitarSkipBtn">Skip</button>
+          <button class="btn btn-continue" id="guitarContinueBtn">Continue →</button>
+        </div>
+      `;
+    }
+
+    function renderGuitarSummaryForm() {
+      const d = guitarSessionData.summary;
+
+      return `
+        <div class="guitar-form-title">Summary</div>
+
+        <div class="guitar-form-row">
+          <label>What Worked</label>
+          <div class="guitar-checkbox-group">
+            <button class="guitar-checkbox-btn ${d.whatWorked.includes('rhythm') ? 'active' : ''}" data-module="summary" data-field="whatWorked" data-value="rhythm">Rhythm</button>
+            <button class="guitar-checkbox-btn ${d.whatWorked.includes('groove') ? 'active' : ''}" data-module="summary" data-field="whatWorked" data-value="groove">Groove</button>
+            <button class="guitar-checkbox-btn ${d.whatWorked.includes('tone') ? 'active' : ''}" data-module="summary" data-field="whatWorked" data-value="tone">Tone</button>
+            <button class="guitar-checkbox-btn ${d.whatWorked.includes('flow') ? 'active' : ''}" data-module="summary" data-field="whatWorked" data-value="flow">Vocal flow</button>
+          </div>
+        </div>
+
+        <div class="guitar-form-row">
+          <label>Limiting Factor</label>
+          <div class="guitar-radio-group">
+            <button class="guitar-radio-btn ${d.limitingFactor === 'tempo' ? 'active' : ''}" data-module="summary" data-field="limitingFactor" data-value="tempo">Tempo</button>
+            <button class="guitar-radio-btn ${d.limitingFactor === 'tension' ? 'active' : ''}" data-module="summary" data-field="limitingFactor" data-value="tension">Tension</button>
+            <button class="guitar-radio-btn ${d.limitingFactor === 'chord_clarity' ? 'active' : ''}" data-module="summary" data-field="limitingFactor" data-value="chord_clarity">Chord clarity</button>
+            <button class="guitar-radio-btn ${d.limitingFactor === 'coordination' ? 'active' : ''}" data-module="summary" data-field="limitingFactor" data-value="coordination">Coordination</button>
+          </div>
+        </div>
+
+        <div class="guitar-form-row">
+          <label>Reflection</label>
+          <input type="text" id="guitarReflection" value="${d.reflection || ''}" placeholder="One line reflection...">
+        </div>
+
+        <div class="guitar-flow-buttons">
+          <button class="btn btn-continue" id="guitarSaveBtn">Save Session</button>
+        </div>
+      `;
+    }
+
+    function renderGuitarDropdown(id, selectedValue, items, labelKey, valueKey, placeholder) {
+      const selectedItem = items.find(item => item[valueKey] === selectedValue);
+      const displayText = selectedItem ? selectedItem[labelKey] : placeholder;
+
+      let menuHtml = '';
+      if (items.length === 0) {
+        menuHtml = `<div class="guitar-dropdown-empty">Add items in Library tab</div>`;
+      } else {
+        menuHtml = items.map(item => `
+          <button class="guitar-dropdown-item ${item[valueKey] === selectedValue ? 'selected' : ''}"
+            data-dropdown="${id}" data-value="${item[valueKey]}">${item[labelKey]}</button>
+        `).join('');
+      }
+
+      return `
+        <div class="guitar-dropdown" id="${id}Dropdown">
+          <button class="guitar-dropdown-trigger" type="button">
+            <span>${displayText}</span>
+            <span class="arrow">▼</span>
+          </button>
+          <div class="guitar-dropdown-menu">
+            ${menuHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    function attachGuitarSessionListeners() {
+      // Day selector
+      document.querySelectorAll('[data-guitar-day]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          guitarSelectedDay = parseInt(btn.dataset.guitarDay);
+          guitarSessionData = null;
+          guitarSessionStep = 'info';
+          guitarPreviousStep = null;
+          ensureGuitarSessionData(guitarSelectedDay);
+          guitarSessionStep = getFirstIncompleteStep();
+          renderGuitarTabContent();
+        });
+      });
+
+      // Module cards
+      document.querySelectorAll('[data-guitar-module]').forEach(card => {
+        card.addEventListener('click', () => {
+          guitarGoToStep(card.dataset.guitarModule);
+        });
+      });
+
+      // Radio buttons (single select)
+      document.querySelectorAll('.guitar-radio-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const field = btn.dataset.field;
+          const value = btn.dataset.value;
+          const module = btn.dataset.module;
+
+          if (module) {
+            if (field === 'focus' || field === 'goal' || field === 'issueTag' || field === 'limitingFactor') {
+              // Allow toggle off for optional fields
+              if (guitarSessionData[module][field] === value) {
+                guitarSessionData[module][field] = '';
+              } else {
+                guitarSessionData[module][field] = value;
+              }
+            } else {
+              guitarSessionData[module][field] = isNaN(parseInt(value)) ? value : parseInt(value);
+            }
+          } else {
+            // Info form fields
+            if (field === 'sessionType') {
+              guitarSessionData.sessionType = value;
+            } else if (field === 'energyLevel') {
+              guitarSessionData.energyLevel = parseInt(value);
+            }
+          }
+
+          // Re-render form to update active states
+          const form = document.getElementById('guitarActiveForm');
+          if (form) form.innerHTML = renderGuitarModuleForm(guitarSessionStep);
+          attachGuitarFormListeners();
+        });
+      });
+
+      // Checkbox buttons (multi select)
+      document.querySelectorAll('.guitar-checkbox-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const module = btn.dataset.module;
+          const field = btn.dataset.field;
+          const value = btn.dataset.value;
+          const max = parseInt(btn.dataset.max) || Infinity;
+
+          const arr = guitarSessionData[module][field];
+          const idx = arr.indexOf(value);
+
+          if (idx >= 0) {
+            arr.splice(idx, 1);
+          } else if (arr.length < max) {
+            arr.push(value);
+          }
+
+          const form = document.getElementById('guitarActiveForm');
+          if (form) form.innerHTML = renderGuitarModuleForm(guitarSessionStep);
+          attachGuitarFormListeners();
+        });
+      });
+
+      // Score buttons
+      document.querySelectorAll('.guitar-score-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const module = btn.dataset.module;
+          const value = parseInt(btn.dataset.value);
+          guitarSessionData[module].score = value;
+
+          const form = document.getElementById('guitarActiveForm');
+          if (form) form.innerHTML = renderGuitarModuleForm(guitarSessionStep);
+          attachGuitarFormListeners();
+        });
+      });
+
+      attachGuitarFormListeners();
+    }
+
+    function attachGuitarFormListeners() {
+      // Duration input
+      const durationInput = document.getElementById('guitarDuration');
+      if (durationInput) {
+        durationInput.addEventListener('change', () => {
+          guitarSessionData.durationMin = parseInt(durationInput.value) || null;
+        });
+      }
+
+      // Rhythm inputs
+      const rhythmBpm = document.getElementById('guitarRhythmBpm');
+      if (rhythmBpm) {
+        rhythmBpm.addEventListener('change', () => {
+          guitarSessionData.rhythm.bpm = parseInt(rhythmBpm.value) || null;
+        });
+      }
+      const rhythmNote = document.getElementById('guitarRhythmNote');
+      if (rhythmNote) {
+        rhythmNote.addEventListener('change', () => {
+          guitarSessionData.rhythm.note = rhythmNote.value;
+        });
+      }
+
+      // Strumming note
+      const strummingNote = document.getElementById('guitarStrummingNote');
+      if (strummingNote) {
+        strummingNote.addEventListener('change', () => {
+          guitarSessionData.strumming.note = strummingNote.value;
+        });
+      }
+
+      // Fingerpicking inputs
+      const fpBpm = document.getElementById('guitarFingerpickingBpm');
+      if (fpBpm) {
+        fpBpm.addEventListener('change', () => {
+          guitarSessionData.fingerpicking.bpm = parseInt(fpBpm.value) || null;
+        });
+      }
+      const fpNote = document.getElementById('guitarFingerpickingNote');
+      if (fpNote) {
+        fpNote.addEventListener('change', () => {
+          guitarSessionData.fingerpicking.note = fpNote.value;
+        });
+      }
+
+      // Performance inputs
+      const perfNote = document.getElementById('guitarPerformanceNote');
+      if (perfNote) {
+        perfNote.addEventListener('change', () => {
+          guitarSessionData.performance.note = perfNote.value;
+        });
+      }
+      const vocalCheck1 = document.getElementById('vocalCheck1');
+      const vocalCheck2 = document.getElementById('vocalCheck2');
+      const vocalCheck3 = document.getElementById('vocalCheck3');
+      if (vocalCheck1) {
+        vocalCheck1.addEventListener('change', () => {
+          guitarSessionData.performance.vocalChecks.guitarSupports = vocalCheck1.checked;
+        });
+      }
+      if (vocalCheck2) {
+        vocalCheck2.addEventListener('change', () => {
+          guitarSessionData.performance.vocalChecks.vocalInTempo = vocalCheck2.checked;
+        });
+      }
+      if (vocalCheck3) {
+        vocalCheck3.addEventListener('change', () => {
+          guitarSessionData.performance.vocalChecks.breathingAligns = vocalCheck3.checked;
+        });
+      }
+
+      // Summary reflection
+      const reflection = document.getElementById('guitarReflection');
+      if (reflection) {
+        reflection.addEventListener('change', () => {
+          guitarSessionData.summary.reflection = reflection.value;
+        });
+      }
+
+      // Dropdowns
+      document.querySelectorAll('.guitar-dropdown').forEach(dropdown => {
+        const trigger = dropdown.querySelector('.guitar-dropdown-trigger');
+        if (trigger) {
+          trigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.querySelectorAll('.guitar-dropdown.open').forEach(d => {
+              if (d !== dropdown) d.classList.remove('open');
+            });
+            dropdown.classList.toggle('open');
+          });
+        }
+      });
+
+      document.querySelectorAll('.guitar-dropdown-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const dropdownId = item.dataset.dropdown;
+          const value = item.dataset.value;
+
+          // Update session data based on dropdown
+          if (dropdownId === 'rhythmPattern') {
+            guitarSessionData.rhythm.pattern = value;
+          } else if (dropdownId === 'strummingPattern1') {
+            guitarSessionData.strumming.patterns[0] = value;
+          } else if (dropdownId === 'strummingPattern2') {
+            guitarSessionData.strumming.patterns[1] = value;
+          } else if (dropdownId === 'fingerpickingModel1') {
+            guitarSessionData.fingerpicking.models[0] = value;
+          } else if (dropdownId === 'fingerpickingModel2') {
+            guitarSessionData.fingerpicking.models[1] = value;
+          } else if (dropdownId === 'performanceSong1') {
+            guitarSessionData.performance.songs[0] = value;
+          } else if (dropdownId === 'performanceSong2') {
+            guitarSessionData.performance.songs[1] = value;
+          } else if (dropdownId === 'performanceSong3') {
+            guitarSessionData.performance.songs[2] = value;
+          }
+
+          // Close dropdown and re-render
+          document.querySelectorAll('.guitar-dropdown.open').forEach(d => d.classList.remove('open'));
+          const form = document.getElementById('guitarActiveForm');
+          if (form) form.innerHTML = renderGuitarModuleForm(guitarSessionStep);
+          attachGuitarFormListeners();
+        });
+      });
+
+      // Close dropdowns when clicking outside
+      document.addEventListener('click', () => {
+        document.querySelectorAll('.guitar-dropdown.open').forEach(d => d.classList.remove('open'));
+      });
+
+      // Flow buttons
+      const continueBtn = document.getElementById('guitarContinueBtn');
+      if (continueBtn) {
+        continueBtn.addEventListener('click', guitarNextStep);
+      }
+
+      const skipBtn = document.getElementById('guitarSkipBtn');
+      if (skipBtn) {
+        skipBtn.addEventListener('click', guitarSkipStep);
+      }
+
+      const saveBtn = document.getElementById('guitarSaveBtn');
+      if (saveBtn) {
+        saveBtn.addEventListener('click', () => {
+          saveGuitarSession();
+          // Mark guitar habit as done for this day
+          const week = getCurrentWeek();
+          if (week) {
+            const day = week.days[guitarSelectedDay];
+            if (day.habits.guitar < 3) {
+              day.habits.guitar = 3; // Mark as practiced
+            }
+            saveDB();
+          }
+          // Show confirmation and reset to first incomplete
+          guitarSessionStep = getFirstIncompleteStep();
+          renderGuitarTabContent();
+        });
+      }
     }
 
     function renderGuitarWeekTab() {
@@ -6522,12 +7550,7 @@
     }
 
     function attachGuitarDaySelectorListeners() {
-      document.querySelectorAll('[data-guitar-day]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          guitarSelectedDay = parseInt(btn.dataset.guitarDay);
-          renderGuitarTabContent();
-        });
-      });
+      // This is now handled in attachGuitarSessionListeners
     }
 
     function attachGuitarLibraryTabListeners() {
